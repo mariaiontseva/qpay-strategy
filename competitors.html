@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QPay · Competitive Landscape</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f5f4;
+    --bg-2: #ececea;
+    --card: #ffffff;
+    --ink: #111113;
+    --ink-2: #36363a;
+    --ink-3: #6f6f76;
+    --ink-4: #a5a5aa;
+    --line: #e4e4e1;
+    --line-2: #d4d4d0;
+    --accent: #0c2a4a;
+    --accent-ink: #ffffff;
+    --accent-soft: #e5ecf3;
+    --good: #1a6b43;
+    --warn: #a34525;
+    --tag-bank: #e4ebf3;
+    --tag-bank-ink: #153b65;
+    --tag-acc: #ede4d6;
+    --tag-acc-ink: #5c4018;
+    --tag-hybrid: #e6dfea;
+    --tag-hybrid-ink: #402758;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    font-feature-settings: "ss01", "cv11", "cv02";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ── Topbar ─────────────────────────────────── */
+  .topbar {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    background: rgba(245, 245, 244, 0.92);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .brand-name {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .brand-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding-left: 14px;
+    margin-left: 2px;
+    border-left: 1px solid var(--line-2);
+  }
+
+  .topbar-nav {
+    display: flex;
+    gap: 28px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-2);
+  }
+
+  .topbar-nav a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.15s ease;
+  }
+
+  .topbar-nav a:hover { color: var(--accent); }
+
+  /* ── Hero ───────────────────────────────────── */
+  .hero {
+    padding: 80px 0 64px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 700;
+    letter-spacing: -0.028em;
+    line-height: 1.08;
+    margin-bottom: 24px;
+    color: var(--ink);
+    max-width: 880px;
+  }
+
+  h1 span {
+    color: var(--accent);
+  }
+
+  .lede {
+    font-size: clamp(17px, 1.8vw, 19px);
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 720px;
+    margin-bottom: 40px;
+    letter-spacing: -0.005em;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .meta-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .meta-value {
+    font-size: 13.5px;
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: -0.003em;
+  }
+
+  /* ── Legend ─────────────────────────────────── */
+  .legend {
+    padding: 28px 0 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .legend-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-right: 8px;
+  }
+
+  /* ── Section head ───────────────────────────── */
+  .section-head {
+    padding: 64px 0 24px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .section-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* ── Grid ───────────────────────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 16px;
+    padding-bottom: 24px;
+  }
+
+  /* ── Card ───────────────────────────────────── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 30px;
+    transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px -10px rgba(17, 17, 19, 0.12), 0 2px 6px -2px rgba(17, 17, 19, 0.04);
+    border-color: var(--line-2);
+  }
+
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+
+  .name-block a {
+    text-decoration: none;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.15s ease;
+  }
+
+  .name-block a:hover { color: var(--accent); }
+  .name-block a:hover .arrow { transform: translate(2px, -2px); opacity: 1; }
+
+  .arrow {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-3);
+    opacity: 0.55;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+
+  .rank {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-4);
+    letter-spacing: 0.06em;
+    padding-right: 4px;
+    border-right: 1px solid var(--line);
+    margin-right: 2px;
+    padding-right: 10px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 9px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .tag-bank { background: var(--tag-bank); color: var(--tag-bank-ink); }
+  .tag-acc { background: var(--tag-acc); color: var(--tag-acc-ink); }
+  .tag-hybrid { background: var(--tag-hybrid); color: var(--tag-hybrid-ink); }
+
+  .positioning {
+    font-size: 14.5px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin-bottom: 22px;
+    padding: 10px 14px;
+    background: var(--bg-2);
+    border-radius: 6px;
+    border-left: 2px solid var(--line-2);
+    letter-spacing: -0.005em;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 22px;
+  }
+
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 6px;
+  }
+
+  .stat-value {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+  }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 10px;
+    margin-top: 8px;
+  }
+
+  ul.pros, ul.cons {
+    list-style: none;
+    margin-bottom: 16px;
+  }
+
+  ul.pros li, ul.cons li {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 7px;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+  }
+
+  ul.pros li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 10px;
+    height: 1.5px;
+    background: var(--good);
+  }
+  ul.pros li::after {
+    content: "";
+    position: absolute;
+    left: 4.25px;
+    top: 4px;
+    width: 1.5px;
+    height: 12px;
+    background: var(--good);
+  }
+
+  ul.cons li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 10px;
+    height: 1.5px;
+    background: var(--warn);
+  }
+
+  .wedge {
+    margin-top: auto;
+    padding: 16px 18px;
+    background: var(--accent-soft);
+    border-radius: 6px;
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+  }
+
+  .wedge-label {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  /* ── Footer ─────────────────────────────────── */
+  footer {
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    padding: 56px 0 40px;
+    margin-top: 48px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+  }
+
+  .footer-brand {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-bottom: 12px;
+  }
+
+  .footer-text {
+    font-size: 13.5px;
+    color: var(--ink-3);
+    line-height: 1.6;
+    max-width: 480px;
+    letter-spacing: -0.005em;
+  }
+
+  .footer-col h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 16px;
+  }
+
+  .footer-col ul {
+    list-style: none;
+  }
+
+  .footer-col li {
+    margin-bottom: 10px;
+    font-size: 13.5px;
+  }
+
+  .footer-col a {
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color 0.15s ease;
+    font-weight: 500;
+  }
+
+  .footer-col a:hover { color: var(--accent); }
+
+  .footer-meta {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  @media (max-width: 720px) {
+    .container { padding: 0 20px; }
+    .hero { padding: 48px 0 40px; }
+    .grid { grid-template-columns: 1fr; gap: 14px; }
+    .card { padding: 24px; }
+    .topbar-nav { display: none; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .stats { grid-template-columns: 1fr; gap: 14px; }
+    .meta-row { gap: 24px; }
+  }
+
+  @media print {
+    body { background: white; }
+    .topbar, footer { display: none; }
+    .card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .hero { padding: 16px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Topbar ─── -->
+<nav class="topbar">
+  <div class="container topbar-inner">
+    <a href="#" class="brand">
+      <span class="brand-mark">Q</span>
+      <span class="brand-name">QPay</span>
+      <span class="brand-tag">Competitive Intel</span>
+    </a>
+    <div class="topbar-nav">
+      <a href="#banking">Banking-first</a>
+      <a href="#accounting">Accounting-first</a>
+      <a href="#hybrid">Hybrid</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── Hero ─── -->
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">010 · UK SMB Fintech · April 2026</div>
+    <h1>The ten products <span>QPay</span> has to beat, and how.</h1>
+    <p class="lede">The UK market splits into banking-first challengers, accounting-first incumbents, and all-in-one hybrids. Not one of them treats the UK Ltd director-and-shareholder workflow as a first-class product. That is the opening.</p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">Scope</span>
+        <span class="meta-value">10 competitors · 3 categories</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Data currency</span>
+        <span class="meta-value">April 2026, verified web sources</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Interaction</span>
+        <span class="meta-value">Click any card to open the product</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Currency</span>
+        <span class="meta-value">GBP, excludes VAT unless stated</span>
+      </div>
+    </div>
+    <div class="legend">
+      <span class="legend-label">Categories</span>
+      <span class="tag tag-bank">Banking-first</span>
+      <span class="tag tag-acc">Accounting-first</span>
+      <span class="tag tag-hybrid">Hybrid · all-in-one</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Banking-first ─── -->
+<section id="banking" class="container">
+  <div class="section-head">
+    <h2 class="section-title">Banking-first challengers</h2>
+    <span class="section-count">04 competitors</span>
+  </div>
+  <div class="grid">
+
+    <article class="card">
+      <div class="card-head">
+        <div class="name-block">
+          <a href="https://www.tide.co/" target="_blank" rel="noopener">
+            <span class="rank">01</span>
+            <h2>Tide</h2>
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+        <span class="tag tag-bank">Banking-first</span>
+      </div>
+      <p class="positioning">"The UK's leading business financial platform."</p>
+      <div class="stats">
+        <div>
+          <div class="stat-label">Pricing</div>
+          <div class="stat-value">£0 · £12.99 · £24.99 · £69.99/mo</div>
+        </div>
+        <div>
+          <div class="stat-label">Scale</div>
+          <div class="stat-value">800K UK · $1.5B val · £190M rev</div>
+        </div>
+      </div>
+      <div class="section-label">Strengths</div>
+      <ul class="pros">
+        <li>14% UK SMB market share, strongest banking-first brand</li>
+        <li>Full stack: account + formation + light accounting</li>
+        <li>Deep-pocketed after $120M TPG round (Sep 2025)</li>
+      </ul>
+      <div class="section-label">Weaknesses</div>
+      <ul class="cons">
+        <li>Accounting is light: no chart of accounts, no journals</li>
+        <li>No native payroll, no CT600, no Companies House filing</li>
+        <li>Zero dividend workflow; no directors' personal accounts</li>
+      </ul>
+      <div class="wedge">
+        <span class="wedge-label">QPay angle</span>
+        Tide is the closest banking-first threat but chose breadth (India, Germany, France) over UK-Ltd depth. We ship the governance wedge before they can.
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="name-block">
+          <a href="https://www.revolut.com/business/" target="_blank" rel="noopener">
+            <span class="rank">02</span>
+            <h2>Revolut Business</h2>
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+        <span class="tag tag-bank">Banking-first</span>
+      </div>
+      <p class="positioning">"The all-in-one business account for global business."</p>
+      <div class="stats">
+        <div>
+          <div class="stat-label">Pricing</div>
+          <div class="stat-value">£10 · £30 · £90/mo · Enterprise</div>
+        </div>
+        <div>
+          <div class="stat-label">Scale</div>
+          <div class="stat-value">$45B group val · UK licence (mobilisation)</div>
+        </div>
+      </div>
+      <div class="section-label">Strengths</div>
+      <ul class="pros">
+        <li>Best-in-class multicurrency UX, 25+ currencies</li>
+        <li>Strongest expense management + team cards in the market</li>
+        <li>Professional brand, enterprise-ready</li>
+      </ul>
+      <div class="section-label">Weaknesses</div>
+      <ul class="cons">
+        <li>UK Ltd DNA invisible: no dividends, no directors, no resolutions</li>
+        <li>No native MTD-VAT filing, no UK-specific tax layer</li>
+        <li>Not FSCS-protected; e-money safeguarding only</li>
+      </ul>
+      <div class="wedge">
+        <span class="wedge-label">QPay angle</span>
+        Revolut is global-first by design. UK-Ltd governance is local detail they cannot prioritise without breaking their platform narrative.
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="name-block">
+          <a href="https://www.starlingbank.com/business-account/" target="_blank" rel="noopener">
+            <span class="rank">03</span>
+            <h2>Starling Business</h2>
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+        <span class="tag tag-bank">Banking-first</span>
+      </div>
+      <p class="positioning">"The award-winning business account, now without the bookkeeping."</p>
+      <div class="stats">
+        <div>
+          <div class="stat-label">Pricing</div>
+          <div class="stat-value">Free · Toolkit £7/mo (closing Mar 2026)</div>
+        </div>
+        <div>
+          <div class="stat-label">Scale</div>
+          <div class="stat-value">Full UK bank · FSCS £85K · 900K+ accts</div>
+        </div>
+      </div>
+      <div class="section-label">Strengths</div>
+      <ul class="pros">
+        <li>Actual UK bank licence, FSCS at face value</li>
+        <li>Clean, calm UX with excellent accessibility</li>
+        <li>Reliable customer-support reputation</li>
+      </ul>
+      <div class="section-label">Weaknesses</div>
+      <ul class="cons">
+        <li>Business Toolkit closing March 2026 — retreats from accounting</li>
+        <li>No Ltd-specific governance, no formation, no multicurrency</li>
+        <li>Displaced cohort needs a new bundled product</li>
+      </ul>
+      <div class="wedge">
+        <span class="wedge-label">QPay angle</span>
+        Toolkit closure in March 2026 is the single biggest time-bounded acquisition opportunity this year. Migration offer goes live Q2 2026.
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="name-block">
+          <a href="https://monzo.com/business-banking" target="_blank" rel="noopener">
+            <span class="rank">04</span>
+            <h2>Monzo Business</h2>
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+        <span class="tag tag-bank">Banking-first</span>
+      </div>
+      <p class="positioning">"Modern business banking for any business."</p>
+      <div class="stats">
+        <div>
+          <div class="stat-label">Pricing</div>
+          <div class="stat-value">£0 Lite · £9 Pro · £25 Team</div>
+        </div>
+        <div>
+          <div class="stat-label">Scale</div>
+          <div class="stat-value">Full UK bank · FSCS · unicorn status</div>
+        </div>
+      </div>
+      <div class="section-label">Strengths</div>
+      <ul class="pros">
+        <li>Full UK bank licence, Mastercard debit, FSCS coverage</li>
+        <li>Signature minimalist UX, strong consumer brand crossover</li>
+        <li>Tax Pots are a small, well-loved retention feature</li>
+      </ul>
+      <div class="section-label">Weaknesses</div>
+      <ul class="cons">
+        <li>Business product feels underinvested vs personal</li>
+        <li>No dividend flow, no resolutions, no formation, no payroll</li>
+        <li>No native VAT filing</li>
+      </ul>
+      <div class="wedge">
+        <span class="wedge-label">QPay angle</span>
+        Monzo Business is "consumer Monzo in a business wrapper". QPay is purpose-built for the Ltd.
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ─── Accounting-first ─── -->
+<section id="accounting" class="container">
+  <div class="section-head">
+    <h2 class="section-title">Accounting-first incumbents</h2>
+    <span class="section-count">03 competitors</span>
+  </div>
+  <div class="grid">
+
+    <article class="card">
+      <div class="card-head">
+        <div class="name-block">
+          <a href="https://www.xero.com/uk/" target="_blank" rel="noopener">
+            <span class="rank">05</span>
+            <h2>Xero</h2>
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+        <span class="tag tag-acc">Accounting-first</span>
+      </div>
+      <p class="positioning">"Beautiful business."</p>
+      <div class="stats">
+        <div>
+          <div class="stat-label">Pricing</div>
+          <div class="stat-value">£16 · £33 · £47 · £65/mo</div>
+        </div>
+        <div>
+          <div class="stat-label">Scale</div>
+          <div class="stat-value">Public (ASX:XRO) · 4M+ global subs</div>
+        </div>
+      </div>
+      <div class="section-label">Strengths</div>
+      <ul class="pros">
+        <li>Accountant ubiquity — 50%+ UK accountants standardised on it</li>
+        <li>Deepest double-entry accounting + 1,000+ app marketplace</li>
+        <li>Multi-currency, strong reporting, proven at scale</li>
+      </ul>
+      <div class="section-label">Weaknesses</div>
+      <ul class="cons">
+        <li>Not a bank. No account, no cards, no money movement</li>
+        <li>UX is showing age; bookkeeper-centric not founder-centric</li>
+        <li>Payroll is a separate subscription add-on</li>
+      </ul>
+      <div class="wedge">
+        <span class="wedge-label">QPay angle</span>
+        Accountant channel defence. QPay delivers Xero-grade books with bank rails in one product, so the accountant does not juggle two tools.
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="name-block">
+          <a href="https://www.freeagent.com/" target="_blank" rel="noopener">
+            <span class="rank">06</span>
+            <h2>FreeAgent</h2>
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+        <span class="tag tag-acc">Accounting-first</span>
+      </div>
+      <p class="positioning">"Accounting software for UK limited companies and contractors."</p>
+      <div class="stats">
+        <div>
+          <div class="stat-label">Pricing</div>
+          <div class="stat-value">Free via NatWest/Mettle · £19-29 direct</div>
+        </div>
+        <div>
+          <div class="stat-label">Scale</div>
+          <div class="stat-value">NatWest-owned · 200K+ UK subscribers</div>
+        </div>
+      </div>
+      <div class="section-label">Strengths</div>
+      <ul class="pros">
+        <li>Deepest Ltd-specific product in UK — dividends done properly</li>
+        <li>Built-in RTI payroll for directors at no extra charge</li>
+        <li>Corporation Tax estimation + Self Assessment data prep</li>
+      </ul>
+      <div class="section-label">Weaknesses</div>
+      <ul class="cons">
+        <li>Not a bank — always paired with Mettle or other account</li>
+        <li>UX feels 2015; modernisation slow under NatWest ownership</li>
+        <li>Limited international capability</li>
+      </ul>
+      <div class="wedge">
+        <span class="wedge-label">QPay angle</span>
+        FreeAgent is the reference implementation of UK Ltd accounting. QPay matches the depth, adds the bank, and unifies both sides of the dividend.
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="name-block">
+          <a href="https://quickbooks.intuit.com/uk/" target="_blank" rel="noopener">
+            <span class="rank">07</span>
+            <h2>QuickBooks Online</h2>
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+        <span class="tag tag-acc">Accounting-first</span>
+      </div>
+      <p class="positioning">Global accounting incumbent with UK localisation.</p>
+      <div class="stats">
+        <div>
+          <div class="stat-label">Pricing</div>
+          <div class="stat-value">£10 · £16 · £33 · £56 · £115/mo</div>
+        </div>
+        <div>
+          <div class="stat-label">Scale</div>
+          <div class="stat-value">Intuit (NASDAQ) · 7M+ global subs</div>
+        </div>
+      </div>
+      <div class="section-label">Strengths</div>
+      <ul class="pros">
+        <li>Global footprint, Intuit brand trust</li>
+        <li>Full accounting with automation, inventory, multicurrency</li>
+        <li>Strong mobile app for accounting-first product</li>
+      </ul>
+      <div class="section-label">Weaknesses</div>
+      <ul class="cons">
+        <li>Not a bank</li>
+        <li>UK-specific Ltd features shallower than FreeAgent</li>
+        <li>Repeated price increases have caused user backlash</li>
+      </ul>
+      <div class="wedge">
+        <span class="wedge-label">QPay angle</span>
+        QBO is global-scale generic. UK Ltd directors buy FreeAgent or Xero instead. QPay competes in that UK-specific lane with banking attached.
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ─── Hybrid ─── -->
+<section id="hybrid" class="container">
+  <div class="section-head">
+    <h2 class="section-title">Hybrid and all-in-one</h2>
+    <span class="section-count">03 competitors</span>
+  </div>
+  <div class="grid">
+
+    <article class="card">
+      <div class="card-head">
+        <div class="name-block">
+          <a href="https://anna.money/" target="_blank" rel="noopener">
+            <span class="rank">08</span>
+            <h2>ANNA Money</h2>
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+        <span class="tag tag-hybrid">Hybrid</span>
+      </div>
+      <p class="positioning">"The Business Account That Does Your Taxes."</p>
+      <div class="stats">
+        <div>
+          <div class="stat-label">Pricing</div>
+          <div class="stat-value">£0 · £19.90 · £49.90/mo</div>
+        </div>
+        <div>
+          <div class="stat-label">Scale</div>
+          <div class="stat-value">50K UK SMEs · £30M ARR · $88M raised</div>
+        </div>
+      </div>
+      <div class="section-label">Strengths</div>
+      <ul class="pros">
+        <li>Tax-first positioning defended: MTD-VAT and MTD-ITSA free</li>
+        <li>Strong AI "Auto Accountant" categorisation quality</li>
+        <li>550% CAGR, accountant-friendly distribution</li>
+      </ul>
+      <div class="section-label">Weaknesses</div>
+      <ul class="cons">
+        <li>No cap table, no compliant dividend vouchers, no resolutions</li>
+        <li>No directors' personal accounts</li>
+        <li>Weaker FX and card acceptance vs Revolut or Wise</li>
+      </ul>
+      <div class="wedge">
+        <span class="wedge-label">QPay angle</span>
+        ANNA nails tax but treats "business" abstractly. QPay is specifically engineered for UK Ltd governance — the axis ANNA does not serve.
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="name-block">
+          <a href="https://www.mettle.co.uk/" target="_blank" rel="noopener">
+            <span class="rank">09</span>
+            <h2>Mettle + FreeAgent</h2>
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+        <span class="tag tag-hybrid">Hybrid</span>
+      </div>
+      <p class="positioning">"A business account that pays for your accounting software."</p>
+      <div class="stats">
+        <div>
+          <div class="stat-label">Pricing</div>
+          <div class="stat-value">Free · FreeAgent bundled</div>
+        </div>
+        <div>
+          <div class="stat-label">Scale</div>
+          <div class="stat-value">NatWest Group · FSCS via parent</div>
+        </div>
+      </div>
+      <div class="section-label">Strengths</div>
+      <ul class="pros">
+        <li>Best-in-class Ltd accounting (FreeAgent) bundled free</li>
+        <li>NatWest-scale institutional trust</li>
+        <li>Director salary + dividend tracking in FreeAgent</li>
+      </ul>
+      <div class="section-label">Weaknesses</div>
+      <ul class="cons">
+        <li>Hard cap at 2 owners — excludes 3+ shareholder Ltds entirely</li>
+        <li>Two apps for one workflow; dividends in FA not in account</li>
+        <li>Mettle UX is utilitarian; dated compared to challengers</li>
+      </ul>
+      <div class="wedge">
+        <span class="wedge-label">QPay angle</span>
+        Closest structural analogue, but capped at 2 owners and institutional pace. QPay serves 3+ shareholder Ltds and unifies both sides of the dividend in one app.
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="name-block">
+          <a href="https://osome.com/uk/" target="_blank" rel="noopener">
+            <span class="rank">10</span>
+            <h2>Osome</h2>
+            <span class="arrow">↗</span>
+          </a>
+        </div>
+        <span class="tag tag-hybrid">Hybrid</span>
+      </div>
+      <p class="positioning">"All-in-one: accounting, tax, and company registration."</p>
+      <div class="stats">
+        <div>
+          <div class="stat-label">Pricing</div>
+          <div class="stat-value">Formation £289 · Accounting £71/mo+</div>
+        </div>
+        <div>
+          <div class="stat-label">Scale</div>
+          <div class="stat-value">Global (SG/HK/UK) · concierge model</div>
+        </div>
+      </div>
+      <div class="section-label">Strengths</div>
+      <ul class="pros">
+        <li>Closest to QPay's "all-in-one" vision conceptually</li>
+        <li>Formation + bookkeeping + tax in one relationship</li>
+        <li>Human-support concierge model appeals to founders</li>
+      </ul>
+      <div class="section-label">Weaknesses</div>
+      <ul class="cons">
+        <li>Not a bank — no account, no cards, no money movement</li>
+        <li>Pricing stacks quickly with add-ons (VAT, PAYE, address)</li>
+        <li>Service-quality reviews uneven; smaller scale in UK</li>
+      </ul>
+      <div class="wedge">
+        <span class="wedge-label">QPay angle</span>
+        Osome validates the "all-in-one" demand but proves you cannot win without the account at the centre. QPay makes the account the anchor.
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ─── Footer ─── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">QPay</div>
+        <p class="footer-text">The only UK business account built for how a Ltd actually works: director salaries, dividends, and shareholder payments done right. This document is internal competitive intelligence, current April 2026.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Strategy docs</h4>
+        <ul>
+          <li><a href="00-executive-summary.md">Executive summary</a></li>
+          <li><a href="01-competitive-analysis.md">Full competitive analysis</a></li>
+          <li><a href="02-positioning.md">Positioning</a></li>
+          <li><a href="03-feature-architecture.md">Feature architecture</a></li>
+          <li><a href="04-screen-plan.md">Screen plan</a></li>
+          <li><a href="05-competitive-advantage.md">Competitive advantage</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Sources</h4>
+        <ul>
+          <li><a href="https://pitchbook.com/" target="_blank" rel="noopener">PitchBook</a></li>
+          <li><a href="https://www.crunchbase.com/" target="_blank" rel="noopener">Crunchbase</a></li>
+          <li><a href="https://www.bloomberg.com/" target="_blank" rel="noopener">Bloomberg</a></li>
+          <li><a href="https://fintech.global/" target="_blank" rel="noopener">FinTech Global</a></li>
+          <li><a href="https://www.fca.org.uk/" target="_blank" rel="noopener">FCA publications</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span>QPay · Competitive Intelligence · v1</span>
+      <span>Last updated 18 April 2026</span>
+      <span>Internal · do not distribute</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

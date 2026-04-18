@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QPay · Feature Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f5f4;
+    --bg-2: #ececea;
+    --card: #ffffff;
+    --ink: #111113;
+    --ink-2: #36363a;
+    --ink-3: #6f6f76;
+    --ink-4: #a5a5aa;
+    --line: #e4e4e1;
+    --line-2: #d4d4d0;
+    --accent: #0c2a4a;
+    --accent-ink: #ffffff;
+    --accent-soft: #e5ecf3;
+
+    --wedge-bg: #0c2a4a;
+    --wedge-ink: #ffffff;
+    --wedge-soft: #dae3ef;
+    --wedge-soft-ink: #0c2a4a;
+
+    --stakes-bg: #ececea;
+    --stakes-ink: #36363a;
+
+    --retention-bg: #ede4d6;
+    --retention-ink: #5c4018;
+
+    --revenue-bg: #e6dfea;
+    --revenue-ink: #402758;
+
+    --distribution-bg: #e4ebf3;
+    --distribution-ink: #153b65;
+
+    --phase-mvp: #1a6b43;
+    --phase-mvp-soft: #dbe8e0;
+    --phase-v2: #8a6f2e;
+    --phase-v2-soft: #f1e8d0;
+    --phase-v3: #6e3a78;
+    --phase-v3-soft: #ede0ef;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    font-feature-settings: "ss01", "cv11", "cv02";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+  /* ── Topbar ─────────────────────────────── */
+  .topbar {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    background: rgba(245, 245, 244, 0.92);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .topbar-inner { display: flex; align-items: center; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand-mark {
+    width: 32px; height: 32px; border-radius: 6px;
+    background: var(--accent); color: var(--accent-ink);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700; letter-spacing: -0.02em; line-height: 1;
+  }
+  .brand-name { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+  .brand-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; font-weight: 500; color: var(--ink-3);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    padding-left: 14px; margin-left: 2px; border-left: 1px solid var(--line-2);
+  }
+  .topbar-nav { display: flex; gap: 28px; font-size: 13px; font-weight: 500; color: var(--ink-2); }
+  .topbar-nav a { text-decoration: none; color: inherit; transition: color 0.15s ease; }
+  .topbar-nav a:hover { color: var(--accent); }
+  .topbar-nav a.active { color: var(--accent); }
+
+  /* ── Hero ───────────────────────────────── */
+  .hero { padding: 80px 0 64px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-3); margin-bottom: 24px;
+  }
+  h1 {
+    font-size: clamp(36px, 5vw, 52px); font-weight: 700;
+    letter-spacing: -0.028em; line-height: 1.08;
+    margin-bottom: 24px; color: var(--ink); max-width: 880px;
+  }
+  h1 span { color: var(--accent); }
+  .lede {
+    font-size: clamp(17px, 1.8vw, 19px); font-weight: 400;
+    line-height: 1.55; color: var(--ink-2); max-width: 720px;
+    margin-bottom: 40px; letter-spacing: -0.005em;
+  }
+
+  /* ── Phase summary strip ─────────────────── */
+  .phase-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+  .phase-card {
+    padding: 20px 22px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--card);
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.18s ease, transform 0.18s ease;
+  }
+  .phase-card:hover { border-color: var(--line-2); transform: translateY(-1px); }
+  .phase-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .phase-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 4px 8px; border-radius: 3px;
+  }
+  .phase-tag.mvp { background: var(--phase-mvp-soft); color: var(--phase-mvp); }
+  .phase-tag.v2 { background: var(--phase-v2-soft); color: var(--phase-v2); }
+  .phase-tag.v3 { background: var(--phase-v3-soft); color: var(--phase-v3); }
+  .phase-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--ink-3); letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
+  }
+  .phase-title { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .phase-goal { font-size: 13px; color: var(--ink-3); line-height: 1.5; }
+
+  /* ── Legend ─────────────────────────────── */
+  .legend {
+    padding: 24px 0 0;
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+  }
+  .legend-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-3); margin-right: 8px;
+  }
+
+  /* ── Section head ───────────────────────── */
+  .section-head {
+    padding: 64px 0 24px;
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 24px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 24px;
+  }
+  .section-title-row { display: flex; align-items: center; gap: 14px; }
+  .section-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+  .section-goal {
+    font-size: 14px; color: var(--ink-3);
+    max-width: 560px; line-height: 1.5;
+    margin-top: 6px;
+  }
+  .section-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* ── Grid ───────────────────────────────── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 14px;
+    padding-bottom: 24px;
+  }
+
+  /* ── Card ───────────────────────────────── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 24px;
+    transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px -10px rgba(17, 17, 19, 0.12), 0 2px 6px -2px rgba(17, 17, 19, 0.04);
+    border-color: var(--line-2);
+  }
+
+  .card.wedge {
+    background: var(--wedge-bg);
+    color: var(--wedge-ink);
+    border-color: var(--wedge-bg);
+  }
+  .card.wedge .feature-name h3 { color: var(--wedge-ink); }
+  .card.wedge .feature-num { color: rgba(255, 255, 255, 0.5); border-right-color: rgba(255, 255, 255, 0.2); }
+  .card.wedge .feature-desc { color: rgba(255, 255, 255, 0.8); }
+  .card.wedge .meta-label { color: rgba(255, 255, 255, 0.5); }
+  .card.wedge .meta-value { color: rgba(255, 255, 255, 0.95); }
+  .card.wedge .meta { border-top-color: rgba(255, 255, 255, 0.15); }
+  .card.wedge .why { color: rgba(255, 255, 255, 0.7); border-top-color: rgba(255, 255, 255, 0.15); }
+
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+    gap: 10px;
+  }
+
+  .feature-name {
+    display: flex; align-items: center; gap: 10px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .feature-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; font-weight: 500;
+    color: var(--ink-4); letter-spacing: 0.06em;
+    padding-right: 10px;
+    border-right: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+
+  h3 {
+    font-size: 16px; font-weight: 700;
+    letter-spacing: -0.02em; line-height: 1.25;
+    color: var(--ink);
+  }
+
+  .classification {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 4px 7px; border-radius: 3px; white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .cls-wedge { background: var(--wedge-soft); color: var(--wedge-soft-ink); }
+  .card.wedge .cls-wedge { background: rgba(255, 255, 255, 0.15); color: var(--wedge-ink); }
+  .cls-stakes { background: var(--stakes-bg); color: var(--stakes-ink); }
+  .cls-retention { background: var(--retention-bg); color: var(--retention-ink); }
+  .cls-revenue { background: var(--revenue-bg); color: var(--revenue-ink); }
+  .cls-distribution { background: var(--distribution-bg); color: var(--distribution-ink); }
+
+  .feature-desc {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin-bottom: 16px;
+    letter-spacing: -0.003em;
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    margin-top: auto;
+  }
+  .meta > div { min-width: 0; }
+  .meta-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-3); margin-bottom: 4px;
+  }
+  .meta-value {
+    font-size: 12px; font-weight: 500;
+    color: var(--ink); line-height: 1.3;
+    letter-spacing: -0.003em;
+  }
+
+  .why {
+    font-size: 12.5px;
+    color: var(--ink-3);
+    line-height: 1.5;
+    padding-top: 12px;
+    margin-top: 14px;
+    border-top: 1px solid var(--line);
+    font-style: normal;
+    letter-spacing: -0.003em;
+  }
+  .why::before {
+    content: "Why: ";
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-4);
+    margin-right: 4px;
+  }
+  .card.wedge .why::before { color: rgba(255, 255, 255, 0.55); }
+
+  /* ── Footer ─────────────────────────────── */
+  footer {
+    background: var(--bg-2);
+    border-top: 1px solid var(--line);
+    padding: 56px 0 40px;
+    margin-top: 48px;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; }
+  .footer-brand { font-size: 18px; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 12px; }
+  .footer-text { font-size: 13.5px; color: var(--ink-3); line-height: 1.6; max-width: 480px; }
+  .footer-col h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-3); margin-bottom: 16px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; font-size: 13.5px; }
+  .footer-col a { color: var(--ink-2); text-decoration: none; transition: color 0.15s ease; font-weight: 500; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-meta {
+    margin-top: 40px; padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.06em;
+    color: var(--ink-3);
+    display: flex; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+
+  @media (max-width: 720px) {
+    .container { padding: 0 20px; }
+    .hero { padding: 48px 0 40px; }
+    .phase-summary { grid-template-columns: 1fr; }
+    .grid { grid-template-columns: 1fr; gap: 14px; }
+    .card { padding: 22px; }
+    .topbar-nav { display: none; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .meta { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media print {
+    body { background: white; }
+    .topbar, footer { display: none; }
+    .card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .hero { padding: 16px 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Topbar ─── -->
+<nav class="topbar">
+  <div class="container topbar-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">Q</span>
+      <span class="brand-name">QPay</span>
+      <span class="brand-tag">Feature Architecture</span>
+    </a>
+    <div class="topbar-nav">
+      <a href="competitors.html">Competitors</a>
+      <a href="features.html" class="active">Features</a>
+      <a href="#mvp">MVP</a>
+      <a href="#v2">V2</a>
+      <a href="#v3">V3</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── Hero ─── -->
+<section class="hero">
+  <div class="container">
+    <div class="eyebrow">035 Features · 36 Months · Staged Roadmap</div>
+    <h1>What <span>QPay</span> ships, and in what order.</h1>
+    <p class="lede">Thirty-five features across three phases. MVP proves the wedge for the first 500-2,000 UK Ltds. V2 closes adjacent gaps that force customers onto second tools. V3 thickens the platform into a full business operating layer.</p>
+
+    <div class="phase-summary">
+      <a href="#mvp" class="phase-card">
+        <div class="phase-head">
+          <span class="phase-tag mvp">MVP</span>
+          <span class="phase-count">16 features · months 0-12</span>
+        </div>
+        <div class="phase-title">Prove the wedge</div>
+        <div class="phase-goal">EMI account, director/shareholder flow, accountant-grade books, compliance calendar. Delivered through Q channel first.</div>
+      </a>
+      <a href="#v2" class="phase-card">
+        <div class="phase-head">
+          <span class="phase-tag v2">V2</span>
+          <span class="phase-count">10 features · months 13-24</span>
+        </div>
+        <div class="phase-title">Close adjacent gaps</div>
+        <div class="phase-goal">Payroll, CT600, FX, expense cards, resolution library. Reasons customers stop leaving for second tools.</div>
+      </a>
+      <a href="#v3" class="phase-card">
+        <div class="phase-head">
+          <span class="phase-tag v3">V3</span>
+          <span class="phase-count">9 features · months 25-36</span>
+        </div>
+        <div class="phase-title">Platform thickening</div>
+        <div class="phase-goal">Insurance, lending, API, automated filings, advisory. From "software that moves money well" to "the Ltd OS".</div>
+      </a>
+    </div>
+
+    <div class="legend">
+      <span class="legend-label">Classification</span>
+      <span class="classification cls-wedge">Wedge</span>
+      <span class="classification cls-stakes">Table-stakes</span>
+      <span class="classification cls-retention">Retention</span>
+      <span class="classification cls-revenue">Revenue</span>
+      <span class="classification cls-distribution">Distribution</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MVP ─── -->
+<section id="mvp" class="container">
+  <div class="section-head">
+    <div>
+      <div class="section-title-row">
+        <h2 class="section-title">MVP · Months 0-12</h2>
+        <span class="phase-tag mvp">16 features</span>
+      </div>
+      <p class="section-goal">Prove the hero positioning: director-dividend-shareholder flow. Q Accountants channel carries the first cohort. Every feature either is the wedge or is table-stakes without which we cannot credibly charge for the wedge.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <article class="card wedge">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">06</span>
+          <h3>Dividend payment workflow</h3>
+        </div>
+        <span class="classification cls-wedge">Hero wedge</span>
+      </div>
+      <div class="feature-desc">Reserves check → amount entry → shareholder split → board resolution draft → vouchers generated → multi-recipient payment → archive → Self Assessment data logged.</div>
+      <div class="why">No UK competitor ships this as an end-to-end flow. This is the product's reason to exist.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">XL</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build</div></div>
+        <div><div class="meta-label">Regulatory</div><div class="meta-value">Companies Act Pt 23</div></div>
+      </div>
+    </article>
+
+    <article class="card wedge">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">05</span>
+          <h3>Directors' personal accounts</h3>
+        </div>
+        <span class="classification cls-wedge">Wedge</span>
+      </div>
+      <div class="feature-desc">Each director of a QPay Ltd opens a linked GBP personal account with its own sort code and debit card. Separate KYC, separate ledger, unified view.</div>
+      <div class="why">Zero UK competitors offer this. Hosts both sides of the dividend transfer and consolidates the director's tax picture.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">M</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build on BaaS</div></div>
+        <div><div class="meta-label">Regulatory</div><div class="meta-value">EMI · personal KYC</div></div>
+      </div>
+    </article>
+
+    <article class="card wedge">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">07</span>
+          <h3>Cap table</h3>
+        </div>
+        <span class="classification cls-wedge">Wedge</span>
+      </div>
+      <div class="feature-desc">Shareholder register with share class, allotments, PSC flags. Two-way synced with Companies House so the private and public records never diverge.</div>
+      <div class="why">Source of truth for who owns what. Drives dividend allocation, PSC filings, confirmation statements.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">M</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build</div></div>
+        <div><div class="meta-label">Regulatory</div><div class="meta-value">CA 2006 registers</div></div>
+      </div>
+    </article>
+
+    <article class="card wedge">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">08</span>
+          <h3>Accountant-grade bookkeeping</h3>
+        </div>
+        <span class="classification cls-wedge">Wedge</span>
+      </div>
+      <div class="feature-desc">Chart of accounts, double-entry ledger, journal entries, accruals, depreciation, bank-feed-driven categorisation with AI plus override, reconciliation, trial balance, P&L, BS.</div>
+      <div class="why">Depth beyond Tide/ANNA. Books that a real UK accountant can close without exporting to Xero.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">XL</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build</div></div>
+        <div><div class="meta-label">Standard</div><div class="meta-value">FRS 102 1A · FRS 105</div></div>
+      </div>
+    </article>
+
+    <article class="card wedge">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">11</span>
+          <h3>Compliance calendar</h3>
+        </div>
+        <span class="classification cls-wedge">Wedge</span>
+      </div>
+      <div class="feature-desc">Every HMRC and Companies House deadline surfaced with status (draft/needs action/filed). One-click-from-calendar into the filing flow.</div>
+      <div class="why">Everyone else shows reminders. We surface actions that file things.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">M</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build</div></div>
+        <div><div class="meta-label">Integrations</div><div class="meta-value">HMRC · CH</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">14</span>
+          <h3>Accountant portal (light)</h3>
+        </div>
+        <span class="classification cls-distribution">Distribution</span>
+      </div>
+      <div class="feature-desc">Accountant invited to a Ltd, multi-client sidebar, read-only plus proposed adjustments and categorisations awaiting client approval.</div>
+      <div class="why">Q Accountants channel depends on it. Sets the foundation for the full multi-client portal in V3.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">M</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build</div></div>
+        <div><div class="meta-label">Permissions</div><div class="meta-value">Role-based</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">01</span>
+          <h3>EMI business account (GBP)</h3>
+        </div>
+        <span class="classification cls-stakes">Table-stakes</span>
+      </div>
+      <div class="feature-desc">GBP current account under QPay brand: sort code, account number, Faster Payments, BACS credits, Direct Debits both directions, standing orders.</div>
+      <div class="why">The anchor. BaaS at launch (Griffin or Modulr), direct EMI by month 18.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">XL</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Buy rails</div></div>
+        <div><div class="meta-label">Regulatory</div><div class="meta-value">FCA EMI · CASS 15</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">02</span>
+          <h3>Debit cards</h3>
+        </div>
+        <span class="classification cls-stakes">Table-stakes</span>
+      </div>
+      <div class="feature-desc">Mastercard or Visa debit, physical and virtual, Apple and Google Pay, 3DS2, SCA under PSD2.</div>
+      <div class="why">No card, no credibility. Team cards with controls move to V2.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Buy issuer</div></div>
+        <div><div class="meta-label">Partner</div><div class="meta-value">Marqeta · Enfuce</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">03</span>
+          <h3>Company formation</h3>
+        </div>
+        <span class="classification cls-wedge">Wedge</span>
+      </div>
+      <div class="feature-desc">Incorporate a UK Ltd in under 10 minutes: name check, SIC, share allocation, KYC, submission. Company number back within 24 hours.</div>
+      <div class="why">Only banking-first peer with formation is Tide. Owning the first 10 minutes of the customer's Ltd life matters.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build on CH API</div></div>
+        <div><div class="meta-label">Status</div><div class="meta-value">Authorised agent</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">04</span>
+          <h3>Registered office + mail</h3>
+        </div>
+        <span class="classification cls-stakes">Table-stakes</span>
+      </div>
+      <div class="feature-desc">Central London or regional address. All post scanned, forwarded, or archived. Included in the base plan.</div>
+      <div class="why">Founders don't want their flat on public record. Free with account removes objection.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">S</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Buy partner</div></div>
+        <div><div class="meta-label">Regulatory</div><div class="meta-value">GDPR on mail</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">09</span>
+          <h3>Invoicing</h3>
+        </div>
+        <span class="classification cls-stakes">Table-stakes</span>
+      </div>
+      <div class="feature-desc">Create, send, track invoices with UK VAT rates, customer database, Open Banking payment links, automated reminders, payment matching.</div>
+      <div class="why">Every account has it. We ship it at parity from day one.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build UX · buy OBP</div></div>
+        <div><div class="meta-label">Partner</div><div class="meta-value">TrueLayer · GoCardless</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">10</span>
+          <h3>Receipt capture</h3>
+        </div>
+        <span class="classification cls-stakes">Table-stakes</span>
+      </div>
+      <div class="feature-desc">Photograph or forward receipt, OCR extracts supplier/date/total/VAT, matches to a transaction, archives to document vault.</div>
+      <div class="why">MTD digital-links requirement. Also founder convenience.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">M</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Buy OCR</div></div>
+        <div><div class="meta-label">Partner</div><div class="meta-value">Klippa · Veryfi</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">12</span>
+          <h3>Document vault</h3>
+        </div>
+        <span class="classification cls-retention">Retention</span>
+      </div>
+      <div class="feature-desc">Every generated document (voucher, resolution, invoice, VAT receipt, CH certificate) stored, tagged, searchable. Share links with expiry.</div>
+      <div class="why">Switching cost compounds per document. 6-7 year retention per HMRC/CH.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">M</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build</div></div>
+        <div><div class="meta-label">Storage</div><div class="meta-value">S3 · KMS · audit log</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">13</span>
+          <h3>VAT registration + MTD filing</h3>
+        </div>
+        <span class="classification cls-stakes">Table-stakes</span>
+      </div>
+      <div class="feature-desc">VAT1 registration submission. Each return computed from books (9 boxes), reviewable drill-down, adjustments, MTD submission, receipt archived.</div>
+      <div class="why">Mandatory. HMRC-recognised software is non-negotiable; every competitor has it.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build</div></div>
+        <div><div class="meta-label">Regulatory</div><div class="meta-value">HMRC MTD-VAT</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">15</span>
+          <h3>Mobile apps (iOS + Android)</h3>
+        </div>
+        <span class="classification cls-stakes">Table-stakes</span>
+      </div>
+      <div class="feature-desc">Native mobile with feature parity on daily flows: payments, invoicing, receipts, dividend declaration, compliance calendar. Biometric auth.</div>
+      <div class="why">Mobile is the daily driver. Heavier workflows (chart of accounts, bulk recon) remain web-only.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">XL</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build native</div></div>
+        <div><div class="meta-label">Security</div><div class="meta-value">SCA · PSD2 · biometrics</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">16</span>
+          <h3>Web app</h3>
+        </div>
+        <span class="classification cls-stakes">Table-stakes</span>
+      </div>
+      <div class="feature-desc">Web portal for heavier workflows: accountant portal entry, bookkeeping review, journals, year-end adjustments. Multi-column layouts.</div>
+      <div class="why">The place accountants work. Mobile is for moving money; web is for closing the books.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">XL</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build</div></div>
+        <div><div class="meta-label">Stack</div><div class="meta-value">React · design tokens</div></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ─── V2 ─── -->
+<section id="v2" class="container">
+  <div class="section-head">
+    <div>
+      <div class="section-title-row">
+        <h2 class="section-title">V2 · Months 13-24</h2>
+        <span class="phase-tag v2">10 features</span>
+      </div>
+      <p class="section-goal">Retention and expansion. Close the adjacent gaps that cause customers to add second tools (payroll, CT, FX, expense controls). Make the accountant portal the reason accountants insist on us.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">17</span>
+          <h3>Payroll + RTI</h3>
+        </div>
+        <span class="classification cls-wedge">Wedge-adjacent</span>
+      </div>
+      <div class="feature-desc">Monthly pay runs for directors and employees, RTI submission to HMRC, payslips, P60 year-end, pension auto-enrolment compliance.</div>
+      <div class="why">Closes the gap that pushes customers onto BrightPay. Director salary + dividend planned together in one view.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">XL</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build · partner pensions</div></div>
+        <div><div class="meta-label">Regulatory</div><div class="meta-value">HMRC RTI · NMW · AE</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">18</span>
+          <h3>Expense cards with controls</h3>
+        </div>
+        <span class="classification cls-retention">Retention</span>
+      </div>
+      <div class="feature-desc">Employee and director cards with spending limits, MCC restrictions, approval workflows. Receipt capture triggered on spend.</div>
+      <div class="why">Owner-managed Ltds with 3+ staff (Persona 3) won't switch from Pleo or Amex without this.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build on issuer API</div></div>
+        <div><div class="meta-label">Partner</div><div class="meta-value">Marqeta policy engine</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">19</span>
+          <h3>CT600 preparation (draft)</h3>
+        </div>
+        <span class="classification cls-retention">Retention</span>
+      </div>
+      <div class="feature-desc">Draft Corporation Tax return generated from books. Reviewable by director or accountant. iXBRL export; submission automated in V3.</div>
+      <div class="why">Every Ltd does a CT600. Preparing it in-product is the single biggest reason to retain the relationship past year one.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">XL</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build · buy iXBRL lib</div></div>
+        <div><div class="meta-label">Standard</div><div class="meta-value">CTSA · iXBRL</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">20</span>
+          <h3>Advanced invoicing</h3>
+        </div>
+        <span class="classification cls-retention">Retention</span>
+      </div>
+      <div class="feature-desc">Recurring invoices, payment links, GoCardless Direct Debit, quotes-to-invoices, late fees, credit notes.</div>
+      <div class="why">Agencies and consultancies (Persona 3) need recurring. Without it they stay on GoCardless standalone.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">M</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build on MVP invoicing</div></div>
+        <div><div class="meta-label">Partner</div><div class="meta-value">GoCardless DD</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">21</span>
+          <h3>FX + multicurrency</h3>
+        </div>
+        <span class="classification cls-stakes">Table-stakes</span>
+      </div>
+      <div class="feature-desc">Hold EUR + USD, FX at interbank + margin, SEPA + SWIFT in and out, multi-currency ledger under one CoA.</div>
+      <div class="why">Scale-up cohort has international suppliers. Revolut wins here today; we close the gap before they cross £500K turnover.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Buy rails · build UX</div></div>
+        <div><div class="meta-label">Partner</div><div class="meta-value">Currencycloud</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">22</span>
+          <h3>External integrations</h3>
+        </div>
+        <span class="classification cls-retention">Retention</span>
+      </div>
+      <div class="feature-desc">Exports to Xero/QuickBooks/Sage/FreeAgent. Ingestion from Shopify, Stripe, PayPal, Amazon Seller Central.</div>
+      <div class="why">Ecommerce Ltds have bespoke stacks. Without connectors they can't switch.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build · or buy platform</div></div>
+        <div><div class="meta-label">Partner</div><div class="meta-value">Codat · Merge.dev</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">23</span>
+          <h3>Board resolution library</h3>
+        </div>
+        <span class="classification cls-wedge">Wedge-extension</span>
+      </div>
+      <div class="feature-desc">Templates for every statutory resolution: director appointment, resignation, change of name, registered office, share allotment, buyback, loan to director.</div>
+      <div class="why">Extends the hero wedge beyond dividends. Board resolutions today are Word templates or nothing.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build · buy e-sign</div></div>
+        <div><div class="meta-label">Partner</div><div class="meta-value">DocuSign · Dropbox Sign</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">24</span>
+          <h3>Shareholders agreement (template)</h3>
+        </div>
+        <span class="classification cls-wedge">Wedge-extension</span>
+      </div>
+      <div class="feature-desc">Wizard-driven shareholders agreement for multi-founder Ltds. Reserved matters, pre-emption, drag/tag. Simpler and cheaper than SeedLegals for non-round contexts.</div>
+      <div class="why">SeedLegals is round-priced. We serve the gap for early Ltds that just need a sensible founder pact.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">M</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build · optional legal review</div></div>
+        <div><div class="meta-label">Signing</div><div class="meta-value">E-signature</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">25</span>
+          <h3>VAT schemes (Flat Rate, Cash, Annual)</h3>
+        </div>
+        <span class="classification cls-retention">Retention</span>
+      </div>
+      <div class="feature-desc">Full VAT scheme support beyond standard quarterly. Flat Rate Scheme, Cash Accounting, Annual Accounting. Scheme-switching flow.</div>
+      <div class="why">Contractors and micro-Ltds often prefer FRS. Without it, we lose the contractor niche to ANNA and FreeAgent.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">M</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build</div></div>
+        <div><div class="meta-label">Regulatory</div><div class="meta-value">VAT Act 1994</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">26</span>
+          <h3>P11D + PAYE calendar</h3>
+        </div>
+        <span class="classification cls-retention">Retention</span>
+      </div>
+      <div class="feature-desc">Director benefits tracked real-time (car, medical, loans to director), P11D filed at year-end, PAYE monthly deadlines, pension triggers.</div>
+      <div class="why">P11D is year-end scramble everywhere. Tracking it live is a genuine differentiator.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">M</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build</div></div>
+        <div><div class="meta-label">Regulatory</div><div class="meta-value">HMRC P11D · PAYE</div></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ─── V3 ─── -->
+<section id="v3" class="container">
+  <div class="section-head">
+    <div>
+      <div class="section-title-row">
+        <h2 class="section-title">V3 · Months 25-36</h2>
+        <span class="phase-tag v3">9 features</span>
+      </div>
+      <p class="section-goal">Platform thickening. Move from "software that moves money well" to "the operating layer of the UK Ltd". Expand revenue via cross-sell. Regulatory uplift where needed.</p>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">27</span>
+          <h3>Insurance marketplace</h3>
+        </div>
+        <span class="classification cls-revenue">Revenue</span>
+      </div>
+      <div class="feature-desc">Curated marketplace for D&O, professional indemnity, cyber, public liability. Quote via partner, purchase, policy archived.</div>
+      <div class="why">Directors don't shop for insurance; we surface it at the right moment (formation, hiring, VAT reg). Commission revenue.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Partner distribution</div></div>
+        <div><div class="meta-label">Regulatory</div><div class="meta-value">FCA IDD · or introducer</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">28</span>
+          <h3>Lending (broker)</h3>
+        </div>
+        <span class="classification cls-revenue">Revenue</span>
+      </div>
+      <div class="feature-desc">Overdraft, working-capital line, invoice finance via lending partners. Originated lending considered year 4+.</div>
+      <div class="why">Cashflow is the #1 founder pain. Brokering lets us monetise without the balance-sheet complexity at first.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">XL</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Buy lending · build UX</div></div>
+        <div><div class="meta-label">Regulatory</div><div class="meta-value">FCA credit broking · CCA</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">29</span>
+          <h3>International payments optimisation</h3>
+        </div>
+        <span class="classification cls-retention">Retention</span>
+      </div>
+      <div class="feature-desc">Local payment rails in major corridors beyond SWIFT. Better pricing at volume. API for automated outbound.</div>
+      <div class="why">Scale-up customers outgrow V2 FX. Without this, they migrate to Wise or Airwallex.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Partner per corridor</div></div>
+        <div><div class="meta-label">Partner</div><div class="meta-value">Local rail providers</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">30</span>
+          <h3>Public API</h3>
+        </div>
+        <span class="classification cls-distribution">Distribution</span>
+      </div>
+      <div class="feature-desc">OAuth-based read-write API for accountants, ERPs, and ecosystem partners. Webhooks, sandbox, documented endpoints.</div>
+      <div class="why">Unlocks accountant-tech-stack integrations. Some accountants have bespoke workflows that need APIs.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build</div></div>
+        <div><div class="meta-label">Standard</div><div class="meta-value">OAuth 2.0 · OpenAPI</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">31</span>
+          <h3>Multi-company accountant dashboard</h3>
+        </div>
+        <span class="classification cls-distribution">Distribution</span>
+      </div>
+      <div class="feature-desc">Q (or any firm) sees all clients in one pane. Aggregated deadlines, risk flags, one-click client dive. Cross-client bulk actions.</div>
+      <div class="why">Scales Q from first partner to repeatable channel model. 50 firms by year 3.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build on MVP portal</div></div>
+        <div><div class="meta-label">Target</div><div class="meta-value">50+ accountancy firms</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">32</span>
+          <h3>Year-end statutory accounts draft</h3>
+        </div>
+        <span class="classification cls-retention">Retention</span>
+      </div>
+      <div class="feature-desc">FRS 102 1A or FRS 105 compliant draft statutory accounts from bookkeeping data. Reviewable, iXBRL output, filing-ready.</div>
+      <div class="why">Closes the year-end-with-outsourced-accountant gap. Accountants do 3 hours of adjustment instead of 15 hours of rebuild.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">XL</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build · buy iXBRL</div></div>
+        <div><div class="meta-label">Standard</div><div class="meta-value">CA 2006 small-co regime</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">33</span>
+          <h3>Corporation Tax filing (automated)</h3>
+        </div>
+        <span class="classification cls-retention">Retention</span>
+      </div>
+      <div class="feature-desc">Submit the V2-prepared CT600 directly to HMRC CT API. iXBRL-tagged, receipt archived.</div>
+      <div class="why">CT filing is still paper- or agent-heavy everywhere. Automated submission is a genuine competitive moat.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build on V2</div></div>
+        <div><div class="meta-label">Regulatory</div><div class="meta-value">HMRC CT recognition</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">34</span>
+          <h3>Companies House filings (full)</h3>
+        </div>
+        <span class="classification cls-retention">Retention</span>
+      </div>
+      <div class="feature-desc">Beyond formation and confirmation: PSC changes, director appointments, share allotments, articles amendments, automated from cap-table state.</div>
+      <div class="why">Every Ltd does these events; SeedLegals charges round-based; we charge subscription.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build on CH API</div></div>
+        <div><div class="meta-label">Status</div><div class="meta-value">Authorised agent</div></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-head">
+        <div class="feature-name">
+          <span class="feature-num">35</span>
+          <h3>Advisory + tax planning</h3>
+        </div>
+        <span class="classification cls-retention">Retention</span>
+      </div>
+      <div class="feature-desc">Real-data prompts: "save £X CT by bringing forward this expense", "optimal dividend vs salary mix", "EMI option scheme signposting".</div>
+      <div class="why">Only possible at year 3 when we have clean longitudinal data. Closes the "I need an accountant for advice" reason to leave.</div>
+      <div class="meta">
+        <div><div class="meta-label">Effort</div><div class="meta-value">L</div></div>
+        <div><div class="meta-label">Build/Buy</div><div class="meta-value">Build rules + ML</div></div>
+        <div><div class="meta-label">Framing</div><div class="meta-value">Guidance, not advice</div></div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ─── Footer ─── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">QPay</div>
+        <p class="footer-text">Feature architecture current April 2026. Classifications map against the strategy outlined in the competitive-advantage document: wedge features build moat, table-stakes buy credibility, retention drives LTV, revenue monetises, distribution compounds channel.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Strategy docs</h4>
+        <ul>
+          <li><a href="00-executive-summary.md">Executive summary</a></li>
+          <li><a href="01-competitive-analysis.md">Competitive analysis</a></li>
+          <li><a href="02-positioning.md">Positioning</a></li>
+          <li><a href="03-feature-architecture.md">Feature architecture (full)</a></li>
+          <li><a href="04-screen-plan.md">Screen plan</a></li>
+          <li><a href="05-competitive-advantage.md">Competitive advantage</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="competitors.html">Competitors</a></li>
+          <li><a href="features.html">Features</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span>QPay · Feature Architecture · v1</span>
+      <span>Last updated 18 April 2026</span>
+      <span>Internal · do not distribute</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
