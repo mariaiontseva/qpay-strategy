@@ -54,7 +54,7 @@
 
   /* ── Topbar ─────────────────────────────────── */
   .topbar {
-    padding: 20px 0;
+    padding: 18px 0;
     border-bottom: 1px solid var(--line);
     background: rgba(245, 245, 244, 0.92);
     backdrop-filter: blur(10px);
@@ -62,70 +62,42 @@
     top: 0;
     z-index: 10;
   }
-
-  .topbar-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: var(--ink);
-  }
-
+  .topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); flex-shrink: 0; }
   .brand-mark {
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    background: var(--accent);
-    color: var(--accent-ink);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1;
+    width: 32px; height: 32px; border-radius: 6px;
+    background: var(--accent); color: var(--accent-ink);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700; letter-spacing: -0.02em; line-height: 1;
   }
-
-  .brand-name {
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1;
+  .brand-name { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; line-height: 1; }
+  .tabs {
+    display: inline-flex;
+    gap: 4px;
+    padding: 4px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
   }
-
-  .brand-tag {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--ink-3);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding-left: 14px;
-    margin-left: 2px;
-    border-left: 1px solid var(--line-2);
-  }
-
-  .topbar-nav {
-    display: flex;
-    gap: 28px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-2);
-  }
-
-  .topbar-nav a {
+  .tab {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 14px;
+    border-radius: 5px;
     text-decoration: none;
-    color: inherit;
-    transition: color 0.15s ease;
+    color: var(--ink-2);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    transition: background 0.15s ease, color 0.15s ease;
   }
-
-  .topbar-nav a:hover { color: var(--accent); }
+  .tab:hover { color: var(--ink); }
+  .tab.active { background: var(--card); color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+  .tab-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    color: var(--ink-4); letter-spacing: 0.06em;
+  }
+  .tab.active .tab-num { color: var(--ink-3); }
 
   /* ── Hero ───────────────────────────────────── */
   .hero {
@@ -549,15 +521,14 @@
 <!-- ─── Topbar ─── -->
 <nav class="topbar">
   <div class="container topbar-inner">
-    <a href="#" class="brand">
+    <a href="./" class="brand">
       <span class="brand-mark">Q</span>
       <span class="brand-name">QPay</span>
-      <span class="brand-tag">Competitive Intel</span>
     </a>
-    <div class="topbar-nav">
-      <a href="#banking">Banking-first</a>
-      <a href="#accounting">Accounting-first</a>
-      <a href="#hybrid">Hybrid</a>
+    <div class="tabs">
+      <a href="competitors.html" class="tab active"><span class="tab-num">01</span>Competitors</a>
+      <a href="features.html" class="tab"><span class="tab-num">02</span>Features</a>
+      <a href="mockup.html" class="tab"><span class="tab-num">03</span>Mockup</a>
     </div>
   </div>
 </nav>
