@@ -100,6 +100,14 @@
   .strat h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 12px; color: #fff; }
   .strat p { font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,0.82); margin-bottom: 10px; }
   .strat p strong { color: #fff; }
+  .strat-timeline { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 18px; align-items: stretch; margin-top: 18px; }
+  @media (max-width: 820px) { .strat-timeline { grid-template-columns: 1fr; gap: 12px; } .strat-stop-arrow { display: none; } }
+  .strat-stop { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+  .strat-stop-label { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.62); }
+  .strat-stop-title { font-size: 16px; font-weight: 700; color: #fff; letter-spacing: -0.012em; }
+  .strat-stop-body { font-size: 13px; line-height: 1.55; color: rgba(255,255,255,0.82); }
+  .strat-stop-body strong { color: #fff; }
+  .strat-stop-arrow { font-size: 22px; color: rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; }
 
   /* IN01 anatomy */
   .in01-list { display: grid; grid-template-columns: 1fr; gap: 12px; }
@@ -219,6 +227,18 @@
   .dec-verdict.yes { background: var(--good-soft); color: var(--good); }
   .dec-verdict.no { background: var(--warn-soft); color: var(--warn); }
   .dec-verdict.later { background: var(--neutral-soft); color: var(--ink-3); }
+
+  /* Decision schema — light timeline inside a dec-row */
+  .dec-schema { grid-column: 1 / -1; margin-top: 14px; padding-top: 16px; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  @media (max-width: 820px) { .dec-schema { grid-template-columns: 1fr; } }
+  .dec-step { position: relative; background: var(--bg-2); border: 1px solid var(--line); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+  .dec-step-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  .dec-step-when { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink-3); letter-spacing: 0.04em; }
+  .dec-step-title { font-size: 13px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+  .dec-step-body { font-size: 11.5px; color: var(--ink-2); line-height: 1.5; }
+  .dec-notes { grid-column: 1 / -1; display: flex; gap: 16px; flex-wrap: wrap; margin-top: 4px; padding-top: 10px; }
+  .dec-note { font-size: 11.5px; color: var(--ink-3); display: flex; align-items: flex-start; gap: 6px; line-height: 1.5; flex: 1; min-width: 180px; }
+  .dec-note::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 6px; flex-shrink: 0; }
 
   /* Footer */
   footer { padding: 48px 0 40px; background: var(--accent); color: #fff; }
@@ -350,12 +370,31 @@
     </div>
 
     <div class="strat">
-      <div class="strat-eyebrow">Strategic decision · independent of EMI timeline</div>
-      <h3>MVP ships today as a presenter. ACSP status comes via HMRC TCSP registration in parallel — 3–6 months, not 12–18. No need to wait for EMI.</h3>
-      <p><strong>Two paths, two timelines.</strong> At MVP we file IN01 as a standard XML Gateway presenter; each director / PSC brings their own personal code from GOV.UK One Login. This requires only a Presenter ID and a pre-funded Credit Account — both obtainable by email within days, zero regulatory gate. <em>We can ship formation the moment the product is built.</em></p>
-      <p><strong>ACSP is a parallel track, not a blocker.</strong> To verify identities ourselves (higher conversion, no bounce to gov.uk), we need AML supervision. The fastest path: register as a <strong>Trust &amp; Company Service Provider with HMRC</strong> (MLRs 2017) — £300 per premises + £40 per responsible person, 3–6 months approval. This is how every UK formation agent (1st Formations, Osome, CFS, Rapid) is already AML-supervised. EMI / FCA supervision would also work but takes 12–18 months and is unnecessary for this purpose.</p>
-      <p><strong>And we'll need ACSP anyway.</strong> From spring 2026 Companies House is making ACSP status a hard requirement for filing on behalf of third parties; from no earlier than November 2026, no ACSP = no third-party filings. Starting the HMRC TCSP application now gets us inside that window comfortably.</p>
-      <p><strong>Sequence:</strong> Day&nbsp;1 — submit HMRC TCSP application + ship formation MVP as presenter with One Login fallback. Month&nbsp;4–6 — TCSP approved → ACSP registration completes within weeks → migrate user flow to in-app verification. Month&nbsp;12–18 — EMI authorisation lands → business-account KYC collapses into same identity capture.</p>
+      <div class="strat-eyebrow">Strategic decision · timeline</div>
+      <h3>Ship formation now. Register as ACSP via HMRC in 3–6 months. EMI is not on the critical path.</h3>
+      <p style="margin-bottom: 22px;">Formation does not need FCA. It needs AML supervision — and HMRC's <strong>Trust &amp; Company Service Provider</strong> route delivers it in 3–6 months, four times faster than EMI. That's the same route every UK formation agent already uses (1st&nbsp;Formations, Osome, CFS, Rapid).</p>
+
+      <div class="strat-timeline">
+        <div class="strat-stop">
+          <div class="strat-stop-label">Day 1</div>
+          <div class="strat-stop-title">Ship the MVP</div>
+          <div class="strat-stop-body">File as <strong>XML Gateway presenter</strong>. Users verify on GOV.UK One Login and come back with a personal code. Only a Presenter ID + Credit Account, obtainable by email in days.</div>
+        </div>
+        <div class="strat-stop-arrow">→</div>
+        <div class="strat-stop">
+          <div class="strat-stop-label">Month 4–6</div>
+          <div class="strat-stop-title">Turn on ACSP</div>
+          <div class="strat-stop-body">HMRC TCSP registration approved (<strong>£300 per premises + £40 per person</strong>). We become ACSP and verify ID inside QPay — no gov.uk bounce.</div>
+        </div>
+        <div class="strat-stop-arrow">→</div>
+        <div class="strat-stop">
+          <div class="strat-stop-label">Month 12–18</div>
+          <div class="strat-stop-title">Fuse with EMI</div>
+          <div class="strat-stop-body">EMI authorisation lands. <strong>Bank-account KYC collapses into the same identity capture</strong> we already run for formation.</div>
+        </div>
+      </div>
+
+      <p style="margin-top: 20px; margin-bottom: 0; font-size: 13px; color: rgba(255,255,255,0.6);">ACSP becomes mandatory for third-party filings no earlier than November 2026. Starting the HMRC TCSP application on Day 1 keeps us comfortably inside that window.</p>
     </div>
   </div>
 </section>
@@ -366,26 +405,26 @@
     <div class="section-head">
       <div>
         <div class="section-eyebrow">ECCTA · identity verification</div>
-        <h2 class="section-title">Every director and PSC must already be verified before the IN01 hits the XML Gateway.</h2>
-        <p class="section-sub">The Economic Crime and Corporate Transparency Act 2023 brought identity verification into force on <strong>18 November 2025</strong>. For new incorporations the rule is absolute: an individual director cannot be appointed, and an individual PSC cannot be named, unless their 11-character Companies House personal code is already issued and included in Parts D5 / I5 of the form. This is a blocking dependency for our flow — we must verify <em>before</em> we submit.</p>
+        <h2 class="section-title">No personal code, no IN01.</h2>
+        <p class="section-sub">Since <strong>18 November 2025</strong>, every individual director and every &gt;25% PSC needs an 11-character Companies House personal code before their name can appear on the form. Verify first, file second — no exceptions.</p>
       </div>
     </div>
     <div class="api-grid">
       <div class="api-card">
-        <div class="api-title">Path A · GOV.UK One Login (free, default)</div>
-        <div class="api-body">User taps "Verify my identity" in QPay → deep link into One Login → provides passport / driving licence + facial check → returns to QPay with 11-char personal code. Time: 5–15 min typical. Failure rate: non-trivial for older passports, foreign passports, proof-of-address edge cases.</div>
+        <div class="api-title">Path A · GOV.UK One Login</div>
+        <div class="api-body">Free, default at MVP. User bounces to gov.uk, scans passport + selfie, returns with the code. 5–15 min when it works; fails on older or foreign passports.</div>
       </div>
       <div class="api-card">
-        <div class="api-title">Path B · QPay as ACSP (mandatory by late 2026)</div>
-        <div class="api-body">Same passport + liveness check, but performed inside QPay using our KYC vendor. We issue the personal code directly. User never leaves the app. Unlocked by HMRC TCSP registration + ACSP application — 3–6 months total, runs in parallel with MVP. Not dependent on EMI authorisation.</div>
+        <div class="api-title">Path B · QPay as ACSP</div>
+        <div class="api-body">Same passport + selfie, but inside QPay. We issue the code directly. Unlocked after HMRC TCSP registration (3–6 months) — no EMI needed.</div>
       </div>
       <div class="api-card">
         <div class="api-title">Who needs a code</div>
-        <div class="api-body">(a) Every individual <strong>director</strong> being appointed on incorporation. (b) Every individual <strong>PSC</strong> with &gt;25% shares, &gt;25% voting rights, right to appoint/remove directors, or significant influence. (c) Subscribers who aren't directors/PSCs don't need a code for incorporation itself, but will if they later become PSCs.</div>
+        <div class="api-body">Every individual <strong>director</strong> named on the form, and every individual <strong>PSC</strong> (&gt;25% shares, &gt;25% voting, or controls the board). Shareholders who aren't PSCs don't need one.</div>
       </div>
       <div class="api-card">
-        <div class="api-title">Code mechanics</div>
-        <div class="api-body">One-off verification per person, reusable for life across all their UK appointments. Format: <span style="font-family: 'IBM Plex Mono', monospace;">XXX/XXXX/XXXX</span>. Stored in the IN01's D5 (director) and I5 (PSC) sections. Not public — name match check at D6/I6 is also non-statutory. Existing directors & PSCs of other companies who already have a code just enter it.</div>
+        <div class="api-title">The code itself</div>
+        <div class="api-body">Format <span style="font-family: 'IBM Plex Mono', monospace;">XXX/XXXX/XXXX</span>. One per person, for life, across every UK company. Goes into IN01 parts D5 (director) and I5 (PSC). Not public.</div>
       </div>
     </div>
   </div>
@@ -632,22 +671,65 @@
       <div>
         <div class="section-eyebrow">Path A · ship today · XML Gateway + GOV.UK One Login</div>
         <h2 class="section-title">MVP flow: user brings their own personal code from One Login, we submit IN01 as a standard presenter.</h2>
-        <p class="section-sub">The path we build first. No regulatory gate — a Presenter ID + Credit Account obtained from Companies House in days; identity verification handled by GOV.UK One Login outside the app, the user returns with an 11-character personal code that we capture and include in the XML. Every screen below is MVP scope; the director-invitation chain (screens A-16 through A-19) shows the co-founder's handset, not the primary user's.</p>
+        <p class="section-sub">The path we build first. No regulatory gate — a Presenter ID + Credit Account obtained from Companies House in days; identity verification handled by GOV.UK One Login outside the app, the user returns with an 11-character personal code that we capture and include in the XML. Every screen below is MVP scope; the director-invitation chain (screens A-18 through A-21) shows the co-founder's handset, not the primary user's.</p>
       </div>
       <span class="section-count">07 phases · 30 screens</span>
     </div>
 
     <!-- Legend: clickable vs read-only -->
-    <div class="flow-legend">
-      <div class="flow-legend-item"><span class="flow-legend-swatch cta"></span><span>Primary button — tap to continue</span></div>
-      <div class="flow-legend-item"><span class="flow-legend-swatch option"></span><span>Selected option — radio / checkbox</span></div>
-      <div class="flow-legend-item"><span class="flow-legend-swatch field"></span><span>Tappable field — edit inline</span></div>
-      <div class="flow-legend-item"><span class="flow-legend-swatch info">✓</span><span>Read-only list — not tappable</span></div>
-    </div>
 
     <!-- 22-screen horizontal flow -->
     <div class="phones-flow-wrap">
       <div class="phones-flow">
+
+        <div class="phases-divider">
+          <div class="num">00 · Phase</div>
+          <div class="title">Sign-up</div>
+          <div class="meta">2 screens</div>
+        </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-screen" style="justify-content: space-between;">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <div style="width: 42px; height: 42px; border-radius: 10px; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700;">Q</div>
+              <h3>The business account that forms your company.</h3>
+              <div class="sub">30 seconds to sign up. The full KYC + ID verification happens later, when we need it.</div>
+              <div class="phone-field selected"><span class="lbl">Email</span><span class="val">john.donn@example.com</span></div>
+              <div class="phone-field"><span class="lbl">Phone</span><span class="val" style="color: var(--ink-3); font-weight: 400;">+44 · mobile number</span></div>
+              <div class="phone-field"><span class="lbl">Name</span><span class="val" style="color: var(--ink-3); font-weight: 400;">First and last</span></div>
+              <div style="font-size: 10.5px; color: var(--ink-3); line-height: 1.4; margin-top: 4px;">By continuing you agree to QPay's Terms and Privacy Policy.</div>
+            </div>
+            <div class="phone-cta">Continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">A-01</div>
+          <div class="phone-caption-name">Sign up for QPay</div>
+          <div class="phone-caption-note">The very first screen. No ID capture yet — we only need email, phone, and a name to open an account shell.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-title">What do you want to do?</div>
+            <div class="phone-crumb">Pick one — you can change later</div>
+          </div>
+          <div class="phone-screen">
+            <div class="phone-option sel"><div><div style="font-weight: 600; color: var(--ink);">Form a new Ltd company</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">10 min · £0 · certificate + business account in one flow</div></div><span class="check"></span></div>
+            <div class="phone-option"><div><div>I already have a Ltd — open an account</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">We'll pull your details from Companies House</div></div><span class="check"></span></div>
+            <div class="phone-cta">Continue — form a Ltd</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">A-02</div>
+          <div class="phone-caption-name">Pick your path</div>
+          <div class="phone-caption-note">Single fork that decides the rest of onboarding. Formation goes into the flow below; the other options run their own onboarding.</div>
+        </div>
+      </div>
 
         <div class="phases-divider">
           <div class="num">01 · Phase</div>
@@ -675,7 +757,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-01</div>
+          <div class="phone-caption-id">A-03</div>
           <div class="phone-caption-name">Welcome &amp; pre-flight</div>
           <div class="phone-caption-note">One-line promise. Four proof points. Free-formation hook above the fold.</div>
         </div>
@@ -693,7 +775,7 @@
           <div class="phone-screen">
             <div class="sub">Add co-directors and shareholders now. They'll each get an invite to verify their ID in QPay before we file.</div>
             <div style="display: flex; flex-direction: column; gap: 8px;">
-              <div class="phone-list-item"><span class="name">Maria Ivanova (you)</span><span class="status ok">Owner</span></div>
+              <div class="phone-list-item"><span class="name">John Donn (you)</span><span class="status ok">Owner</span></div>
               <div class="phone-list-item"><span class="name">+ Add co-founder</span><span style="color: var(--accent); font-size: 11px;">by email</span></div>
             </div>
             <div class="phone-note">Most new Ltds are 1–2 directors. You can add more later but it's easier to list everyone upfront.</div>
@@ -701,7 +783,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-02</div>
+          <div class="phone-caption-id">A-04</div>
           <div class="phone-caption-name">Invite co-founders</div>
           <div class="phone-caption-note">Sets up parallel ID verification — each person runs their own in their own app.</div>
         </div>
@@ -724,7 +806,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-03</div>
+          <div class="phone-caption-id">A-05</div>
           <div class="phone-caption-name">ID verification path</div>
           <div class="phone-caption-note">MVP: One Login only. No ACSP option visible yet.</div>
         </div>
@@ -748,7 +830,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-04</div>
+          <div class="phone-caption-id">A-06</div>
           <div class="phone-caption-name">Bouncing to gov.uk</div>
           <div class="phone-caption-note">Full-screen transition with deep link. Clear handover moment.</div>
         </div>
@@ -771,9 +853,9 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-05</div>
+          <div class="phone-caption-id">A-07</div>
           <div class="phone-caption-name">On gov.uk · passport capture</div>
-          <div class="phone-caption-note">Outside QPay. Shown here so team knows what users experience between A-04 and A-07.</div>
+          <div class="phone-caption-note">Outside QPay. Shown here so team knows what users experience between A-06 and A-09.</div>
         </div>
       </div>
 
@@ -794,7 +876,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-06</div>
+          <div class="phone-caption-id">A-08</div>
           <div class="phone-caption-name">On gov.uk · liveness check</div>
           <div class="phone-caption-note">Liveness / selfie. Also outside QPay.</div>
         </div>
@@ -815,7 +897,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-07</div>
+          <div class="phone-caption-id">A-09</div>
           <div class="phone-caption-name">Return with code</div>
           <div class="phone-caption-note">Auto-captured via deep link callback. User doesn't type the code manually.</div>
         </div>
@@ -846,7 +928,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-08</div>
+          <div class="phone-caption-id">A-10</div>
           <div class="phone-caption-name">Name check (live)</div>
           <div class="phone-caption-note">Public Data API queries on every keystroke. Trademark overlay a differentiator.</div>
         </div>
@@ -864,13 +946,11 @@
           <div class="phone-screen">
             <div class="phone-option sel"><div><div style="font-weight: 600; color: var(--ink);">Private limited by shares</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">99% of UK Ltds. Dividends, shareholders, cap table.</div></div><span class="check"></span></div>
             <div class="phone-option"><div><div>Private limited by guarantee</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Non-profits, clubs, charities.</div></div><span class="check"></span></div>
-            <div class="phone-option"><div><div style="color: var(--ink-4);">Public limited by shares</div><div style="font-size: 11px; color: var(--ink-4); margin-top: 2px;">Listed companies. Requires £50k paid-up capital.</div></div><span class="check"></span></div>
-            <div class="phone-option"><div><div style="color: var(--ink-4);">Private unlimited (with / without share capital)</div><div style="font-size: 11px; color: var(--ink-4); margin-top: 2px;">Rare.</div></div><span class="check"></span></div>
             <div class="phone-cta">Continue</div>
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-09</div>
+          <div class="phone-caption-id">A-11</div>
           <div class="phone-caption-name">Company type</div>
           <div class="phone-caption-note">Default pre-selected. PLC / unlimited greyed at MVP — only visible for awareness.</div>
         </div>
@@ -897,7 +977,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-10</div>
+          <div class="phone-caption-id">A-12</div>
           <div class="phone-caption-name">SIC code picker</div>
           <div class="phone-caption-note">Natural-language search. AI maps "I build iOS apps" → 62012. Multi-select up to 4.</div>
         </div>
@@ -916,12 +996,12 @@
             <div class="sub">Companies House sends legal mail here. It's public — don't use your home unless you don't mind that.</div>
             <div class="phone-option sel"><div><div style="font-weight: 600; color: var(--ink);">Use QPay's London address</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Mail scanned to you · £0 · included</div></div><span class="check"></span></div>
             <div class="phone-option"><div><div>My own address</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Jurisdiction: E&amp;W / Wales / Scotland / NI</div></div><span class="check"></span></div>
-            <div class="phone-field"><span class="lbl">Registered email (private)</span><span class="val">maria@mitocholine.com</span></div>
+            <div class="phone-field"><span class="lbl">Registered email (private)</span><span class="val">john.donn@example.com</span></div>
             <div class="phone-cta">Continue</div>
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-11</div>
+          <div class="phone-caption-id">A-13</div>
           <div class="phone-caption-name">Registered office + email</div>
           <div class="phone-caption-note">QPay virtual office is the default — keeps user's home off the public register.</div>
         </div>
@@ -946,7 +1026,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-12</div>
+          <div class="phone-caption-id">A-14</div>
           <div class="phone-caption-name">Articles choice</div>
           <div class="phone-caption-note">Model Articles at MVP. Bespoke routes through Q Accountants.</div>
         </div>
@@ -970,7 +1050,7 @@
           <div class="phone-screen">
             <div class="sub">At least one individual director is required. Each must verify their identity before we file.</div>
             <div style="display: flex; flex-direction: column; gap: 8px;">
-              <div class="phone-list-item"><div><div class="name">Maria Ivanova</div><div style="font-size: 11px; color: var(--ink-3);">ID verified · personal code AB1/2345/6789</div></div><span class="status ok">Ready</span></div>
+              <div class="phone-list-item"><div><div class="name">John Donn</div><div style="font-size: 11px; color: var(--ink-3);">ID verified · personal code AB1/2345/6789</div></div><span class="status ok">Ready</span></div>
               <div class="phone-list-item"><span class="name" style="color: var(--accent);">+ Add another director</span><span style="color: var(--ink-4); font-size: 11px;">Individual or company</span></div>
             </div>
             <div class="phone-note">A director can be the same person as a shareholder. Many one-person Ltds have exactly one of each.</div>
@@ -978,7 +1058,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-13</div>
+          <div class="phone-caption-id">A-15</div>
           <div class="phone-caption-name">Director list</div>
           <div class="phone-caption-note">Status chips drive completion. Each director is an addressable sub-flow.</div>
         </div>
@@ -995,7 +1075,7 @@
           <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
           <div class="phone-screen">
             <div class="sub">Pre-filled from your verified ID. Double-check before we file — changes later cost £8 each.</div>
-            <div class="phone-field selected"><span class="lbl">Full name</span><span class="val">Maria Ivanova</span></div>
+            <div class="phone-field selected"><span class="lbl">Full name</span><span class="val">John Donn</span></div>
             <div class="phone-field"><span class="lbl">Nationality</span><span class="val">British</span></div>
             <div class="phone-field"><span class="lbl">Date of birth (private)</span><span class="val">12 May 1988</span></div>
             <div class="phone-field"><span class="lbl">Country of residence</span><span class="val">United Kingdom</span></div>
@@ -1005,7 +1085,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-14</div>
+          <div class="phone-caption-id">A-16</div>
           <div class="phone-caption-name">Director particulars</div>
           <div class="phone-caption-note">All fields prefilled from ID verification capture. User confirms, doesn't type.</div>
         </div>
@@ -1029,7 +1109,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-15</div>
+          <div class="phone-caption-id">A-17</div>
           <div class="phone-caption-name">Privacy + name match</div>
           <div class="phone-caption-note">Section 243 as add-on. Name mismatch handled inline (D6 on form).</div>
         </div>
@@ -1046,7 +1126,7 @@
           <div class="phone-screen">
             <div style="border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px; background: var(--card);">
               <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 24px; height: 24px; border-radius: 5px; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">Q</div><div style="font-size: 11.5px; color: var(--ink-3);">QPay · 2 min ago</div></div>
-              <div style="font-size: 14px; font-weight: 700; color: var(--ink);">Maria has invited you to be a director of Orca Design Ltd</div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--ink);">John has invited you to be a director of Orca Design Ltd</div>
               <div style="font-size: 12px; color: var(--ink-2); line-height: 1.4;">To accept, you'll need to verify your identity with Companies House (takes about 10 minutes). Everything happens on your phone — we'll walk you through it.</div>
             </div>
             <div class="phone-note">Push + email both sent simultaneously. Email has the same CTA link for desktop users.</div>
@@ -1054,7 +1134,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-16</div>
+          <div class="phone-caption-id">A-18</div>
           <div class="phone-caption-name">Co-founder · push notification</div>
           <div class="phone-caption-note">From Daniel's handset. Minimal context — enough to decide whether to engage.</div>
         </div>
@@ -1066,7 +1146,7 @@
           <div class="phone-header" style="background: var(--bg-2);">
             <div style="font-size: 10.5px; color: var(--ink-3); font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.08em;">DANIEL'S PHONE</div>
             <div class="phone-title">Director appointment</div>
-            <div class="phone-crumb">Invited by Maria Ivanova</div>
+            <div class="phone-crumb">Invited by John Donn</div>
           </div>
           <div class="phone-screen">
             <div class="phone-field"><span class="lbl">Company</span><span class="val">Orca Design Ltd · forming now</span></div>
@@ -1075,14 +1155,14 @@
             <div class="phone-check-list">
               <div class="phone-check">You'll be listed as a director on the public register</div>
               <div class="phone-check">Your home address stays private</div>
-              <div class="phone-check">You can decline at any time — we'll tell Maria</div>
+              <div class="phone-check">You can decline at any time — we'll tell John</div>
             </div>
             <div class="phone-cta">Accept &amp; verify my identity</div>
             <div class="phone-link">Decline this appointment</div>
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-17</div>
+          <div class="phone-caption-id">A-19</div>
           <div class="phone-caption-name">Co-founder · accept screen</div>
           <div class="phone-caption-note">Full context before consent. Matches consent-to-act (IN01 Part 6) — legally required.</div>
         </div>
@@ -1096,7 +1176,7 @@
             <div class="phone-title">Verify your identity</div>
           </div>
           <div class="phone-screen">
-            <div class="sub">Same as Maria's flow — we bounce you to GOV.UK One Login, you verify with passport or driving licence, and come back with an 11-character code.</div>
+            <div class="sub">Same as John's flow — we bounce you to GOV.UK One Login, you verify with passport or driving licence, and come back with an 11-character code.</div>
             <div class="phone-check-list">
               <div class="phone-check">Passport or driving licence</div>
               <div class="phone-check">About 5–10 minutes</div>
@@ -1108,7 +1188,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-18</div>
+          <div class="phone-caption-id">A-20</div>
           <div class="phone-caption-name">Co-founder · verification intro</div>
           <div class="phone-caption-note">Escape hatch for directors who already have a code (common after Nov 2025).</div>
         </div>
@@ -1124,17 +1204,17 @@
             <div style="display: flex; flex-direction: column; gap: 14px;">
               <div class="phone-chip ok">✓ Verified</div>
               <h3>You're ready to be a director.</h3>
-              <div class="sub">Maria has been notified. As soon as she submits the IN01, you'll be officially appointed.</div>
+              <div class="sub">John has been notified. As soon as she submits the IN01, you'll be officially appointed.</div>
               <div class="phone-field selected"><span class="lbl">Your personal code</span><span class="val" style="font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.06em;">CD4 / 5678 / 9012</span></div>
-              <div class="phone-list-item"><span class="name">Company formation</span><span class="status todo">Pending Maria</span></div>
+              <div class="phone-list-item"><span class="name">Company formation</span><span class="status todo">Pending John</span></div>
               <div class="phone-list-item"><span class="name">Your director appointment</span><span class="status ok">Ready</span></div>
               <div class="phone-list-item"><span class="name">Your shares allocation</span><span class="status ok">Ready</span></div>
             </div>
-            <div class="phone-cta ghost">Close · wait for Maria</div>
+            <div class="phone-cta ghost">Close · wait for John</div>
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-19</div>
+          <div class="phone-caption-id">A-21</div>
           <div class="phone-caption-name">Co-founder · ready</div>
           <div class="phone-caption-note">Mirror status back to primary user's director list in real time.</div>
         </div>
@@ -1165,7 +1245,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-20</div>
+          <div class="phone-caption-id">A-22</div>
           <div class="phone-caption-name">Share structure template</div>
           <div class="phone-caption-note">99% of users pick a template. Custom is a power-user escape hatch.</div>
         </div>
@@ -1193,7 +1273,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-21</div>
+          <div class="phone-caption-id">A-23</div>
           <div class="phone-caption-name">Share class + rights</div>
           <div class="phone-caption-note">Rights auto-filled from template. Advanced: custom rights editor.</div>
         </div>
@@ -1211,7 +1291,7 @@
           <div class="phone-screen">
             <div class="sub">100 Ordinary shares to distribute among subscribers.</div>
             <div style="display: flex; flex-direction: column; gap: 8px;">
-              <div class="phone-list-item" style="padding: 10px 0;"><div><div class="name">Maria Ivanova</div><div style="font-size: 11px; color: var(--ink-3);">100 shares · 100.0%</div></div><span class="status ok">Paid £100</span></div>
+              <div class="phone-list-item" style="padding: 10px 0;"><div><div class="name">John Donn</div><div style="font-size: 11px; color: var(--ink-3);">100 shares · 100.0%</div></div><span class="status ok">Paid £100</span></div>
               <div class="phone-list-item" style="padding: 10px 0;"><span class="name" style="color: var(--accent);">+ Add subscriber</span></div>
             </div>
             <div class="phone-note">Memorandum: "I agree to become a member of Orca Design Ltd and take at least one share." Auto-generated, signed at review.</div>
@@ -1220,7 +1300,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-22</div>
+          <div class="phone-caption-id">A-24</div>
           <div class="phone-caption-name">Subscriber allocation</div>
           <div class="phone-caption-note">Live % bar. Produces the cap table that lives in the Company tab forever.</div>
         </div>
@@ -1244,7 +1324,7 @@
           <div class="phone-screen">
             <div class="sub">Anyone with &gt;25% shares, &gt;25% voting rights, or the power to appoint directors is a PSC. We've suggested one from your cap table.</div>
             <div style="display: flex; flex-direction: column; gap: 8px;">
-              <div class="phone-field selected"><span class="lbl">Auto-detected PSC</span><span class="val">Maria Ivanova · 100% shares &amp; voting</span></div>
+              <div class="phone-field selected"><span class="lbl">Auto-detected PSC</span><span class="val">John Donn · 100% shares &amp; voting</span></div>
             </div>
             <div class="phone-option"><div><div>Add another PSC</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Individual, holding company, or trust</div></div><span class="check"></span></div>
             <div class="phone-option"><div><div>No PSC exists</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Rare — e.g. widely-held ownership</div></div><span class="check"></span></div>
@@ -1252,9 +1332,9 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-23</div>
+          <div class="phone-caption-id">A-25</div>
           <div class="phone-caption-name">PSC auto-suggest</div>
-          <div class="phone-caption-note">Detects PSCs from share split in A-22. User confirms, rarely types.</div>
+          <div class="phone-caption-note">Detects PSCs from share split in A-24. User confirms, rarely types.</div>
         </div>
       </div>
 
@@ -1268,7 +1348,7 @@
           </div>
           <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
           <div class="phone-screen">
-            <div class="sub">How does Maria hold her control? Tick all that apply.</div>
+            <div class="sub">How does John hold her control? Tick all that apply.</div>
             <div class="phone-option sel"><div><div style="font-weight: 600;">Shares &mdash; 75% or more</div></div><span class="check"></span></div>
             <div class="phone-option sel"><div><div style="font-weight: 600;">Voting rights &mdash; 75% or more</div></div><span class="check"></span></div>
             <div class="phone-option"><div><div>Right to appoint/remove majority of directors</div></div><span class="check"></span></div>
@@ -1278,7 +1358,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-24</div>
+          <div class="phone-caption-id">A-26</div>
           <div class="phone-caption-name">Nature of control</div>
           <div class="phone-caption-note">Pre-ticked from cap table. User can adjust. Brackets explained inline.</div>
         </div>
@@ -1308,7 +1388,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-25</div>
+          <div class="phone-caption-id">A-27</div>
           <div class="phone-caption-name">Three statutory statements</div>
           <div class="phone-caption-note">Collapsed into one screen. Each ticked and logged separately in XML.</div>
         </div>
@@ -1328,14 +1408,14 @@
             <div class="phone-field"><span class="lbl">Type · articles</span><span class="val" style="font-size: 12px;">Private Ltd by shares · Model</span></div>
             <div class="phone-field"><span class="lbl">SIC</span><span class="val" style="font-size: 12px;">62012 Software dev</span></div>
             <div class="phone-field"><span class="lbl">Registered office</span><span class="val" style="font-size: 12px;">QPay virtual office</span></div>
-            <div class="phone-field"><span class="lbl">Directors (1)</span><span class="val" style="font-size: 12px;">Maria Ivanova ✓</span></div>
-            <div class="phone-field"><span class="lbl">Shares</span><span class="val" style="font-size: 12px;">100 Ordinary · £1 · 100% Maria</span></div>
-            <div class="phone-field"><span class="lbl">PSCs (1)</span><span class="val" style="font-size: 12px;">Maria · 75%+ shares &amp; voting</span></div>
+            <div class="phone-field"><span class="lbl">Directors (1)</span><span class="val" style="font-size: 12px;">John Donn ✓</span></div>
+            <div class="phone-field"><span class="lbl">Shares</span><span class="val" style="font-size: 12px;">100 Ordinary · £1 · 100% John</span></div>
+            <div class="phone-field"><span class="lbl">PSCs (1)</span><span class="val" style="font-size: 12px;">John · 75%+ shares &amp; voting</span></div>
             <div class="phone-cta">Sign and pay</div>
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-26</div>
+          <div class="phone-caption-id">A-28</div>
           <div class="phone-caption-name">Review summary</div>
           <div class="phone-caption-note">Every IN01 field rolled up. Tap any row to edit. Sign = type full name.</div>
         </div>
@@ -1360,7 +1440,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-27</div>
+          <div class="phone-caption-id">A-29</div>
           <div class="phone-caption-name">Payment</div>
           <div class="phone-caption-note">£0 user charge. CH fee debited from QPay's Credit Account. Clear psychology.</div>
         </div>
@@ -1385,7 +1465,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-28</div>
+          <div class="phone-caption-id">A-30</div>
           <div class="phone-caption-name">Submission &amp; wait</div>
           <div class="phone-caption-note">Honest timeline. Stage-by-stage checklist shows progress, not just a spinner.</div>
         </div>
@@ -1413,7 +1493,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-29</div>
+          <div class="phone-caption-id">A-31</div>
           <div class="phone-caption-name">Certificate received</div>
           <div class="phone-caption-note">The moment of pride. Documents delivered. Account-opening auto-triggered.</div>
         </div>
@@ -1439,7 +1519,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-30</div>
+          <div class="phone-caption-id">A-32</div>
           <div class="phone-caption-name">Auto-actions queue</div>
           <div class="phone-caption-note">The bridge from formation to a working Ltd. Every next step is pre-drafted.</div>
         </div>
@@ -1457,27 +1537,122 @@
     <div class="section-head">
       <div>
         <div class="section-eyebrow">Path B · month 4–6 onwards · QPay as ACSP</div>
-        <h2 class="section-title">Post-ACSP flow: verification moves inside the app. Only 6 screens actually change.</h2>
-        <p class="section-sub">Once HMRC TCSP registration is confirmed and ACSP status is live, the identity-verification screens collapse into QPay. No bounce to gov.uk, no waiting for the code to come back — we capture the passport, run liveness, and issue the personal code directly. Everything else in the flow (company basics, shares, PSCs, review, submit, post-incorp) is identical to Path A. Below: only the six screens that differ.</p>
+        <h2 class="section-title">Post-ACSP flow: full 31-screen flow with verification moved inside the app.</h2>
+        <p class="section-sub">Once HMRC TCSP registration is confirmed and ACSP status is live, the identity-verification screens collapse into QPay. No bounce to gov.uk, no waiting for the code to come back — we capture the passport, run liveness, and issue the personal code directly. The rest of the flow (company basics, shares, PSCs, review, submit, post-incorp) is identical in shape to Path A; we show it here in full so the end-to-end experience is clear.</p>
       </div>
-      <span class="section-count">02 phases changed · 6 new screens</span>
+      <span class="section-count">31 screens · 8 phases · ACSP-compressed verify</span>
     </div>
 
-    <div class="flow-legend">
-      <div class="flow-legend-item"><span class="flow-legend-swatch cta"></span><span>Primary button — tap to continue</span></div>
-      <div class="flow-legend-item"><span class="flow-legend-swatch option"></span><span>Selected option — radio / checkbox</span></div>
-      <div class="flow-legend-item"><span class="flow-legend-swatch field"></span><span>Tappable field — edit inline</span></div>
-      <div class="flow-legend-item"><span class="flow-legend-swatch info">✓</span><span>Read-only list — not tappable</span></div>
-    </div>
 
     <div class="phones-flow-wrap">
       <div class="phones-flow">
 
         <div class="phases-divider">
-          <div class="num">01 · Phase</div>
-          <div class="title">Your ID<br>in-app</div>
-          <div class="meta">3 replaces A-03…A-07</div>
+          <div class="num">00 · Phase</div>
+          <div class="title">Sign-up</div>
+          <div class="meta">2 screens</div>
         </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-screen" style="justify-content: space-between;">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <div style="width: 42px; height: 42px; border-radius: 10px; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700;">Q</div>
+              <h3>The business account that forms your company.</h3>
+              <div class="sub">30 seconds to sign up. The full KYC + ID verification happens later, when we need it.</div>
+              <div class="phone-field selected"><span class="lbl">Email</span><span class="val">john.donn@example.com</span></div>
+              <div class="phone-field"><span class="lbl">Phone</span><span class="val" style="color: var(--ink-3); font-weight: 400;">+44 · mobile number</span></div>
+              <div class="phone-field"><span class="lbl">Name</span><span class="val" style="color: var(--ink-3); font-weight: 400;">First and last</span></div>
+              <div style="font-size: 10.5px; color: var(--ink-3); line-height: 1.4; margin-top: 4px;">By continuing you agree to QPay's Terms and Privacy Policy.</div>
+            </div>
+            <div class="phone-cta">Continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-01</div>
+          <div class="phone-caption-name">Sign up for QPay</div>
+          <div class="phone-caption-note">The very first screen. No ID capture yet — we only need email, phone, and a name to open an account shell.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-title">What do you want to do?</div>
+            <div class="phone-crumb">Pick one — you can change later</div>
+          </div>
+          <div class="phone-screen">
+            <div class="phone-option sel"><div><div style="font-weight: 600; color: var(--ink);">Form a new Ltd company</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">10 min · £0 · certificate + business account in one flow</div></div><span class="check"></span></div>
+            <div class="phone-option"><div><div>I already have a Ltd — open an account</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">We'll pull your details from Companies House</div></div><span class="check"></span></div>
+            <div class="phone-cta">Continue — form a Ltd</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-02</div>
+          <div class="phone-caption-name">Pick your path</div>
+          <div class="phone-caption-note">Single fork that decides the rest of onboarding. Formation goes into the flow below; the other options run their own onboarding.</div>
+        </div>
+      </div>
+
+        <div class="phases-divider">
+          <div class="num">01 · Phase</div>
+          <div class="title">Onboarding<br>+ ID in-app</div>
+          <div class="meta">6 screens</div>
+        </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-screen" style="justify-content: space-between;">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <div class="phone-chip">10 minutes · £0</div>
+              <h3>Form your UK&nbsp;Ltd in QPay.</h3>
+              <div class="sub">Companies House charges £100. QPay covers it. Your business account opens the moment the company number arrives.</div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink-3); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px;">What you'll need</div>
+              <div class="phone-check-list">
+                <div class="phone-check">Passport or driving licence</div>
+                <div class="phone-check">Your residential address (kept private)</div>
+                <div class="phone-check">A registered office (we offer ours)</div>
+                <div class="phone-check">Details of any co-owners</div>
+              </div>
+            </div>
+            <div class="phone-cta">Start — it's free</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-03</div>
+          <div class="phone-caption-name">Welcome &amp; pre-flight</div>
+          <div class="phone-caption-note">One-line promise. Four proof points. Free-formation hook above the fold.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Who else is involved?</div>
+            <div class="phone-crumb">Co-owners</div>
+          </div>
+          <div class="phone-progress"><span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="phone-screen">
+            <div class="sub">Add co-directors and shareholders now. They'll each get an invite to verify their ID in QPay before we file.</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="phone-list-item"><span class="name">John Donn (you)</span><span class="status ok">Owner</span></div>
+              <div class="phone-list-item"><span class="name">+ Add co-founder</span><span style="color: var(--accent); font-size: 11px;">by email</span></div>
+            </div>
+            <div class="phone-note">Most new Ltds are 1–2 directors. You can add more later but it's easier to list everyone upfront.</div>
+            <div class="phone-cta">Continue with 1 person</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-04</div>
+          <div class="phone-caption-name">Invite co-founders</div>
+          <div class="phone-caption-note">Sets up parallel ID verification — each person runs their own in their own app.</div>
+        </div>
+      </div>
 
         <div class="phone-wrap">
           <div class="phone">
@@ -1497,7 +1672,7 @@
             </div>
           </div>
           <div class="phone-caption">
-            <div class="phone-caption-id">B-03</div>
+            <div class="phone-caption-id">B-05</div>
             <div class="phone-caption-name">Verify path · ACSP default</div>
             <div class="phone-caption-note">In-app wins by default; One Login kept as the fallback when biometric capture fails.</div>
           </div>
@@ -1525,7 +1700,7 @@
             </div>
           </div>
           <div class="phone-caption">
-            <div class="phone-caption-id">B-04</div>
+            <div class="phone-caption-id">B-06</div>
             <div class="phone-caption-name">Passport scan · in-app</div>
             <div class="phone-caption-note">NFC chip read where supported. Biometric data never leaves the device unencrypted.</div>
           </div>
@@ -1549,7 +1724,7 @@
             </div>
           </div>
           <div class="phone-caption">
-            <div class="phone-caption-id">B-05</div>
+            <div class="phone-caption-id">B-07</div>
             <div class="phone-caption-name">Liveness · in-app</div>
             <div class="phone-caption-note">Our KYC vendor handles the liveness challenge. Result: pass / retry / fallback to One Login.</div>
           </div>
@@ -1571,24 +1746,247 @@
             </div>
           </div>
           <div class="phone-caption">
-            <div class="phone-caption-id">B-06</div>
+            <div class="phone-caption-id">B-08</div>
             <div class="phone-caption-name">Code issued + KYC done</div>
             <div class="phone-caption-note">The killer moment: formation identity + bank-account KYC fuse into one capture.</div>
           </div>
         </div>
 
-        <div class="phases-divider same">
-          <span class="tag">unchanged</span>
+        <div class="phases-divider">
           <div class="num">02 · Phase</div>
           <div class="title">Company<br>basics</div>
-          <div class="meta">A-08 … A-12<br>same as Path A</div>
+          <div class="meta">5 screens</div>
         </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Company name</div>
+            <div class="phone-crumb">IN01 A1–A3</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="active"></span><span></span><span></span><span></span><span></span></div>
+          <div class="phone-screen">
+            <div class="phone-field selected"><span class="lbl">Your proposed name</span><span class="val">Orca Design Ltd</span></div>
+            <div class="phone-chip ok">✓ Available at Companies House</div>
+            <div class="phone-field"><span class="lbl">Auto-check</span><span class="val" style="font-size: 12px; font-weight: 400; color: var(--ink-2);">No identical or "same as" match. No sensitive words. No trademark conflicts on IPO database.</span></div>
+            <div class="phone-option"><span>Exempt from "Limited" (charity/community use)</span><span class="check"></span></div>
+            <div class="sub">We check the register live as you type. Sensitive words (Bank, Royal, International, etc.) need separate approval — we flag those before you continue.</div>
+            <div class="phone-cta">Continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-09</div>
+          <div class="phone-caption-name">Name check (live)</div>
+          <div class="phone-caption-note">Public Data API queries on every keystroke. Trademark overlay a differentiator.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Company type</div>
+            <div class="phone-crumb">IN01 A4</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="active"></span><span></span><span></span><span></span></div>
+          <div class="phone-screen">
+            <div class="phone-option sel"><div><div style="font-weight: 600; color: var(--ink);">Private limited by shares</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">99% of UK Ltds. Dividends, shareholders, cap table.</div></div><span class="check"></span></div>
+            <div class="phone-option"><div><div>Private limited by guarantee</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Non-profits, clubs, charities.</div></div><span class="check"></span></div>
+            <div class="phone-cta">Continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-10</div>
+          <div class="phone-caption-name">Company type</div>
+          <div class="phone-caption-note">Default pre-selected. PLC / unlimited greyed at MVP — only visible for awareness.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">What will you do?</div>
+            <div class="phone-crumb">IN01 A5 · SIC codes</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="active"></span><span></span><span></span></div>
+          <div class="phone-screen">
+            <div class="phone-field"><span class="lbl">Search</span><span class="val" style="color: var(--ink-3); font-weight: 400;">e.g. software, design, consulting…</span></div>
+            <div class="sub">Pick up to 4 SIC codes. We'll show the most relevant as you type.</div>
+            <div style="display: flex; flex-direction: column; gap: 6px;">
+              <div class="phone-field selected"><span class="lbl">Selected</span><span class="val">62012 · Business/domestic software dev</span></div>
+              <div class="phone-field"><span class="lbl">Suggested</span><span class="val" style="font-size: 12px; font-weight: 400;">74100 · Specialised design activities</span></div>
+              <div class="phone-field"><span class="lbl">Suggested</span><span class="val" style="font-size: 12px; font-weight: 400;">70229 · Other mgmt consultancy</span></div>
+            </div>
+            <div class="phone-cta">Continue with 1 code</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-11</div>
+          <div class="phone-caption-name">SIC code picker</div>
+          <div class="phone-caption-note">Natural-language search. AI maps "I build iOS apps" → 62012. Multi-select up to 4.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Registered office</div>
+            <div class="phone-crumb">IN01 A6–A7, A10</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="active"></span><span></span></div>
+          <div class="phone-screen">
+            <div class="sub">Companies House sends legal mail here. It's public — don't use your home unless you don't mind that.</div>
+            <div class="phone-option sel"><div><div style="font-weight: 600; color: var(--ink);">Use QPay's London address</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Mail scanned to you · £0 · included</div></div><span class="check"></span></div>
+            <div class="phone-option"><div><div>My own address</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Jurisdiction: E&amp;W / Wales / Scotland / NI</div></div><span class="check"></span></div>
+            <div class="phone-field"><span class="lbl">Registered email (private)</span><span class="val">john.donn@example.com</span></div>
+            <div class="phone-cta">Continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-12</div>
+          <div class="phone-caption-name">Registered office + email</div>
+          <div class="phone-caption-note">QPay virtual office is the default — keeps user's home off the public register.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Articles of association</div>
+            <div class="phone-crumb">IN01 A8</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="active"></span></div>
+          <div class="phone-screen">
+            <div class="sub">The rulebook for how your company runs. The free default (Model Articles) works for 95% of Ltds.</div>
+            <div class="phone-option sel"><div><div style="font-weight: 600; color: var(--ink);">Model Articles · recommended</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Free · standard Companies Act 2006 template</div></div><span class="check"></span></div>
+            <div class="phone-option"><div><div>Model + amendments</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Upload amendments PDF</div></div><span class="check"></span></div>
+            <div class="phone-option"><div><div>Fully bespoke</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Upload your own articles</div></div><span class="check"></span></div>
+            <div class="phone-link">Why does this matter?</div>
+            <div class="phone-cta">Continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-13</div>
+          <div class="phone-caption-name">Articles choice</div>
+          <div class="phone-caption-note">Model Articles at MVP. Bespoke routes through Q Accountants.</div>
+        </div>
+      </div>
 
         <div class="phases-divider">
           <div class="num">03 · Phase</div>
-          <div class="title">Director<br>in-app</div>
-          <div class="meta">3 replaces A-16…A-19</div>
+          <div class="title">Directors<br>+ invite</div>
+          <div class="meta">7 screens</div>
         </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Directors</div>
+            <div class="phone-crumb">IN01 D1</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
+          <div class="phone-screen">
+            <div class="sub">At least one individual director is required. Each must verify their identity before we file.</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="phone-list-item"><div><div class="name">John Donn</div><div style="font-size: 11px; color: var(--ink-3);">ID verified · personal code AB1/2345/6789</div></div><span class="status ok">Ready</span></div>
+              <div class="phone-list-item"><span class="name" style="color: var(--accent);">+ Add another director</span><span style="color: var(--ink-4); font-size: 11px;">Individual or company</span></div>
+            </div>
+            <div class="phone-note">A director can be the same person as a shareholder. Many one-person Ltds have exactly one of each.</div>
+            <div class="phone-cta">Continue with 1 director</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-14</div>
+          <div class="phone-caption-name">Director list</div>
+          <div class="phone-caption-note">Status chips drive completion. Each director is an addressable sub-flow.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Your details</div>
+            <div class="phone-crumb">IN01 D1–D4</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
+          <div class="phone-screen">
+            <div class="sub">Pre-filled from your verified ID. Double-check before we file — changes later cost £8 each.</div>
+            <div class="phone-field selected"><span class="lbl">Full name</span><span class="val">John Donn</span></div>
+            <div class="phone-field"><span class="lbl">Nationality</span><span class="val">British</span></div>
+            <div class="phone-field"><span class="lbl">Date of birth (private)</span><span class="val">12 May 1988</span></div>
+            <div class="phone-field"><span class="lbl">Country of residence</span><span class="val">United Kingdom</span></div>
+            <div class="phone-field"><span class="lbl">Residential address (private)</span><span class="val" style="font-size: 12px;">45 King's Rd, London SW3 4UH</span></div>
+            <div class="phone-field"><span class="lbl">Service address (public)</span><span class="val" style="font-size: 12px;">QPay virtual office</span></div>
+            <div class="phone-cta">Looks right, continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-15</div>
+          <div class="phone-caption-name">Director particulars</div>
+          <div class="phone-caption-note">All fields prefilled from ID verification capture. User confirms, doesn't type.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Privacy options</div>
+            <div class="phone-crumb">IN01 D5–D6, § 243</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
+          <div class="phone-screen">
+            <div class="sub">Your month/year of birth and service address are public. Your full DOB and home address stay private.</div>
+            <div class="phone-field"><span class="lbl">Companies House personal code</span><span class="val" style="font-family: 'IBM Plex Mono', monospace;">AB1/2345/6789</span><div style="font-size: 10.5px; color: var(--good); margin-top: 3px;">✓ Verified 5 minutes ago</div></div>
+            <div class="phone-option"><div><div>Apply for § 243 protection</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Hides home from credit agencies · £100 · 5 weeks</div></div><span class="check"></span></div>
+            <div class="phone-option"><div><div>Name on ID differs from name above</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">e.g. legally changed, preferred name</div></div><span class="check"></span></div>
+            <div class="phone-cta">Confirm &amp; continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-16</div>
+          <div class="phone-caption-name">Privacy + name match</div>
+          <div class="phone-caption-note">Section 243 as add-on. Name mismatch handled inline (D6 on form).</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header" style="background: var(--bg-2);">
+            <div style="font-size: 10.5px; color: var(--ink-3); font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.08em;">DANIEL'S PHONE · CO-FOUNDER</div>
+            <div class="phone-title" style="font-size: 14px;">📩 QPay notification</div>
+          </div>
+          <div class="phone-screen">
+            <div style="border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 8px; background: var(--card);">
+              <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 24px; height: 24px; border-radius: 5px; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">Q</div><div style="font-size: 11.5px; color: var(--ink-3);">QPay · 2 min ago</div></div>
+              <div style="font-size: 14px; font-weight: 700; color: var(--ink);">John has invited you to be a director of Orca Design Ltd</div>
+              <div style="font-size: 12px; color: var(--ink-2); line-height: 1.4;">To accept, you'll need to verify your identity with Companies House (takes about 10 minutes). Everything happens on your phone — we'll walk you through it.</div>
+            </div>
+            <div class="phone-note">Push + email both sent simultaneously. Email has the same CTA link for desktop users.</div>
+            <div class="phone-cta">Open invite</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-17</div>
+          <div class="phone-caption-name">Co-founder · push notification</div>
+          <div class="phone-caption-note">From Daniel's handset. Minimal context — enough to decide whether to engage.</div>
+        </div>
+      </div>
 
         <div class="phone-wrap">
           <div class="phone">
@@ -1596,7 +1994,7 @@
             <div class="phone-header" style="background: var(--bg-2);">
               <div style="font-size: 10.5px; color: var(--ink-3); font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.08em;">DANIEL'S PHONE · CO-FOUNDER</div>
               <div class="phone-title">Director appointment</div>
-              <div class="phone-crumb">Invited by Maria Ivanova</div>
+              <div class="phone-crumb">Invited by John Donn</div>
             </div>
             <div class="phone-screen">
               <div class="phone-field"><span class="lbl">Company</span><span class="val">Orca Design Ltd · forming now</span></div>
@@ -1612,9 +2010,9 @@
             </div>
           </div>
           <div class="phone-caption">
-            <div class="phone-caption-id">B-12</div>
+            <div class="phone-caption-id">B-18</div>
             <div class="phone-caption-name">Co-founder · accept + in-app path</div>
-            <div class="phone-caption-note">Same consent context as A-17. Different CTA — no gov.uk bounce.</div>
+            <div class="phone-caption-note">Same consent context as A-19. Different CTA — no gov.uk bounce.</div>
           </div>
         </div>
 
@@ -1627,7 +2025,7 @@
               <div class="phone-crumb">QPay ACSP · in-app capture</div>
             </div>
             <div class="phone-screen">
-              <div class="sub">Same two-step capture as Maria's. Passport scan → 5-second selfie video.</div>
+              <div class="sub">Same two-step capture as John's. Passport scan → 5-second selfie video.</div>
               <div style="display: flex; flex-direction: column; gap: 8px;">
                 <div class="phone-list-item"><div><div class="name">Step 1 · Passport</div><div style="font-size: 11px; color: var(--ink-3);">NFC or photo capture</div></div><span class="status ok">✓ Done</span></div>
                 <div class="phone-list-item"><div><div class="name">Step 2 · Liveness selfie</div><div style="font-size: 11px; color: var(--ink-3);">5-second video, turn head</div></div><span class="status todo">In progress</span></div>
@@ -1639,7 +2037,7 @@
             </div>
           </div>
           <div class="phone-caption">
-            <div class="phone-caption-id">B-13</div>
+            <div class="phone-caption-id">B-19</div>
             <div class="phone-caption-name">Co-founder · capture</div>
             <div class="phone-caption-note">Compressed into one screen — progress of 2 steps visible, live capture view below.</div>
           </div>
@@ -1655,37 +2053,329 @@
               <div style="display: flex; flex-direction: column; gap: 14px;">
                 <div class="phone-chip ok">✓ Verified · QPay ACSP</div>
                 <h3>You're ready.</h3>
-                <div class="sub">Maria sees your status updated right now. She can submit the IN01 as soon as she's done with the rest.</div>
+                <div class="sub">John sees your status updated right now. She can submit the IN01 as soon as she's done with the rest.</div>
                 <div class="phone-field selected"><span class="lbl">Personal code · yours for life</span><span class="val" style="font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.06em;">CD4 / 5678 / 9012</span></div>
                 <div class="phone-list-item"><span class="name">Director appointment</span><span class="status ok">Ready</span></div>
                 <div class="phone-list-item"><span class="name">Share allocation (40%)</span><span class="status ok">Ready</span></div>
-                <div class="phone-list-item"><span class="name">Awaiting Maria's submission</span><span class="status todo">Pending</span></div>
+                <div class="phone-list-item"><span class="name">Awaiting John's submission</span><span class="status todo">Pending</span></div>
               </div>
               <div class="phone-cta ghost">Close · I'll wait for the certificate</div>
             </div>
           </div>
           <div class="phone-caption">
-            <div class="phone-caption-id">B-14</div>
+            <div class="phone-caption-id">B-20</div>
             <div class="phone-caption-name">Co-founder · ready</div>
-            <div class="phone-caption-note">End of co-founder flow. Maria's director list updates in real time.</div>
+            <div class="phone-caption-note">End of co-founder flow. John's director list updates in real time.</div>
           </div>
         </div>
 
-        <div class="phases-divider same">
-          <span class="tag">unchanged</span>
-          <div class="num">04–07 · Phases</div>
-          <div class="title">Shares ·<br>PSCs · Review ·<br>Pay · Submit ·<br>Certificate</div>
-          <div class="meta">A-20 … A-30<br>same as Path A</div>
+        <div class="phases-divider">
+          <div class="num">04 · Phase</div>
+          <div class="title">Share<br>capital</div>
+          <div class="meta">3 screens</div>
         </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">How are shares split?</div>
+            <div class="phone-crumb">IN01 F1</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
+          <div class="phone-screen">
+            <div class="sub">Shares decide who owns what, who gets dividends, and who votes. Pick a template or build your own.</div>
+            <div class="phone-option sel"><div><div style="font-weight: 600; color: var(--ink);">Solo founder — 100 shares, 1 class</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">All Ordinary shares · £1 nominal each</div></div><span class="check"></span></div>
+            <div class="phone-option"><div><div>Two co-founders — 50/50</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Or custom split: 60/40, 70/30…</div></div><span class="check"></span></div>
+            <div class="phone-option"><div><div>Founder + investor — A and B classes</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Different voting/dividend rights</div></div><span class="check"></span></div>
+            <div class="phone-option"><div><div>Custom structure</div></div><span class="check"></span></div>
+            <div class="phone-cta">Continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-21</div>
+          <div class="phone-caption-name">Share structure template</div>
+          <div class="phone-caption-note">99% of users pick a template. Custom is a power-user escape hatch.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Ordinary shares</div>
+            <div class="phone-crumb">IN01 F1–F2</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
+          <div class="phone-screen">
+            <div class="phone-field"><span class="lbl">Class</span><span class="val">Ordinary</span></div>
+            <div class="phone-field"><span class="lbl">Number of shares</span><span class="val">100</span></div>
+            <div class="phone-field"><span class="lbl">Nominal value</span><span class="val">£1.00 each · £100 total</span></div>
+            <div style="font-size: 11.5px; color: var(--ink-3); margin-top: 4px; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.04em;">PRESCRIBED RIGHTS</div>
+            <div class="phone-field"><span class="lbl">Voting</span><span class="val" style="font-size: 12px; font-weight: 400;">One vote per share</span></div>
+            <div class="phone-field"><span class="lbl">Dividend</span><span class="val" style="font-size: 12px; font-weight: 400;">Pro rata, discretionary</span></div>
+            <div class="phone-field"><span class="lbl">On winding up</span><span class="val" style="font-size: 12px; font-weight: 400;">Pro rata to capital</span></div>
+            <div class="phone-field"><span class="lbl">Redeemable?</span><span class="val" style="font-size: 12px; font-weight: 400;">No</span></div>
+            <div class="phone-cta">Use these (standard)</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-22</div>
+          <div class="phone-caption-name">Share class + rights</div>
+          <div class="phone-caption-note">Rights auto-filled from template. Advanced: custom rights editor.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Allocate shares</div>
+            <div class="phone-crumb">IN01 F3</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
+          <div class="phone-screen">
+            <div class="sub">100 Ordinary shares to distribute among subscribers.</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="phone-list-item" style="padding: 10px 0;"><div><div class="name">John Donn</div><div style="font-size: 11px; color: var(--ink-3);">100 shares · 100.0%</div></div><span class="status ok">Paid £100</span></div>
+              <div class="phone-list-item" style="padding: 10px 0;"><span class="name" style="color: var(--accent);">+ Add subscriber</span></div>
+            </div>
+            <div class="phone-note">Memorandum: "I agree to become a member of Orca Design Ltd and take at least one share." Auto-generated, signed at review.</div>
+            <div class="phone-chip ok">✓ 100% allocated · cap table ready</div>
+            <div class="phone-cta">Continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-23</div>
+          <div class="phone-caption-name">Subscriber allocation</div>
+          <div class="phone-caption-note">Live % bar. Produces the cap table that lives in the Company tab forever.</div>
+        </div>
+      </div>
+
+        <div class="phases-divider">
+          <div class="num">05 · Phase</div>
+          <div class="title">PSCs</div>
+          <div class="meta">2 screens</div>
+        </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Who has control?</div>
+            <div class="phone-crumb">IN01 H1, I1–I9</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
+          <div class="phone-screen">
+            <div class="sub">Anyone with &gt;25% shares, &gt;25% voting rights, or the power to appoint directors is a PSC. We've suggested one from your cap table.</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="phone-field selected"><span class="lbl">Auto-detected PSC</span><span class="val">John Donn · 100% shares &amp; voting</span></div>
+            </div>
+            <div class="phone-option"><div><div>Add another PSC</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Individual, holding company, or trust</div></div><span class="check"></span></div>
+            <div class="phone-option"><div><div>No PSC exists</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Rare — e.g. widely-held ownership</div></div><span class="check"></span></div>
+            <div class="phone-cta">Confirm 1 PSC</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-24</div>
+          <div class="phone-caption-name">PSC auto-suggest</div>
+          <div class="phone-caption-note">Detects PSCs from share split in A-24. User confirms, rarely types.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Nature of control</div>
+            <div class="phone-crumb">IN01 I7</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
+          <div class="phone-screen">
+            <div class="sub">How does John hold her control? Tick all that apply.</div>
+            <div class="phone-option sel"><div><div style="font-weight: 600;">Shares &mdash; 75% or more</div></div><span class="check"></span></div>
+            <div class="phone-option sel"><div><div style="font-weight: 600;">Voting rights &mdash; 75% or more</div></div><span class="check"></span></div>
+            <div class="phone-option"><div><div>Right to appoint/remove majority of directors</div></div><span class="check"></span></div>
+            <div class="phone-option"><div><div>Significant influence or control</div><div style="font-size: 11px; color: var(--ink-3);">Only if none of the above apply</div></div><span class="check"></span></div>
+            <div style="font-size: 11.5px; color: var(--ink-3); padding: 4px 0;">Brackets: &gt;25% &amp; ≤50% · &gt;50% &amp; &lt;75% · 75%+ (the highest you meet)</div>
+            <div class="phone-cta">Continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-25</div>
+          <div class="phone-caption-name">Nature of control</div>
+          <div class="phone-caption-note">Pre-ticked from cap table. User can adjust. Brackets explained inline.</div>
+        </div>
+      </div>
+
+        <div class="phases-divider">
+          <div class="num">06 · Phase</div>
+          <div class="title">Review<br>pay, file</div>
+          <div class="meta">4 screens</div>
+        </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Declarations</div>
+            <div class="phone-crumb">IN01 L1 · M1 · N1</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
+          <div class="phone-screen">
+            <div class="sub">Three declarations required by the Companies Act &amp; ECCTA. Tick each to continue.</div>
+            <div class="phone-option sel"><div><div style="font-weight: 600;">Consent to act (Part 6)</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Each named director has consented.</div></div><span class="check"></span></div>
+            <div class="phone-option sel"><div><div style="font-weight: 600;">PSC particulars supplied (Part 7)</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Each individual PSC knows their details are being filed.</div></div><span class="check"></span></div>
+            <div class="phone-option sel"><div><div style="font-weight: 600;">Lawful purpose (Part 8 · ECCTA)</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Subscribers form the company for lawful purposes.</div></div><span class="check"></span></div>
+            <div class="phone-cta">Continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-26</div>
+          <div class="phone-caption-name">Three statutory statements</div>
+          <div class="phone-caption-note">Collapsed into one screen. Each ticked and logged separately in XML.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Review</div>
+            <div class="phone-crumb">Full summary</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
+          <div class="phone-screen">
+            <div class="phone-field"><span class="lbl">Company</span><span class="val">Orca Design Ltd · England &amp; Wales</span></div>
+            <div class="phone-field"><span class="lbl">Type · articles</span><span class="val" style="font-size: 12px;">Private Ltd by shares · Model</span></div>
+            <div class="phone-field"><span class="lbl">SIC</span><span class="val" style="font-size: 12px;">62012 Software dev</span></div>
+            <div class="phone-field"><span class="lbl">Registered office</span><span class="val" style="font-size: 12px;">QPay virtual office</span></div>
+            <div class="phone-field"><span class="lbl">Directors (1)</span><span class="val" style="font-size: 12px;">John Donn ✓</span></div>
+            <div class="phone-field"><span class="lbl">Shares</span><span class="val" style="font-size: 12px;">100 Ordinary · £1 · 100% John</span></div>
+            <div class="phone-field"><span class="lbl">PSCs (1)</span><span class="val" style="font-size: 12px;">John · 75%+ shares &amp; voting</span></div>
+            <div class="phone-cta">Sign and pay</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-27</div>
+          <div class="phone-caption-name">Review summary</div>
+          <div class="phone-caption-note">Every IN01 field rolled up. Tap any row to edit. Sign = type full name.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-back">‹ Back</div>
+            <div class="phone-title">Payment</div>
+            <div class="phone-crumb">CH fee</div>
+          </div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span></div>
+          <div class="phone-screen">
+            <div class="phone-field"><span class="lbl">Companies House fee</span><span class="val">£100.00</span></div>
+            <div class="phone-field"><span class="lbl">QPay handling</span><span class="val">–£100.00 absorbed</span></div>
+            <div class="phone-field selected"><span class="lbl">You pay today</span><span class="val" style="font-size: 18px;">£0.00</span></div>
+            <div style="font-size: 11.5px; color: var(--ink-3); margin-top: 4px;">Your first year of QPay Business is on us when you form through us. After that: £15/mo.</div>
+            <div class="phone-option sel"><div><div style="font-weight: 600;">Same-day processing</div><div style="font-size: 11px; color: var(--ink-3); margin-top: 2px;">Before 15:00 · certificate within hours</div></div><span class="check"></span></div>
+            <div class="phone-cta">File with Companies House</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-28</div>
+          <div class="phone-caption-name">Payment</div>
+          <div class="phone-caption-note">£0 user charge. CH fee debited from QPay's Credit Account. Clear psychology.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-screen" style="justify-content: center; align-items: center; gap: 20px;">
+            <div style="width: 70px; height: 70px; border-radius: 50%; border: 3px solid var(--accent-soft); border-top-color: var(--accent); animation: spin 1s linear infinite;"></div>
+            <div style="text-align: center;">
+              <div class="phone-chip">Filing · XML Gateway</div>
+              <h3 style="margin-top: 16px;">Filing with Companies House…</h3>
+              <div class="sub" style="text-align: center; margin-top: 6px;">Typical wait is 3–5 hours during business hours. We'll push a notification the moment it's accepted.</div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px; width: 100%; margin-top: 8px;">
+              <div class="phone-list-item"><span class="name">IN01 XML constructed</span><span class="status ok">✓</span></div>
+              <div class="phone-list-item"><span class="name">Memorandum attached</span><span class="status ok">✓</span></div>
+              <div class="phone-list-item"><span class="name">Submitted to presenter</span><span class="status ok">✓</span></div>
+              <div class="phone-list-item"><span class="name">CH acknowledgement</span><span class="status todo">Waiting…</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-29</div>
+          <div class="phone-caption-name">Submission &amp; wait</div>
+          <div class="phone-caption-note">Honest timeline. Stage-by-stage checklist shows progress, not just a spinner.</div>
+        </div>
+      </div>
+
+        <div class="phases-divider">
+          <div class="num">07 · Phase</div>
+          <div class="title">Post-<br>incorp</div>
+          <div class="meta">2 screens</div>
+        </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-screen" style="justify-content: space-between;">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <div class="phone-chip ok">✓ Incorporated</div>
+              <h3>Orca Design Ltd is live.</h3>
+              <div class="sub">Company number: <strong style="color: var(--ink); font-family: 'IBM Plex Mono', monospace;">16842379</strong></div>
+              <div class="phone-field selected"><span class="lbl">Certificate of Incorporation</span><span class="val" style="font-size: 12px;">PDF · signed by Registrar · saved to Company vault</span></div>
+              <div class="phone-field"><span class="lbl">Also saved</span><span class="val" style="font-size: 12px;">Memorandum · Model Articles · CT41G template</span></div>
+              <div style="font-size: 12px; color: var(--ink-2); line-height: 1.5;">Your business account is opening now. We've drafted your Corporation Tax registration with HMRC — review and send whenever you're ready.</div>
+            </div>
+            <div class="phone-cta">Open my business account</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-30</div>
+          <div class="phone-caption-name">Certificate received</div>
+          <div class="phone-caption-note">The moment of pride. Documents delivered. Account-opening auto-triggered.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header">
+            <div class="phone-title">Next steps</div>
+            <div class="phone-crumb">Post-incorporation · auto-queued</div>
+          </div>
+          <div class="phone-screen">
+            <div class="sub">We've prepared everything. Tap to review each; we won't file without your OK.</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="phone-list-item"><div><div class="name">HMRC · Corporation Tax registration</div><div style="font-size: 11px; color: var(--ink-3);">Due within 3 months of trading</div></div><span class="status todo">Draft ready</span></div>
+              <div class="phone-list-item"><div><div class="name">VAT registration</div><div style="font-size: 11px; color: var(--ink-3);">Only if turnover &gt; £90k forecast</div></div><span class="status todo">Optional</span></div>
+              <div class="phone-list-item"><div><div class="name">PAYE scheme</div><div style="font-size: 11px; color: var(--ink-3);">If you'll pay yourself a director salary</div></div><span class="status todo">Optional</span></div>
+              <div class="phone-list-item"><div><div class="name">Cap table</div><div style="font-size: 11px; color: var(--ink-3);">Populated from IN01 F3</div></div><span class="status ok">✓ Live</span></div>
+              <div class="phone-list-item"><div><div class="name">PSC register</div><div style="font-size: 11px; color: var(--ink-3);">Populated from IN01 Part 5</div></div><span class="status ok">✓ Live</span></div>
+              <div class="phone-list-item"><div><div class="name">Confirmation statement reminder</div><div style="font-size: 11px; color: var(--ink-3);">Due 12 months from today</div></div><span class="status ok">✓ Scheduled</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-31</div>
+          <div class="phone-caption-name">Auto-actions queue</div>
+          <div class="phone-caption-note">The bridge from formation to a working Ltd. Every next step is pre-drafted.</div>
+        </div>
+      </div>
 
       </div><!-- /phones-flow -->
     </div><!-- /phones-flow-wrap -->
-
-    <div class="strat" style="margin-top: 12px;">
-      <div class="strat-eyebrow">What stays the same</div>
-      <h3>Every other screen — company basics, share capital, PSCs, declarations, review, pay, submit, certificate, post-incorp actions — is byte-for-byte identical to Path&nbsp;A.</h3>
-      <p>That means no second build. The migration from Path&nbsp;A to Path&nbsp;B is a verification-module swap: we detect the user has an ACSP-capable QPay build, hide the One Login option, show the in-app capture. Users already mid-flow on Path&nbsp;A finish on Path&nbsp;A; new flows start on Path&nbsp;B. Zero schema change to the IN01 XML payload — the personal code format is the same regardless of issuer.</p>
-    </div>
   </div>
 </section>
 
@@ -1743,9 +2433,42 @@
       <div class="dec-row">
         <div>
           <div class="dec-q">1. Register as ACSP to verify identities in-app?</div>
-          <div class="dec-a">Yes, and start the AML-supervision clock immediately — but it does <em>not</em> block MVP. Path: apply for HMRC TCSP registration now (£300 + £40/person, 3–6 months) → ACSP follows within weeks of TCSP approval. Independent of the 12–18 month EMI track. Also becomes mandatory for third-party filings from late 2026, so the application needs to be in flight regardless.</div>
+          <div class="dec-a">Yes — via HMRC's TCSP route, started on day one, running in parallel with the MVP. It does not block anything.</div>
         </div>
         <div class="dec-verdict yes">YES · HMRC route · parallel to MVP</div>
+
+        <div class="dec-schema">
+          <div class="dec-step">
+            <span class="dec-step-num">Step 1</span>
+            <span class="dec-step-when">Day 1</span>
+            <span class="dec-step-title">Submit HMRC TCSP</span>
+            <span class="dec-step-body">File the application: £300 per premises + £40 per responsible person. No approval needed to start; you're AML-supervised from the moment HMRC acknowledges.</span>
+          </div>
+          <div class="dec-step">
+            <span class="dec-step-num">Step 2</span>
+            <span class="dec-step-when">Day 1–7</span>
+            <span class="dec-step-title">Ship formation MVP</span>
+            <span class="dec-step-body">Get Presenter ID + pre-funded Credit Account from Companies House (email, few days). Go live as an XML Gateway presenter; directors use GOV.UK One Login for ID.</span>
+          </div>
+          <div class="dec-step">
+            <span class="dec-step-num">Step 3</span>
+            <span class="dec-step-when">Month 3–6</span>
+            <span class="dec-step-title">HMRC TCSP approved</span>
+            <span class="dec-step-body">You're now formally AML-supervised. This is the only regulatory gate for ACSP status — no FCA or EMI required.</span>
+          </div>
+          <div class="dec-step">
+            <span class="dec-step-num">Step 4</span>
+            <span class="dec-step-when">Month 4–6</span>
+            <span class="dec-step-title">ACSP registration live</span>
+            <span class="dec-step-body">Apply to Companies House as ACSP — approved within weeks of TCSP. Switch user flow to in-app ID capture. No gov.uk bounce.</span>
+          </div>
+
+          <div class="dec-notes">
+            <div class="dec-note">Independent of EMI (12–18 months). No waiting.</div>
+            <div class="dec-note">ACSP becomes mandatory for third-party filings from late 2026. Starting now keeps us inside the window.</div>
+            <div class="dec-note">Every UK formation agent (1st Formations, Osome, CFS, Rapid) runs this exact route.</div>
+          </div>
+        </div>
       </div>
 
       <div class="dec-row">
