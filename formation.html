@@ -345,11 +345,12 @@
     </div>
 
     <div class="strat">
-      <div class="strat-eyebrow">Strategic decision · single biggest product lever</div>
-      <h3>Register QPay as an Authorised Corporate Service Provider (ACSP). Verify directors in-app instead of bouncing them to GOV.UK One Login.</h3>
-      <p>ACSP status lets a regulated firm perform identity verification itself and issue the 11-character personal code directly. Supervised firms (accountants, solicitors, trust & company service providers, AML-regulated EMIs) can apply. QPay, once authorised by the FCA as an EMI, will be AML-regulated and eligible.</p>
-      <p><strong>Why it matters:</strong> (a) we keep the user inside the app for the most friction-heavy step, (b) we can verify directors who have been failed by One Login's automated flow (passport quality, address history), (c) it becomes a B2B wedge — Q Accountants' practice clients get verified by QPay's ACSP, strengthening the distribution moat, (d) the data we collect (verified identity, residential address, DOB, nationality) is the same data the business account's KYC already requires, so the two flows collapse into one.</p>
-      <p><strong>Cost:</strong> ACSP application free but requires AML supervision; we already have it for the EMI. Ongoing cost: ID verification compute + compliance audit trail. <strong>Timing:</strong> apply immediately once EMI authorisation lands.</p>
+      <div class="strat-eyebrow">Strategic decision · independent of EMI timeline</div>
+      <h3>MVP ships today as a presenter. ACSP status comes via HMRC TCSP registration in parallel — 3–6 months, not 12–18. No need to wait for EMI.</h3>
+      <p><strong>Two paths, two timelines.</strong> At MVP we file IN01 as a standard XML Gateway presenter; each director / PSC brings their own personal code from GOV.UK One Login. This requires only a Presenter ID and a pre-funded Credit Account — both obtainable by email within days, zero regulatory gate. <em>We can ship formation the moment the product is built.</em></p>
+      <p><strong>ACSP is a parallel track, not a blocker.</strong> To verify identities ourselves (higher conversion, no bounce to gov.uk), we need AML supervision. The fastest path: register as a <strong>Trust &amp; Company Service Provider with HMRC</strong> (MLRs 2017) — £300 per premises + £40 per responsible person, 3–6 months approval. This is how every UK formation agent (1st Formations, Osome, CFS, Rapid) is already AML-supervised. EMI / FCA supervision would also work but takes 12–18 months and is unnecessary for this purpose.</p>
+      <p><strong>And we'll need ACSP anyway.</strong> From spring 2026 Companies House is making ACSP status a hard requirement for filing on behalf of third parties; from no earlier than November 2026, no ACSP = no third-party filings. Starting the HMRC TCSP application now gets us inside that window comfortably.</p>
+      <p><strong>Sequence:</strong> Day&nbsp;1 — submit HMRC TCSP application + ship formation MVP as presenter with One Login fallback. Month&nbsp;4–6 — TCSP approved → ACSP registration completes within weeks → migrate user flow to in-app verification. Month&nbsp;12–18 — EMI authorisation lands → business-account KYC collapses into same identity capture.</p>
     </div>
   </div>
 </section>
@@ -370,8 +371,8 @@
         <div class="api-body">User taps "Verify my identity" in QPay → deep link into One Login → provides passport / driving licence + facial check → returns to QPay with 11-char personal code. Time: 5–15 min typical. Failure rate: non-trivial for older passports, foreign passports, proof-of-address edge cases.</div>
       </div>
       <div class="api-card">
-        <div class="api-title">Path B · QPay as ACSP (preferred long-term)</div>
-        <div class="api-body">Same passport + liveness check, but performed inside QPay using our KYC vendor (same one the business account uses). We issue the personal code as an ACSP filing. User never leaves the app. Collapses formation KYC and account-opening KYC into a single capture.</div>
+        <div class="api-title">Path B · QPay as ACSP (mandatory by late 2026)</div>
+        <div class="api-body">Same passport + liveness check, but performed inside QPay using our KYC vendor. We issue the personal code directly. User never leaves the app. Unlocked by HMRC TCSP registration + ACSP application — 3–6 months total, runs in parallel with MVP. Not dependent on EMI authorisation.</div>
       </div>
       <div class="api-card">
         <div class="api-title">Who needs a code</div>
@@ -1303,9 +1304,9 @@
       <div class="dec-row">
         <div>
           <div class="dec-q">1. Register as ACSP to verify identities in-app?</div>
-          <div class="dec-a">Pros: single ID capture serving both formation and EMI KYC; lower drop-off; stronger Q-channel proposition. Cons: requires AML supervisor sign-off; adds compliance ops. Timing: apply as soon as EMI is authorised.</div>
+          <div class="dec-a">Yes, and start the AML-supervision clock immediately — but it does <em>not</em> block MVP. Path: apply for HMRC TCSP registration now (£300 + £40/person, 3–6 months) → ACSP follows within weeks of TCSP approval. Independent of the 12–18 month EMI track. Also becomes mandatory for third-party filings from late 2026, so the application needs to be in flight regardless.</div>
         </div>
-        <div class="dec-verdict yes">YES · fast-track</div>
+        <div class="dec-verdict yes">YES · HMRC route · parallel to MVP</div>
       </div>
 
       <div class="dec-row">
