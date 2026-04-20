@@ -128,11 +128,26 @@
   .pay-step-body { font-size: 12.5px; line-height: 1.5; color: var(--ink-2); }
   .pay-arrow { display: flex; align-items: center; justify-content: center; color: var(--ink-4); font-size: 20px; }
 
-  /* Phone wireframes (reuse from mockup) */
-  .group-head { margin-bottom: 22px; display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-  .group-title { font-size: 20px; font-weight: 700; letter-spacing: -0.018em; color: var(--ink); }
-  .group-meta { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em; }
-  .phones { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 28px; margin-bottom: 48px; }
+  /* Phone wireframes — horizontal scroll flow */
+  .phones-flow-wrap { position: relative; margin: 0 -32px; padding: 0 32px; }
+  .phones-flow { display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x proximity; padding: 12px 0 40px; -webkit-overflow-scrolling: touch; scroll-padding-left: 32px; }
+  .phones-flow::-webkit-scrollbar { height: 10px; }
+  .phones-flow::-webkit-scrollbar-track { background: var(--bg-2); border-radius: 5px; }
+  .phones-flow::-webkit-scrollbar-thumb { background: var(--ink-4); border-radius: 5px; }
+  .phones-flow::-webkit-scrollbar-thumb:hover { background: var(--ink-3); }
+  .phones-flow .phone-wrap { scroll-snap-align: start; flex-shrink: 0; }
+  .phases-divider { flex-shrink: 0; width: 120px; padding: 32px 20px; display: flex; flex-direction: column; justify-content: center; gap: 10px; border-left: 2px solid var(--accent); scroll-snap-align: start; }
+  .phases-divider .num { font-family: 'IBM Plex Mono', monospace; color: var(--accent); font-size: 13px; letter-spacing: 0.08em; font-weight: 600; }
+  .phases-divider .title { font-size: 20px; font-weight: 700; letter-spacing: -0.018em; color: var(--ink); line-height: 1.15; }
+  .phases-divider .meta { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.04em; }
+  .flow-legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 8px; padding: 14px 18px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
+  .flow-legend-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--ink-2); }
+  .flow-legend-swatch { width: 22px; height: 22px; border-radius: 5px; flex-shrink: 0; border: 1px solid var(--line); }
+  .flow-legend-swatch.cta { background: var(--accent); border-color: var(--accent); }
+  .flow-legend-swatch.option { background: var(--accent-soft); border-color: var(--accent); position: relative; }
+  .flow-legend-swatch.option::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 11px; color: var(--accent); font-weight: 700; line-height: 1; }
+  .flow-legend-swatch.field { background: var(--bg); }
+  .flow-legend-swatch.info { background: transparent; border: none; display: flex; align-items: center; justify-content: center; color: var(--good); font-size: 16px; font-weight: 700; }
   .phone-wrap { display: flex; flex-direction: column; align-items: center; gap: 14px; }
   .phone { width: 300px; height: 620px; background: var(--card); border: 1px solid var(--line-2); border-radius: 32px; padding: 0; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
   .phone-status { display: flex; justify-content: space-between; padding: 12px 22px 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-2); }
@@ -162,7 +177,22 @@
   .phone-chip.warn { background: var(--warn-soft); color: var(--warn); }
   .phone-cta { margin-top: auto; background: var(--accent); color: var(--accent-ink); padding: 12px; border-radius: 10px; text-align: center; font-size: 13.5px; font-weight: 600; letter-spacing: -0.005em; }
   .phone-cta.ghost { background: transparent; border: 1px solid var(--line); color: var(--ink-2); }
-  .phone-link { font-size: 12.5px; color: var(--accent); font-weight: 600; text-align: center; padding: 4px 0; }
+  .phone-link { font-size: 12.5px; color: var(--accent); font-weight: 600; text-align: center; padding: 4px 0; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; text-decoration-color: var(--accent-soft); }
+
+  /* Read-only informational — clearly NOT a button */
+  .phone-check { display: flex; gap: 10px; padding: 5px 2px; font-size: 13px; color: var(--ink-2); align-items: flex-start; line-height: 1.4; }
+  .phone-check::before { content: '✓'; color: var(--good); font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .phone-check-list { display: flex; flex-direction: column; gap: 0; padding: 4px 0; border-top: 1px dashed var(--line); border-bottom: 1px dashed var(--line); margin: 4px 0; }
+  .phone-check-list .phone-check { padding: 7px 2px; border-bottom: 1px dashed var(--line); }
+  .phone-check-list .phone-check:last-child { border-bottom: 0; }
+  .phone-note { display: flex; gap: 8px; padding: 8px 10px; font-size: 11.5px; color: var(--ink-3); line-height: 1.45; background: transparent; border-left: 2px solid var(--line-2); }
+  .phone-note::before { content: 'i'; font-family: Georgia, serif; font-style: italic; color: var(--ink-3); font-size: 12px; flex-shrink: 0; font-weight: 700; line-height: 1.3; }
+
+  /* Interactive fields — add right-side chevron to suggest tappability */
+  .phone-field { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font-size: 12.5px; color: var(--ink-2); position: relative; }
+  .phone-field.tappable { padding-right: 28px; cursor: pointer; }
+  .phone-field.tappable::after { content: '›'; position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--ink-4); font-size: 18px; font-weight: 400; line-height: 1; }
+  .phone-field.tappable:hover { border-color: var(--ink-4); }
   .phone-list-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; }
   .phone-list-item:last-child { border-bottom: 0; }
   .phone-list-item .name { color: var(--ink); font-weight: 500; }
@@ -601,12 +631,23 @@
       <span class="section-count">07 groups · 22 screens</span>
     </div>
 
-    <!-- GROUP 1 · PRE-FLIGHT -->
-    <div class="group-head">
-      <div class="group-title">01 · Pre-flight</div>
-      <div class="group-meta">What you'll need · invite co-founders · ID verify</div>
+    <!-- Legend: clickable vs read-only -->
+    <div class="flow-legend">
+      <div class="flow-legend-item"><span class="flow-legend-swatch cta"></span><span>Primary button — tap to continue</span></div>
+      <div class="flow-legend-item"><span class="flow-legend-swatch option"></span><span>Selected option — radio / checkbox</span></div>
+      <div class="flow-legend-item"><span class="flow-legend-swatch field"></span><span>Tappable field — edit inline</span></div>
+      <div class="flow-legend-item"><span class="flow-legend-swatch info">✓</span><span>Read-only list — not tappable</span></div>
     </div>
-    <div class="phones">
+
+    <!-- 22-screen horizontal flow -->
+    <div class="phones-flow-wrap">
+      <div class="phones-flow">
+
+        <div class="phases-divider">
+          <div class="num">01 · Phase</div>
+          <div class="title">Pre-<br>flight</div>
+          <div class="meta">3 screens</div>
+        </div>
 
       <div class="phone-wrap">
         <div class="phone">
@@ -616,11 +657,12 @@
               <div class="phone-chip">10 minutes · £0</div>
               <h3>Form your UK&nbsp;Ltd in QPay.</h3>
               <div class="sub">Companies House charges £100. QPay covers it. Your business account opens the moment the company number arrives.</div>
-              <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
-                <div class="phone-field"><span class="lbl">You'll need</span><span class="val">Passport or driving licence</span></div>
-                <div class="phone-field"><span class="lbl">You'll need</span><span class="val">Residential address (private)</span></div>
-                <div class="phone-field"><span class="lbl">You'll need</span><span class="val">Registered office (we offer ours)</span></div>
-                <div class="phone-field"><span class="lbl">You'll need</span><span class="val">Details of co-owners, if any</span></div>
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink-3); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px;">What you'll need</div>
+              <div class="phone-check-list">
+                <div class="phone-check">Passport or driving licence</div>
+                <div class="phone-check">Your residential address (kept private)</div>
+                <div class="phone-check">A registered office (we offer ours)</div>
+                <div class="phone-check">Details of any co-owners</div>
               </div>
             </div>
             <div class="phone-cta">Start — it's free</div>
@@ -648,7 +690,7 @@
               <div class="phone-list-item"><span class="name">Maria Ivanova (you)</span><span class="status ok">Owner</span></div>
               <div class="phone-list-item"><span class="name">+ Add co-founder</span><span style="color: var(--accent); font-size: 11px;">by email</span></div>
             </div>
-            <div class="phone-field" style="margin-top: 4px;"><span class="lbl">Tip</span><span class="val" style="font-size: 12px; font-weight: 400;">Most new Ltds are 1–2 directors. You can add more later but it's easier to list everyone upfront.</span></div>
+            <div class="phone-note">Most new Ltds are 1–2 directors. You can add more later but it's easier to list everyone upfront.</div>
             <div class="phone-cta">Continue with 1 person</div>
           </div>
         </div>
@@ -682,14 +724,11 @@
         </div>
       </div>
 
-    </div>
-
-    <!-- GROUP 2 · COMPANY BASICS -->
-    <div class="group-head">
-      <div class="group-title">02 · Company basics</div>
-      <div class="group-meta">Name check · type · SIC · address · articles</div>
-    </div>
-    <div class="phones">
+        <div class="phases-divider">
+          <div class="num">02 · Phase</div>
+          <div class="title">Company<br>basics</div>
+          <div class="meta">5 screens</div>
+        </div>
 
       <div class="phone-wrap">
         <div class="phone">
@@ -816,14 +855,11 @@
         </div>
       </div>
 
-    </div>
-
-    <!-- GROUP 3 · DIRECTORS -->
-    <div class="group-head">
-      <div class="group-title">03 · Directors</div>
-      <div class="group-meta">Add directors · personal details · ID verification return</div>
-    </div>
-    <div class="phones">
+        <div class="phases-divider">
+          <div class="num">03 · Phase</div>
+          <div class="title">Directors</div>
+          <div class="meta">3 screens</div>
+        </div>
 
       <div class="phone-wrap">
         <div class="phone">
@@ -840,7 +876,7 @@
               <div class="phone-list-item"><div><div class="name">Maria Ivanova</div><div style="font-size: 11px; color: var(--ink-3);">ID verified · personal code AB1/2345/6789</div></div><span class="status ok">Ready</span></div>
               <div class="phone-list-item"><span class="name" style="color: var(--accent);">+ Add another director</span><span style="color: var(--ink-4); font-size: 11px;">Individual or company</span></div>
             </div>
-            <div class="phone-field"><span class="lbl">Reminder</span><span class="val" style="font-size: 12px; font-weight: 400;">A director can be the same person as a shareholder. Many one-person Ltds have exactly one of each.</span></div>
+            <div class="phone-note">A director can be the same person as a shareholder. Many one-person Ltds have exactly one of each.</div>
             <div class="phone-cta">Continue with 1 director</div>
           </div>
         </div>
@@ -902,14 +938,11 @@
         </div>
       </div>
 
-    </div>
-
-    <!-- GROUP 4 · SHARES -->
-    <div class="group-head">
-      <div class="group-title">04 · Share capital</div>
-      <div class="group-meta">Structure template · classes · allocate</div>
-    </div>
-    <div class="phones">
+        <div class="phases-divider">
+          <div class="num">04 · Phase</div>
+          <div class="title">Share<br>capital</div>
+          <div class="meta">3 screens</div>
+        </div>
 
       <div class="phone-wrap">
         <div class="phone">
@@ -979,7 +1012,7 @@
               <div class="phone-list-item" style="padding: 10px 0;"><div><div class="name">Maria Ivanova</div><div style="font-size: 11px; color: var(--ink-3);">100 shares · 100.0%</div></div><span class="status ok">Paid £100</span></div>
               <div class="phone-list-item" style="padding: 10px 0;"><span class="name" style="color: var(--accent);">+ Add subscriber</span></div>
             </div>
-            <div class="phone-field"><span class="lbl">Memorandum</span><span class="val" style="font-size: 12px; font-weight: 400;">"I agree to become a member of Orca Design Ltd and take at least one share." Auto-generated, signed at review.</span></div>
+            <div class="phone-note">Memorandum: "I agree to become a member of Orca Design Ltd and take at least one share." Auto-generated, signed at review.</div>
             <div class="phone-chip ok">✓ 100% allocated · cap table ready</div>
             <div class="phone-cta">Continue</div>
           </div>
@@ -991,14 +1024,11 @@
         </div>
       </div>
 
-    </div>
-
-    <!-- GROUP 5 · PSCs -->
-    <div class="group-head">
-      <div class="group-title">05 · People with significant control</div>
-      <div class="group-meta">Auto-suggest from cap table · nature of control</div>
-    </div>
-    <div class="phones">
+        <div class="phases-divider">
+          <div class="num">05 · Phase</div>
+          <div class="title">PSCs</div>
+          <div class="meta">2 screens</div>
+        </div>
 
       <div class="phone-wrap">
         <div class="phone">
@@ -1052,14 +1082,11 @@
         </div>
       </div>
 
-    </div>
-
-    <!-- GROUP 6 · STATEMENTS + REVIEW + PAY + SUBMIT -->
-    <div class="group-head">
-      <div class="group-title">06 · Review, pay, submit</div>
-      <div class="group-meta">Statements · summary · sign · filing</div>
-    </div>
-    <div class="phones">
+        <div class="phases-divider">
+          <div class="num">06 · Phase</div>
+          <div class="title">Review<br>pay, file</div>
+          <div class="meta">4 screens</div>
+        </div>
 
       <div class="phone-wrap">
         <div class="phone">
@@ -1162,14 +1189,11 @@
         </div>
       </div>
 
-    </div>
-
-    <!-- GROUP 7 · POST-INCORP -->
-    <div class="group-head">
-      <div class="group-title">07 · Post-incorporation</div>
-      <div class="group-meta">Certificate received · auto actions unlock business</div>
-    </div>
-    <div class="phones">
+        <div class="phases-divider">
+          <div class="num">07 · Phase</div>
+          <div class="title">Post-<br>incorp</div>
+          <div class="meta">2 screens</div>
+        </div>
 
       <div class="phone-wrap">
         <div class="phone">
@@ -1219,7 +1243,8 @@
         </div>
       </div>
 
-    </div>
+      </div><!-- /phones-flow -->
+    </div><!-- /phones-flow-wrap -->
 
   </div>
 </section>
