@@ -140,6 +140,11 @@
   .phases-divider .num { font-family: 'IBM Plex Mono', monospace; color: var(--accent); font-size: 13px; letter-spacing: 0.08em; font-weight: 600; }
   .phases-divider .title { font-size: 20px; font-weight: 700; letter-spacing: -0.018em; color: var(--ink); line-height: 1.15; }
   .phases-divider .meta { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--ink-3); letter-spacing: 0.04em; }
+  .phases-divider.same { border-left: 2px dashed var(--ink-4); width: 170px; background: var(--bg-2); }
+  .phases-divider.same .num { color: var(--ink-4); }
+  .phases-divider.same .title { color: var(--ink-3); font-size: 15px; line-height: 1.25; }
+  .phases-divider.same .meta { color: var(--ink-4); font-style: italic; font-size: 10px; }
+  .phases-divider.same .tag { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: var(--ink-2); letter-spacing: 0.1em; text-transform: uppercase; background: var(--card); padding: 4px 8px; border-radius: 4px; display: inline-block; align-self: flex-start; border: 1px solid var(--line-2); }
   .flow-legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 8px; padding: 14px 18px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; }
   .flow-legend-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--ink-2); }
   .flow-legend-swatch { width: 22px; height: 22px; border-radius: 5px; flex-shrink: 0; border: 1px solid var(--line); }
@@ -1572,6 +1577,13 @@
           </div>
         </div>
 
+        <div class="phases-divider same">
+          <span class="tag">unchanged</span>
+          <div class="num">02 · Phase</div>
+          <div class="title">Company<br>basics</div>
+          <div class="meta">A-08 … A-12<br>same as Path A</div>
+        </div>
+
         <div class="phases-divider">
           <div class="num">03 · Phase</div>
           <div class="title">Director<br>in-app</div>
@@ -1657,6 +1669,13 @@
             <div class="phone-caption-name">Co-founder · ready</div>
             <div class="phone-caption-note">End of co-founder flow. Maria's director list updates in real time.</div>
           </div>
+        </div>
+
+        <div class="phases-divider same">
+          <span class="tag">unchanged</span>
+          <div class="num">04–07 · Phases</div>
+          <div class="title">Shares ·<br>PSCs · Review ·<br>Pay · Submit ·<br>Certificate</div>
+          <div class="meta">A-20 … A-30<br>same as Path A</div>
         </div>
 
       </div><!-- /phones-flow -->
