@@ -42,17 +42,17 @@ Presenter ID in the envelope header; CH authenticates via a hashed password.
 ### Email template — Presenter ID request
 
 > **To:** `ch.softwarehouse@companieshouse.gov.uk`
-> **Subject:** Software Developer registration — QPay Ltd — Presenter ID request (production + test)
+> **Subject:** Software Developer registration — QPayments Limited — Presenter ID request (production + test)
 
 ```
 Dear Software Developer Support Team,
 
-I am writing on behalf of QPay Ltd to request Presenter ID credentials
+I am writing on behalf of QPayments Limited to request Presenter ID credentials
 for XML Gateway filing, including a parallel test-environment account
 for our development work.
 
 Company details
-  Company name:         QPay Ltd
+  Company name:         QPayments Limited
   Registered office:    [TBD — QPay's London office]
   Company number:       [applying in parallel / company number here once issued]
   Primary tech contact: [name], [email]
@@ -85,7 +85,7 @@ to provide additional information or a technical walkthrough.
 
 Best regards,
 [Your name]
-[Role], QPay Ltd
+[Role], QPayments Limited
 [Email]
 [Phone]
 ```
@@ -93,7 +93,7 @@ Best regards,
 **Notes:**
 - Be explicit about requesting both production and test — they sometimes
   issue only production unless you ask for both.
-- If QPay Ltd isn't incorporated yet, put the incorporation as in-flight
+- If QPayments Limited isn't incorporated yet, put the incorporation as in-flight
   with an expected date; CH are fine with that.
 
 ---
@@ -141,13 +141,13 @@ throughput data.
 ### Cover email template — Credit Account application
 
 > **To:** Companies House Credit Account team (address printed on CA1 form — confirm the current one when filling out)
-> **Subject:** Credit Account application — QPay Ltd
+> **Subject:** Credit Account application — QPayments Limited
 
 ```
 Dear Companies House,
 
 Please find attached our completed CA1 form applying for a Credit
-Account for QPay Ltd.
+Account for QPayments Limited.
 
 We plan to use the Credit Account primarily to fund IN01 submissions
 via the XML Gateway, with volumes ramping as we onboard new customers.
@@ -159,14 +159,14 @@ Initial BACS top-up planned upon approval: £250.
 Please confirm receipt and the BACS remittance details.
 
 Company details
-  Company name:  QPay Ltd
+  Company name:  QPayments Limited
   Company number:[TBD]
   Registered office: [TBD]
   Contact:       [name], [email], [phone]
 
 Best regards,
 [Your name]
-[Role], QPay Ltd
+[Role], QPayments Limited
 ```
 
 **Notes:**
