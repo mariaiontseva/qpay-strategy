@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QPay — Companies House access plan · Path A MVP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f2f3f4;
+    --bg-2: #e9ebec;
+    --card: #ffffff;
+    --ink: #0a0d12;
+    --ink-2: #2b3440;
+    --ink-3: #6a7381;
+    --ink-4: #a2a9b2;
+    --line: #dfe2e6;
+    --line-2: #c8cdd4;
+    --accent: #0c2a4a;
+    --accent-soft: #dae5f0;
+    --accent-ink: #ffffff;
+    --good: #1a7a3c;
+    --good-soft: #d9edd9;
+    --warn: #a0640a;
+    --warn-soft: #f4ecd0;
+    --neutral-soft: #e4e6e8;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+
+  /* Topbar (copied from formation.html) */
+  .topbar { position: sticky; top: 0; z-index: 10; background: rgba(242,243,244,0.92); backdrop-filter: saturate(1.4) blur(8px); border-bottom: 1px solid var(--line); }
+  .topbar-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 32px; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+  .brand-mark { width: 28px; height: 28px; border-radius: 7px; background: var(--accent); color: var(--accent-ink); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+  .brand-name { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+  .tabs { display: flex; gap: 4px; }
+  .tab { padding: 8px 14px; font-size: 13px; color: var(--ink-3); text-decoration: none; border-radius: 8px; display: flex; align-items: center; gap: 8px; transition: background 0.15s, color 0.15s; }
+  .tab-num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink-4); letter-spacing: 0.04em; }
+  .tab:hover { background: var(--bg-2); color: var(--ink-2); }
+  .tab.active { background: var(--ink); color: #fff; }
+  .tab.active .tab-num { color: rgba(255,255,255,0.6); }
+
+  /* Hero */
+  section { padding: 40px 0; }
+  section + section { padding-top: 20px; }
+  .section-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+  h1 { font-size: 48px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; margin: 10px 0 16px; }
+  h2 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin: 28px 0 12px; }
+  h3 { font-size: 17.5px; font-weight: 700; letter-spacing: -0.015em; margin: 18px 0 8px; }
+  p { margin: 0 0 10px; color: var(--ink-2); }
+  p.lede { font-size: 17px; color: var(--ink-2); max-width: 760px; }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 14px 0 18px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: 13.5px; vertical-align: top; }
+  th { background: var(--bg-2); font-weight: 600; color: var(--ink); font-size: 12.5px; letter-spacing: 0.01em; }
+  tr:last-child td { border-bottom: 0; }
+  td code { background: var(--bg-2); padding: 2px 6px; border-radius: 4px; font-size: 12px; font-family: 'IBM Plex Mono', monospace; }
+
+  /* Code blocks (email templates) */
+  pre { background: var(--ink); color: #e8eaee; font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; line-height: 1.6; padding: 20px 22px; border-radius: 10px; overflow-x: auto; margin: 12px 0 20px; white-space: pre; }
+  code.inline { background: var(--bg-2); padding: 2px 7px; border-radius: 4px; font-size: 12.5px; font-family: 'IBM Plex Mono', monospace; color: var(--ink); }
+
+  /* Email subject line */
+  .email-meta { background: var(--card); border: 1px solid var(--line); border-radius: 10px 10px 0 0; padding: 12px 22px; font-size: 12.5px; color: var(--ink-2); font-family: 'IBM Plex Mono', monospace; }
+  .email-meta strong { color: var(--ink); font-weight: 600; }
+  .email-meta + pre { margin-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
+
+  /* Callout */
+  .callout { background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--accent); padding: 14px 18px; border-radius: 6px; margin: 14px 0; font-size: 13.5px; }
+  .callout.warn { border-left-color: var(--warn); }
+  .callout.good { border-left-color: var(--good); }
+  .callout strong { color: var(--ink); }
+  .callout ul { margin: 6px 0 0; padding-left: 18px; }
+  .callout li { color: var(--ink-2); margin-bottom: 3px; }
+
+  /* TL;DR card */
+  .hero-card { background: var(--accent); color: #fff; border-radius: 12px; padding: 26px 28px; margin-top: 22px; }
+  .hero-card-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.62); margin-bottom: 10px; }
+  .hero-card h3 { color: #fff; font-size: 18px; margin-top: 0; }
+  .hero-card p { color: rgba(255,255,255,0.85); font-size: 14px; margin: 0; }
+
+  ul { color: var(--ink-2); padding-left: 22px; margin: 6px 0 14px; }
+  ul li { margin-bottom: 4px; }
+  ul li code.inline { font-size: 12px; }
+
+  /* Footer */
+  footer { padding: 36px 0 40px; background: var(--accent); color: #fff; margin-top: 40px; }
+  footer .foot-note { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.64); letter-spacing: 0.08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<nav class="topbar">
+  <div class="container topbar-inner">
+    <a href="competitors.html" class="brand">
+      <span class="brand-mark">Q</span>
+      <span class="brand-name">QPay</span>
+    </a>
+    <div class="tabs">
+      <a href="competitors.html" class="tab"><span class="tab-num">01</span>Competitors</a>
+      <a href="features.html" class="tab"><span class="tab-num">02</span>Features</a>
+      <a href="mockup.html" class="tab"><span class="tab-num">03</span>Mockup</a>
+      <a href="formation.html" class="tab"><span class="tab-num">04</span>Formation</a>
+      <a href="ch-access.html" class="tab active"><span class="tab-num">05</span>CH Access</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section>
+  <div class="container">
+    <div class="section-eyebrow">Ops plan · Path A · MVP</div>
+    <h1>Companies House access plan.</h1>
+    <p class="lede">Three registrations needed before QPay can submit IN01s in production. All free except the actual £100 filing fee. Path B (ACSP) is a separate parallel track with its own application process.</p>
+
+    <div class="hero-card">
+      <div class="hero-card-eyebrow">Single critical blocker</div>
+      <h3>Credit Account funding.</h3>
+      <p>It's the slowest piece (5–10 days approval + 1–3 days BACS). Submit the CA1 form on Day 1 in parallel with the Software Developer email. Everything else hangs off those two.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TL;DR table -->
+<section>
+  <div class="container">
+    <h2>TL;DR</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 32px;">#</th>
+          <th>Access</th>
+          <th>Where</th>
+          <th>Time</th>
+          <th style="width: 80px;">Blocker?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>Presenter ID + password</strong><br><span style="color: var(--ink-3); font-size: 12px;">XML Gateway, production</span></td>
+          <td>email <code>ch.softwarehouse@companieshouse.gov.uk</code></td>
+          <td>3–7 days</td>
+          <td><span style="color: var(--warn); font-weight: 600;">Yes</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>Test Presenter ID + password</strong><br><span style="color: var(--ink-3); font-size: 12px;">sandbox</span></td>
+          <td>same email as #1 — bundled request</td>
+          <td>3–7 days</td>
+          <td><span style="color: var(--warn); font-weight: 600;">Yes, for dev</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>Credit Account</strong><br><span style="color: var(--ink-3); font-size: 12px;">for £100 filing fees</span></td>
+          <td>CA1 form → post / email to CH</td>
+          <td>5–10 days + 1–3 days BACS</td>
+          <td><span style="color: var(--warn); font-weight: 600;">Yes, for live</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><strong>Public Data API key</strong><br><span style="color: var(--ink-3); font-size: 12px;">free name checks, lookup</span></td>
+          <td>self-serve at <code>developer.company-information.service.gov.uk</code></td>
+          <td>5 minutes</td>
+          <td style="color: var(--ink-3);">No</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 1. Presenter ID -->
+<section>
+  <div class="container">
+    <h2>1. Presenter ID + Authentication (XML Gateway)</h2>
+    <p><strong>What we get:</strong> a 6-digit Presenter ID and authentication password, bound to QPay's software. This is the identity under which QPay submits IN01 XML envelopes to the Companies House XML Gateway. Every submission includes the Presenter ID in the envelope header; CH authenticates via a hashed password.</p>
+    <p><strong>Where to request:</strong> Companies House Software Developer Support. Email <code class="inline">ch.softwarehouse@companieshouse.gov.uk</code>. This is the only channel — there is no self-serve portal for the XML Gateway.</p>
+    <p><strong>Cost:</strong> free to register; per-submission fees paid via Credit Account (see #3).</p>
+
+    <h3>Email template — Presenter ID request</h3>
+    <div class="email-meta">
+      <strong>To:</strong> ch.softwarehouse@companieshouse.gov.uk<br>
+      <strong>Subject:</strong> Software Developer registration — QPay Ltd — Presenter ID request (production + test)
+    </div>
+    <pre>Dear Software Developer Support Team,
+
+I am writing on behalf of QPay Ltd to request Presenter ID credentials
+for XML Gateway filing, including a parallel test-environment account
+for our development work.
+
+Company details
+  Company name:         QPay Ltd
+  Registered office:    [TBD — QPay's London office]
+  Company number:       [applying in parallel / company number once issued]
+  Primary tech contact: [name], [email]
+  Business contact:     Maria Iontseva, maria@mitocholine.com
+
+Software description
+  QPay is a UK business-account platform for new limited companies.
+  We file IN01 on behalf of our users as part of an integrated
+  onboarding flow; subsequent statutory filings follow post-
+  incorporation. Submissions are constructed client-side as XML
+  envelopes against the Companies House schemas and delivered
+  through the XML Gateway.
+
+Forms we plan to file (MVP)
+  - IN01 (Incorporation)
+
+Forms planned for follow-on releases
+  - AP01 / AP02 / AP03 / AP04  (director and secretary appointments)
+  - TM01 / TM02                 (terminations)
+  - CS01                        (confirmation statement)
+  - AA02 / AA03                 (dormant and micro accounts)
+
+Requested credentials
+  1. Production Presenter ID + authentication password
+  2. Test Presenter ID + authentication password (sandbox)
+
+We have reviewed the XML Gateway schemas and will follow the
+standard submission, acknowledgement, and rejection handling
+protocols. Happy to provide additional information or a technical
+walkthrough.
+
+Best regards,
+[Your name]
+[Role], QPay Ltd
+[Email]
+[Phone]</pre>
+    <div class="callout">
+      <strong>Notes:</strong>
+      <ul>
+        <li>Be explicit about requesting both production and test — they sometimes issue only production unless you ask for both.</li>
+        <li>If QPay Ltd isn't incorporated yet, put the incorporation as in-flight with an expected date; CH are fine with that.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Test Presenter -->
+<section>
+  <div class="container">
+    <h2>2. Test Presenter ID + Test Credit Account (sandbox)</h2>
+    <p><strong>What we get:</strong> a parallel set of credentials that submit into CH's test environment. Submissions are parsed, validated against the real schemas, and either accepted (no company is created — it's simulated) or rejected with the same error codes as production.</p>
+    <p><strong>Why we need it:</strong> to integration-test the full IN01 construction and submission pipeline without paying £100 per attempt and without polluting the real register.</p>
+    <p><strong>Where:</strong> same request as #1 above. Most teams request both at once.</p>
+    <p><strong>Cost:</strong> free. Test Credit Account is also free and pre-funded.</p>
+  </div>
+</section>
+
+<!-- 3. Credit Account -->
+<section>
+  <div class="container">
+    <h2>3. Credit Account (for real filing fees)</h2>
+    <p><strong>What we get:</strong> a pre-funded account with Companies House; each IN01 we submit debits the £100 filing fee from it. Without a funded Credit Account, CH will reject live submissions even if the XML is valid.</p>
+    <p><strong>Where to apply:</strong></p>
+    <ul>
+      <li>Form: <strong>CA1</strong> (Credit Account application)</li>
+      <li>Submission: post or email to Companies House Credit Account team</li>
+      <li>Funding method: BACS bank transfer from our business account</li>
+    </ul>
+
+    <h3>Current fees relevant to us (from 1 Feb 2026)</h3>
+    <table>
+      <thead>
+        <tr><th>Filing</th><th>Digital fee</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>IN01 (incorporation)</td><td><strong>£100</strong></td></tr>
+        <tr><td>CS01 (confirmation statement)</td><td>£34</td></tr>
+        <tr><td>AP01 / TM01 (appointments / terminations)</td><td>£0</td></tr>
+        <tr><td>Change of name (NM01)</td><td>£20</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Recommended initial top-up:</strong> £250. Covers 2 IN01s as buffer from day 1. For scale we'll top up with larger BACS transfers once we have monthly throughput data.</p>
+
+    <h3>Cover email template — Credit Account application</h3>
+    <div class="email-meta">
+      <strong>To:</strong> Companies House Credit Account team <span style="color: var(--ink-3);">(address printed on CA1 form — confirm the current one when filling out)</span><br>
+      <strong>Subject:</strong> Credit Account application — QPay Ltd
+    </div>
+    <pre>Dear Companies House,
+
+Please find attached our completed CA1 form applying for a Credit
+Account for QPay Ltd.
+
+We plan to use the Credit Account primarily to fund IN01 submissions
+via the XML Gateway, with volumes ramping as we onboard new
+customers. We expect initial monthly volume in the low double
+digits, growing from there.
+
+Initial BACS top-up planned upon approval: £250.
+
+Please confirm receipt and the BACS remittance details.
+
+Company details
+  Company name:      QPay Ltd
+  Company number:    [TBD]
+  Registered office: [TBD]
+  Contact:           [name], [email], [phone]
+
+Best regards,
+[Your name]
+[Role], QPay Ltd</pre>
+
+    <div class="callout">
+      <strong>Notes:</strong>
+      <ul>
+        <li>CA1 asks for a single nominated contact — keep it consistent with the contact used in the XML Gateway registration so CH can cross-reference.</li>
+        <li>Fund the account before going live; a submitted IN01 with zero balance bounces.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Public Data API -->
+<section>
+  <div class="container">
+    <h2>4. Public Data API key (free, self-serve)</h2>
+    <p><strong>What we get:</strong> an API key to query the public Companies House register — name availability checks, SIC code lookups, officer searches, full company filings history.</p>
+    <p><strong>Used in Path A at:</strong></p>
+    <ul>
+      <li><strong>A-05 (company name):</strong> live check as user types — is the name already taken? does it trip "same as" rules?</li>
+      <li><strong>A-06 (SIC codes):</strong> suggest relevant codes from natural-language search.</li>
+      <li>Post-MVP: powering the "I already have a Ltd" onboarding branch.</li>
+    </ul>
+    <p><strong>Where:</strong> <code class="inline">developer.company-information.service.gov.uk</code></p>
+    <ul>
+      <li>Click <strong>Register</strong> (top right)</li>
+      <li>Create account → verify email → create application → get API key</li>
+      <li>Rate limit: 600 requests per 5 minutes on free tier. Plenty for MVP.</li>
+    </ul>
+    <p><strong>Cost:</strong> free. <strong>No email template needed</strong> — entirely self-serve, takes 5 minutes.</p>
+  </div>
+</section>
+
+<!-- What we don't need -->
+<section>
+  <div class="container">
+    <h2>What we do <em>not</em> need for Path A</h2>
+    <p>These become relevant for Path B (ACSP) or later releases — do not block MVP:</p>
+    <div class="callout warn">
+      <ul>
+        <li><strong>ACSP registration</strong> — required only to verify IDs ourselves in-app. Path A bounces users to GOV.UK One Login instead. Separate track.</li>
+        <li><strong>Identity Verification Service (direct API)</strong> — also ACSP-only. For Path A we capture the personal code the user returns with after One Login, no API call needed.</li>
+        <li><strong>REST Filing API for incorporations</strong> — Companies House has not yet published REST endpoints for IN01. When they do, we migrate; until then XML Gateway is the only route.</li>
+        <li><strong>Streaming API</strong> — real-time stream of register events. Useful later for reconciliation and cap-table sync; not MVP.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section>
+  <div class="container">
+    <h2>Timeline</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 110px;">Day</th>
+          <th>Action</th>
+          <th style="width: 120px;">Owner</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>D+0</code></td>
+          <td>Send email from template #1 to <code>ch.softwarehouse@companieshouse.gov.uk</code></td>
+          <td>Maria</td>
+        </tr>
+        <tr>
+          <td><code>D+0</code></td>
+          <td>Download &amp; fill CA1 form; send by post OR email with template #3</td>
+          <td>Maria</td>
+        </tr>
+        <tr>
+          <td><code>D+0</code></td>
+          <td>Register for Public Data API key (5 min, self-serve)</td>
+          <td>Maria</td>
+        </tr>
+        <tr>
+          <td><code>D+1 → D+7</code></td>
+          <td>CH responds with Presenter ID + test creds</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><code>D+1</code></td>
+          <td>Start building IN01 XML construction + signing pipeline using schema docs</td>
+          <td>Dev</td>
+        </tr>
+        <tr>
+          <td><code>D+7 → D+10</code></td>
+          <td>Credit Account approved + BACS remittance details received</td>
+          <td>Maria</td>
+        </tr>
+        <tr>
+          <td><code>D+10 → D+12</code></td>
+          <td>BACS top-up £250 clears</td>
+          <td>Maria</td>
+        </tr>
+        <tr>
+          <td><code>D+7 → D+20</code></td>
+          <td>Run test IN01s in sandbox, iterate on validation errors</td>
+          <td>Dev</td>
+        </tr>
+        <tr>
+          <td><code>D+20</code></td>
+          <td>First live IN01 submission with internal test company</td>
+          <td>Dev + Maria</td>
+        </tr>
+        <tr>
+          <td><code>D+20 →</code></td>
+          <td>First customer formations</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout good">
+      <strong>Single critical blocker:</strong> Credit Account funding. Everything else can progress in parallel while waiting.
+    </div>
+  </div>
+</section>
+
+<!-- Refs + risks -->
+<section>
+  <div class="container">
+    <h2>References</h2>
+    <ul>
+      <li>XML Gateway schemas and protocol docs: CH send these with the credentials. Public mirror at <code class="inline">developer.companieshouse.gov.uk</code> (separate from the Public Data API subdomain).</li>
+      <li>Public Data API docs: <code class="inline">developer-specs.company-information.service.gov.uk</code></li>
+      <li>Filing fees (current and historic): search <code class="inline">"Companies House fees"</code> on gov.uk — the PDF lists every form.</li>
+      <li>CA1 form: search <code class="inline">"Companies House CA1"</code> on gov.uk for the latest PDF.</li>
+    </ul>
+
+    <h2>Risks &amp; things to watch</h2>
+    <div class="callout warn">
+      <ol style="margin: 0; padding-left: 20px; color: var(--ink-2);">
+        <li style="margin-bottom: 6px;"><strong>CH response times can slip during end-of-year filing rush</strong> (late Dec, early Jan when a lot of companies file year-end accounts). Not relevant right now, but worth tracking if we re-apply or add services.</li>
+        <li style="margin-bottom: 6px;"><strong>CH may deprecate XML Gateway</strong> once they release REST incorporation — no published date but expected within 12–24 months. We plan migration when the REST spec ships; until then XML is the only route.</li>
+        <li style="margin-bottom: 6px;"><strong>Credit Account balance alerts</strong> — set an internal low-balance threshold (e.g., £300). If we run dry mid-session our flows will 500.</li>
+        <li><strong>Schema version pinning</strong> — CH occasionally releases new IN01 schema versions (currently v12.0, Feb 2026). They give ~30 days notice; we should subscribe to their developer mailing list the moment we get the Presenter ID.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="foot-note">QPay · Path A · MVP operations · Companies House</div>
+  </div>
+</footer>
+
+</body>
+</html>
