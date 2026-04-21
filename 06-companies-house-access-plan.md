@@ -56,7 +56,7 @@ Company details
   Registered office:    [TBD — QPay's London office]
   Company number:       [applying in parallel / company number here once issued]
   Primary tech contact: [name], [email]
-  Business contact:     Maria Iontseva, maria@mitocholine.com
+  Business contact:     Maria Iontseva, maria@qpayments.co.uk
 
 Software description
   QPay is a UK business-account platform for new limited companies.
