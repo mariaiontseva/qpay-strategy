@@ -141,13 +141,7 @@
   <div class="container">
     <div class="section-eyebrow">System architecture · repos · contracts</div>
     <h1>Three repos, one product.</h1>
-    <p class="lede">QPay ships as a Flutter mobile app backed by a TypeScript API. Strategy and docs live separately. Here's why three repositories (not one monorepo), how they talk to each other, and what goes where.</p>
-
-    <div class="hero-card">
-      <div class="hero-card-eyebrow">Decision</div>
-      <h3>Polyrepo, not monorepo.</h3>
-      <p>Flutter (Dart) and Node (TypeScript) are different ecosystems with incompatible tooling. Mixing them in one repo creates more friction than it saves. We split by runtime boundary and wire them through a versioned HTTP contract.</p>
-    </div>
+    <p class="lede">QPay ships as a Flutter mobile app backed by a TypeScript API. Strategy and docs live separately. Here's how the three repositories fit together, how they talk to each other, and what goes where.</p>
   </div>
 </section>
 
@@ -158,26 +152,22 @@
     <div class="repo-diagram">
 
       <div class="repo-box">
-        <span class="repo-status exists">EXISTS</span>
-        <div class="repo-tag">01 · Public strategy</div>
+        <div class="repo-tag">01 · Strategy</div>
         <div class="repo-name">qpay-strategy</div>
         <div class="repo-title">Product strategy &amp; docs</div>
         <div class="repo-body">Competitive analysis, flow wireframes, Companies House plan, this architecture doc. Plain HTML + markdown. Deployed to GitHub Pages.</div>
         <div class="repo-chips">
-          <span class="chip public">public</span>
           <span class="chip">HTML</span>
           <span class="chip">GitHub Pages</span>
         </div>
       </div>
 
       <div class="repo-box">
-        <span class="repo-status new">NEW</span>
         <div class="repo-tag">02 · Mobile client</div>
         <div class="repo-name">qpay-app</div>
         <div class="repo-title">Flutter iOS + Android</div>
         <div class="repo-body">Single Dart codebase targeting iOS and Android. Handles onboarding, formation flow, banking UI, KYC capture. Talks to backend over HTTPS.</div>
         <div class="repo-chips">
-          <span class="chip private">private</span>
           <span class="chip flutter">Flutter</span>
           <span class="chip flutter">Dart</span>
           <span class="chip">Fastlane</span>
@@ -185,13 +175,11 @@
       </div>
 
       <div class="repo-box">
-        <span class="repo-status new">NEW</span>
         <div class="repo-tag">03 · API &amp; business logic</div>
         <div class="repo-name">qpay-backend</div>
         <div class="repo-title">TypeScript API + integrations</div>
         <div class="repo-body">Auth, accounts, payments, formation engine, Companies House XML Gateway client, KYC vendor integration, Postgres. The source of truth for all user and company state.</div>
         <div class="repo-chips">
-          <span class="chip private">private</span>
           <span class="chip ts">TypeScript</span>
           <span class="chip">Node.js</span>
           <span class="chip">Postgres</span>
@@ -271,7 +259,7 @@
         <!-- Strategy repo note (below, dashed) -->
         <rect x="230" y="300" width="520" height="60" rx="8" fill="#f2f3f4" stroke="#c8cdd4" stroke-width="1.5" stroke-dasharray="5,4"/>
         <text x="490" y="325" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#6a7381" letter-spacing="1">QPAY-STRATEGY · SEPARATE</text>
-        <text x="490" y="345" text-anchor="middle" font-family="Inter" font-size="12" fill="#2b3440">Public docs &amp; strategy — no runtime coupling to app or backend</text>
+        <text x="490" y="345" text-anchor="middle" font-family="Inter" font-size="12" fill="#2b3440">Docs &amp; strategy — no runtime coupling to app or backend</text>
       </svg>
     </div>
 
@@ -281,53 +269,19 @@
 
 <section>
   <div class="container">
-    <h2>Why not a monorepo?</h2>
-
-    <div class="reason-grid">
-      <div class="reason-card no">
-        <h4>❌ Tooling mismatch</h4>
-        <p>Dart uses <code class="inline">pub</code>, Node uses <code class="inline">npm / pnpm</code>. They don't share lockfiles, workspaces, or dependency resolution. A monorepo means running two separate package managers side by side — all the downsides of splitting, none of the upsides.</p>
-      </div>
-      <div class="reason-card no">
-        <h4>❌ CI times diverge</h4>
-        <p>Flutter build + iOS/Android signing runs 15–20 minutes. Backend unit tests run in 2–3. In one repo every trivial backend PR waits on a mobile build. Separate repos keep each loop fast.</p>
-      </div>
-      <div class="reason-card no">
-        <h4>❌ Different secrets</h4>
-        <p>App Store signing keys, Play Console credentials, provisioning profiles live in <code class="inline">qpay-app</code>. Database URLs, Stripe secret keys, Companies House passwords live in <code class="inline">qpay-backend</code>. Keeping them apart reduces the blast radius if either repo is compromised.</p>
-      </div>
-      <div class="reason-card no">
-        <h4>❌ Different contributors</h4>
-        <p>Mobile contractors, backend contractors, accounting partners may all be granted access in different combinations. Separate repos make permission boundaries clear; a monorepo forces "all or nothing".</p>
-      </div>
-      <div class="reason-card yes">
-        <h4>✅ Shared types — solved by OpenAPI</h4>
-        <p>The one real monorepo win is "change a model on both sides at once". OpenAPI solves this without the monorepo cost: backend defines the schema, CI generates a typed Dart client, mobile imports it. Drift becomes a compile error, not a production bug.</p>
-      </div>
-      <div class="reason-card yes">
-        <h4>✅ Atomic cross-stack changes — not needed at MVP</h4>
-        <p>The mobile app and backend ship on different cadences anyway (App Store review = days, backend deploy = minutes). API versioning + backward compatibility is the correct pattern for mobile, not atomic commits.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
     <h2>What lives in each repo</h2>
 
-    <h3>qpay-strategy · public</h3>
+    <h3>qpay-strategy</h3>
     <table>
       <tbody>
         <tr><th style="width: 160px;">Stack</th><td>HTML, CSS, Markdown. No build step.</td></tr>
         <tr><th>Deploys to</th><td>GitHub Pages — <code>mariaiontseva.github.io/qpay-strategy/</code></td></tr>
         <tr><th>Contains</th><td>Competitive analysis · Features catalogue · Formation flow wireframes · CH access plan · this architecture doc</td></tr>
         <tr><th>Does not contain</th><td>Code · secrets · customer data</td></tr>
-        <tr><th>Who can read</th><td>Anyone — this is the shareable public-facing strategy</td></tr>
       </tbody>
     </table>
 
-    <h3>qpay-app · private</h3>
+    <h3>qpay-app</h3>
     <table>
       <tbody>
         <tr><th style="width: 160px;">Stack</th><td>Flutter 3.x · Dart · Riverpod (state) · GoRouter (navigation) · Firebase (push, crash reporting)</td></tr>
@@ -339,7 +293,7 @@
       </tbody>
     </table>
 
-    <h3>qpay-backend · private</h3>
+    <h3>qpay-backend</h3>
     <table>
       <tbody>
         <tr><th style="width: 160px;">Stack</th><td>TypeScript · Node.js 24 LTS · Fastify (or Hono) · Prisma (ORM) · Postgres · Redis · Bull (job queue)</td></tr>
@@ -376,85 +330,6 @@
                                   HTTPS (typed)</pre>
 
     <p><strong>Every endpoint change</strong> goes through a backend PR that bumps <code class="inline">openapi.yaml</code>. CI generates a new Dart package version. Mobile upgrades in its own PR when ready. Backward-compatible changes ship freely; breaking changes bump the major version and coexist during rollout.</p>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <h2>Order of creation</h2>
-
-    <table>
-      <thead>
-        <tr>
-          <th style="width: 80px;">Order</th>
-          <th>Repo</th>
-          <th>Why now</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>1</strong></td>
-          <td><code>qpay-backend</code></td>
-          <td>Companies House integration work can start as soon as Presenter ID arrives. No mobile needed to build and test the XML Gateway client against the sandbox.</td>
-        </tr>
-        <tr>
-          <td><strong>2</strong></td>
-          <td><code>qpay-app</code></td>
-          <td>Starts in parallel. Even before backend has real endpoints, Flutter work can begin on UI screens against mock OpenAPI responses.</td>
-        </tr>
-        <tr>
-          <td><strong>3</strong></td>
-          <td>(later) <code>qpay-infra</code></td>
-          <td>Only if we outgrow Vercel-managed infrastructure. Terraform / Pulumi for custom cloud resources. Not an MVP concern.</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <h2>Access model</h2>
-    <div class="callout">
-      <strong>Principle:</strong> grant the smallest scope that lets someone do their work. Farid — accounting side, needs visibility into formation / CH / strategy but not secrets or database.
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Role</th>
-          <th><code>qpay-strategy</code></th>
-          <th><code>qpay-app</code></th>
-          <th><code>qpay-backend</code></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Maria</strong> · founder</td>
-          <td>admin</td>
-          <td>admin</td>
-          <td>admin</td>
-        </tr>
-        <tr>
-          <td><strong>Farid</strong> · accounting / CH advisor</td>
-          <td>write</td>
-          <td>write (reviews flows &amp; UI)</td>
-          <td>read (reviews CH integration; no secrets access)</td>
-        </tr>
-        <tr>
-          <td>Future mobile contractor</td>
-          <td>—</td>
-          <td>write</td>
-          <td>read</td>
-        </tr>
-        <tr>
-          <td>Future backend contractor</td>
-          <td>—</td>
-          <td>read</td>
-          <td>write</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </section>
 
