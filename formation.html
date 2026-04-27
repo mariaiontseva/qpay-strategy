@@ -674,10 +674,10 @@
     <div class="section-head">
       <div>
         <div class="section-eyebrow">Path A · ship today · XML Gateway + GOV.UK One Login</div>
-        <h2 class="section-title">Solo founder ships in 15 screens.</h2>
-        <p class="section-sub">Rebuilt with Farid's feedback and the latest plan (April 2026): mock QPay as already an Authorised Corporate Service Provider, collapse ID verification into the app, hold pricing till the last screen. 15 screens instead of 32. Path B (post-ACSP flow) is folded in — the in-app verification it required is now Path A's default.</p>
+        <h2 class="section-title">Solo founder ships in 16 screens.</h2>
+        <p class="section-sub">Rebuilt with Farid's feedback and the latest plan (April 2026): mock QPay as already an Authorised Corporate Service Provider, collapse ID verification into the app, hold pricing till the last screen. 16 screens instead of 32. Path B (post-ACSP flow) is folded in — the in-app verification it required is now Path A's default.</p>
       </div>
-      <span class="section-count">15 screens · 6 phases · ACSP-mocked</span>
+      <span class="section-count">16 screens · 6 phases · ACSP-mocked</span>
     </div>
 
     <!-- Legend: clickable vs read-only -->
@@ -918,7 +918,7 @@
         <div class="phases-divider">
           <div class="num">04 · Phase</div>
           <div class="title">Director</div>
-          <div class="meta">3 screens</div>
+          <div class="meta">4 screens</div>
         </div>
 
       <div class="phone-wrap">
@@ -962,8 +962,29 @@
         </div>
         <div class="phone-caption">
           <div class="phone-caption-id">A-11</div>
-          <div class="phone-caption-name">In-app ID verification</div>
-          <div class="phone-caption-note">Mocked as if QPay is already an ACSP. Passport / DL scan + liveness, never leaves the app. We capture, run liveness, issue the personal code.</div>
+          <div class="phone-caption-name">Scan ID document</div>
+          <div class="phone-caption-note">Document half of the AML-standard doc + selfie pair. Approved photo IDs per Companies House: biometric passport, UK photo DL, BRP, BRC, FWP. NFC chip read where available.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header"><div class="phone-back">‹ Back</div><div class="phone-title">Quick selfie</div><div class="phone-crumb">Liveness check</div></div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="active"></span><span></span></div>
+          <div class="phone-screen">
+            <div class="sub">Companies House requires biometric face-match against your document. Frame your face — no glasses, good lighting.</div>
+            <div style="flex: 1; border: 2px dashed var(--line-2); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: var(--bg); min-height: 200px;">
+              <div style="width: 110px; height: 110px; border: 2px solid var(--ink-3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 38px; color: var(--ink-3);">🙂</div>
+              <div style="font-size: 11.5px; color: var(--ink-3); text-align: center; max-width: 200px;">Look at the camera. We'll take a couple of frames automatically.</div>
+            </div>
+            <div class="phone-cta">Capture</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">A-12</div>
+          <div class="phone-caption-name">Liveness selfie</div>
+          <div class="phone-caption-note">Per Companies House identity verification standard, ACSPs must run a biometric face-match equivalent to GOV.UK One Login. Document + selfie is the AML-standard pair.</div>
         </div>
       </div>
 
@@ -983,7 +1004,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-12</div>
+          <div class="phone-caption-id">A-13</div>
           <div class="phone-caption-name">Verified · personal code</div>
           <div class="phone-caption-note">Success state inline. No round-trip to gov.uk. Code shown once, also stored in profile for reuse.</div>
         </div>
@@ -1011,7 +1032,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-13</div>
+          <div class="phone-caption-id">A-14</div>
           <div class="phone-caption-name">Pricing + form CTA</div>
           <div class="phone-caption-note">Pricing held till the last screen. £100 = pure CH pass-through, £0 QPay formation fee. Subscription disclosed but not charged today.</div>
         </div>
@@ -1037,7 +1058,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-14</div>
+          <div class="phone-caption-id">A-15</div>
           <div class="phone-caption-name">Filing in progress</div>
           <div class="phone-caption-note">Single transactional moment. Spinner + reassurance. Under 30 sec for 95% of filings.</div>
         </div>
@@ -1062,7 +1083,7 @@
           </div>
         </div>
         <div class="phone-caption">
-          <div class="phone-caption-id">A-15</div>
+          <div class="phone-caption-id">A-16</div>
           <div class="phone-caption-name">Live</div>
           <div class="phone-caption-note">Company number returned by CH, incorporation date, jurisdiction. CTA pivots straight into the QPay business account.</div>
         </div>
