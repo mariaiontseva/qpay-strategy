@@ -1095,6 +1095,204 @@
   </div>
 </section>
 
+<!-- PATH B · existing Ltd onboarding -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">Path B · existing Ltd · open a business account</div>
+        <h2 class="section-title">Existing Ltd ships in 7 screens.</h2>
+        <p class="section-sub">User comes with a real registered company. We can't open a bank account without AML/KYC — Money Laundering Regulations 2017 require source-of-funds, sanctions screening, and PSC verification before any account opens. This path collects the minimum legal set, with Companies House auto-fill doing most of the typing.</p>
+      </div>
+      <span class="section-count">7 screens · 4 phases · MLR 2017 compliant</span>
+    </div>
+
+    <div class="phones-flow-wrap">
+      <div class="phones-flow">
+
+        <div class="phases-divider">
+          <div class="num">01 · Phase</div>
+          <div class="title">Find the<br>company</div>
+          <div class="meta">2 screens</div>
+        </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header"><div class="phone-back">‹ Back</div><div class="phone-title">What's the company number?</div><div class="phone-crumb">Step 1 of 7</div></div>
+          <div class="phone-progress"><span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="phone-screen">
+            <div class="sub">Eight digits from your incorporation certificate. We'll look it up at Companies House.</div>
+            <div class="phone-field selected"><span class="lbl">Company number</span><span class="val" style="font-family: 'IBM Plex Mono', monospace;">15837421</span></div>
+            <div class="phone-chip ok" style="background: var(--good-soft); color: var(--good);">✓ Active · Orca Design Ltd</div>
+            <div class="phone-cta">Continue</div>
+            <div class="phone-link">I don't know my number</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-01</div>
+          <div class="phone-caption-name">Company number lookup</div>
+          <div class="phone-caption-note">Single field. Hits the Companies House Public Data API; fast-fail on dissolved/removed companies. The "I don't know my number" path lets the user search by name.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header"><div class="phone-back">‹ Back</div><div class="phone-title">Is this you?</div><div class="phone-crumb">Step 2 of 7</div></div>
+          <div class="phone-progress"><span class="done"></span><span class="active"></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="phone-screen">
+            <div class="sub">Pulled from the Companies House public register. Tap any line to flag it as wrong.</div>
+            <div class="phone-field selected"><span class="lbl">Name</span><span class="val">Orca Design Ltd</span></div>
+            <div class="phone-field"><span class="lbl">Number · Status</span><span class="val">15837421 · Active</span></div>
+            <div class="phone-field"><span class="lbl">Incorporated</span><span class="val">3 Mar 2024</span></div>
+            <div class="phone-field"><span class="lbl">Registered office</span><span class="val" style="font-size: 12px;">45 King's Rd, London SW3 4UH</span></div>
+            <div class="phone-field"><span class="lbl">SIC</span><span class="val">62012 · Software dev</span></div>
+            <div class="phone-field"><span class="lbl">Director on file</span><span class="val">John Donn (you)</span></div>
+            <div class="phone-cta">Yes, that's mine</div>
+            <div class="phone-link">Something's wrong</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-02</div>
+          <div class="phone-caption-name">Confirm details</div>
+          <div class="phone-caption-note">Auto-filled from the CH register: name, number, status, incorporation date, registered office, SIC, directors. User confirms identity match before we touch anything.</div>
+        </div>
+      </div>
+
+        <div class="phases-divider">
+          <div class="num">02 · Phase</div>
+          <div class="title">Verify<br>identities</div>
+          <div class="meta">2 screens</div>
+        </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header"><div class="phone-back">‹ Back</div><div class="phone-title">Verify your ID</div><div class="phone-crumb">ECCTA + AML · Step 3 of 7</div></div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="active"></span><span></span><span></span><span></span><span></span></div>
+          <div class="phone-screen">
+            <div class="sub">QPay is your Authorised Corporate Service Provider. We capture the document and a liveness selfie right here — same Stripe Identity flow as the new-Ltd path.</div>
+            <div class="phone-chip ok" style="background: var(--good-soft); color: var(--good);">✓ QPay · Authorised by Companies House</div>
+            <div style="flex: 1; border: 2px dashed var(--line-2); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: var(--bg); min-height: 200px;">
+              <div style="width: 80px; height: 56px; border: 2px solid var(--ink-3); border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--ink-3);">📕</div>
+              <div style="font-size: 11.5px; color: var(--ink-3); text-align: center; max-width: 200px;">Hold passport flat. Photo + chip side visible.</div>
+            </div>
+            <div class="phone-cta">Scan + selfie</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-03</div>
+          <div class="phone-caption-name">Director ID verification</div>
+          <div class="phone-caption-note">Same vendor SDK as Path A. Reuses the personal code if the director was already verified through QPay (lifetime credential per ECCTA).</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header"><div class="phone-back">‹ Back</div><div class="phone-title">People with significant control</div><div class="phone-crumb">PSC register · Step 4 of 7</div></div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="active"></span><span></span><span></span><span></span></div>
+          <div class="phone-screen">
+            <div class="sub">Anyone with 25%+ shares or voting rights must be verified. Pulled from the PSC register; co-PSCs get an email invite to do their own ID flow inside QPay.</div>
+            <div class="phone-field selected" style="background: var(--good-soft); border-color: var(--good);"><span class="lbl">John Donn (you) · 60% shares</span><span class="val" style="color: var(--good);">✓ Verified</span></div>
+            <div class="phone-field"><span class="lbl">Sasha Petrova · 40% shares</span><span class="val" style="font-size: 11px; color: var(--ink-3);">Send invite</span></div>
+            <div class="phone-note" style="font-size: 11.5px;">If a PSC is itself a company, we walk up to the ultimate beneficial owner — flagged on the next screen.</div>
+            <div class="phone-cta">Send invites · Continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-04</div>
+          <div class="phone-caption-name">PSC verification</div>
+          <div class="phone-caption-note">Pulled from CH PSC register. Self-PSC marked verified via B-03; co-PSCs get an emailed deep-link the way co-directors do in Path A. Account stays gated until everyone clears.</div>
+        </div>
+      </div>
+
+        <div class="phases-divider">
+          <div class="num">03 · Phase</div>
+          <div class="title">AML &<br>screening</div>
+          <div class="meta">2 screens</div>
+        </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header"><div class="phone-back">‹ Back</div><div class="phone-title">How will the account be used?</div><div class="phone-crumb">MLR § 28 · Step 5 of 7</div></div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="active"></span><span></span><span></span></div>
+          <div class="phone-screen">
+            <div class="sub">Two questions to satisfy our AML obligations. We don't share these — they sit in your business profile.</div>
+            <div class="phone-field selected"><span class="lbl">Source of funds</span><span class="val">Trading revenue</span></div>
+            <div class="phone-field"><span class="lbl">Expected monthly volume</span><span class="val">£10k – £50k</span></div>
+            <div class="phone-note" style="font-size: 11.5px;">High-risk industries (gambling, crypto-asset trading, money services) need a quick extra check. We'll flag it if so.</div>
+            <div class="phone-cta">Continue</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-05</div>
+          <div class="phone-caption-name">Source of funds + volume</div>
+          <div class="phone-caption-note">Two pickers (source: trading / capital injection / loan / investment / other; volume: £0-10k / 10-50k / 50-200k / 200k+). High-risk-industry detection comes from SIC + a sanity check on the typed activity.</div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header"><div class="phone-back">‹ Back</div><div class="phone-title">Last attestation</div><div class="phone-crumb">Sanctions + PEP · Step 6 of 7</div></div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="active"></span><span></span></div>
+          <div class="phone-screen">
+            <div class="sub">We've already screened your name against UK and OFAC sanctions lists. Two last self-declarations.</div>
+            <div class="phone-chip ok" style="background: var(--good-soft); color: var(--good);">✓ Sanctions screening · cleared</div>
+            <div class="phone-field"><span class="lbl">PEP (Politically Exposed Person)</span><span class="val">No</span></div>
+            <div class="phone-field"><span class="lbl">UTR (HMRC)</span><span class="val" style="color: var(--ink-3);">Add later</span></div>
+            <div class="phone-note" style="font-size: 11.5px;">A PEP isn't a blocker — we just need to apply enhanced due diligence. UTR + VAT registration are optional now; speeds up tax filings later.</div>
+            <div class="phone-cta">Confirm + open account</div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-06</div>
+          <div class="phone-caption-name">Sanctions / PEP / tax IDs</div>
+          <div class="phone-caption-note">Sanctions check is automatic via ComplyAdvantage / Refinitiv. PEP is a self-declaration toggle — Yes routes the application to manual EDD review. UTR + VAT are optional pre-fills for HMRC integrations.</div>
+        </div>
+      </div>
+
+        <div class="phases-divider">
+          <div class="num">04 · Phase</div>
+          <div class="title">Account<br>open</div>
+          <div class="meta">1 screen</div>
+        </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-status"><span>9:41</span><span>● ● ●</span></div>
+          <div class="phone-header"><div class="phone-back">‹ Back</div><div class="phone-title">Welcome to QPay</div><div class="phone-crumb">Step 7 of 7</div></div>
+          <div class="phone-progress"><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="done"></span><span class="active"></span></div>
+          <div class="phone-screen">
+            <div style="display: flex; flex-direction: column; gap: 16px; height: 100%; justify-content: center;">
+              <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--good-soft); display: flex; align-items: center; justify-content: center; font-size: 32px; color: var(--good); align-self: center;">✓</div>
+              <div style="text-align: center;">
+                <h3 style="margin-top: 4px;">Your business account is open.</h3>
+                <div class="sub" style="text-align: center; margin-top: 4px;">Sort code + account number are ready. Funded balance: £0.</div>
+              </div>
+              <div class="phone-field"><span class="lbl">Sort code</span><span class="val" style="font-family: 'IBM Plex Mono', monospace;">04-00-04</span></div>
+              <div class="phone-field"><span class="lbl">Account number</span><span class="val" style="font-family: 'IBM Plex Mono', monospace;">12345678</span></div>
+              <div class="phone-cta">Open my dashboard</div>
+            </div>
+          </div>
+        </div>
+        <div class="phone-caption">
+          <div class="phone-caption-id">B-07</div>
+          <div class="phone-caption-name">Account open</div>
+          <div class="phone-caption-note">No filing fee — this isn't a CH submission. Subscription (£15/month, first month free) starts the moment the account opens. Same Home dashboard as the new-Ltd flow lands here.</div>
+        </div>
+      </div>
+
+      </div><!-- /phones-flow -->
+    </div><!-- /phones-flow-wrap -->
+
+  </div>
+</section>
+
+
 <!-- Post-incorp automations spec -->
 <section>
   <div class="container">
