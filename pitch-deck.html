@@ -952,6 +952,349 @@
     letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3);
   }
 
+  /* ───── regulatory path slide ───── */
+  .reg-stage {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    gap: clamp(28px, 3.4vw, 44px);
+  }
+  .reg-headline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(36px, 4.4vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.028em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 22ch;
+  }
+  .reg-headline .accent { color: var(--accent); }
+
+  .reg-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+    position: relative;
+  }
+  .reg-step {
+    padding: 16px clamp(18px, 2vw, 28px) 0 0;
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 8px;
+    min-width: 0;
+    position: relative;
+  }
+  .reg-step:nth-child(n+2) { padding-left: clamp(18px, 2vw, 28px); }
+  .reg-step:last-child { border-right: 0; padding-right: 0; }
+  .reg-step.now::before {
+    content: ""; position: absolute; top: -5px; left: 0;
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+  .reg-step .when {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .reg-step.future .when { color: var(--ink-3); }
+  .reg-step h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(17px, 1.5vw, 21px);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--ink);
+    margin: 2px 0 0;
+  }
+  .reg-step p {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--ink-2);
+    margin: 0;
+    max-width: 28ch;
+    letter-spacing: -0.003em;
+  }
+
+  .reg-coda {
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: clamp(14px, 1.16vw, 17px);
+    line-height: 1.5;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    max-width: 70ch;
+  }
+  .reg-coda .accent { color: var(--accent); font-weight: 600; }
+
+  /* ───── product roadmap slide ───── */
+  .rm-stage {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    gap: clamp(28px, 3.4vw, 44px);
+  }
+  .rm-headline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(36px, 4.4vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.028em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 22ch;
+  }
+  .rm-headline .accent { color: var(--accent); }
+
+  .rm-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .rm-col {
+    padding: 16px clamp(20px, 2.4vw, 32px) 0 0;
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 12px;
+    min-width: 0;
+  }
+  .rm-col:nth-child(n+2) { padding-left: clamp(20px, 2.4vw, 32px); }
+  .rm-col:last-child { border-right: 0; padding-right: 0; }
+  .rm-col .phase {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .rm-col h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(20px, 1.8vw, 26px);
+    letter-spacing: -0.022em;
+    line-height: 1.1;
+    color: var(--ink);
+    margin: 0;
+  }
+  .rm-col ul {
+    list-style: none; margin: 0; padding: 0;
+    border-top: 1px solid var(--border);
+  }
+  .rm-col li {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 12.5px;
+    color: var(--ink-2);
+    letter-spacing: -0.003em;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.3;
+  }
+  .rm-col li:last-child { border-bottom: 0; }
+
+  /* ───── team slide ───── */
+  .team-stage {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    gap: clamp(24px, 3vw, 40px);
+  }
+  .team-headline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(36px, 4.4vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.028em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 22ch;
+  }
+  .team-headline .accent { color: var(--accent); }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .person {
+    padding: 14px clamp(16px, 1.8vw, 24px) 0 0;
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 12px;
+    min-width: 0;
+  }
+  .person:nth-child(n+2) { padding-left: clamp(16px, 1.8vw, 24px); }
+  .person:last-child { border-right: 0; padding-right: 0; }
+  .avatar {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    background: linear-gradient(135deg, var(--surface-2) 0%, var(--border) 100%);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar::before {
+    content: "PHOTO";
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--ink-3);
+  }
+  .person .role {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .person h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(16px, 1.4vw, 19px);
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    margin: -4px 0 0;
+    line-height: 1.15;
+  }
+  .person p {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 11.5px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    margin: 0;
+    letter-spacing: -0.003em;
+  }
+
+  /* ───── use of funds / ask slide ───── */
+  .ask-stage {
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: clamp(40px, 5vw, 80px);
+    align-items: center;
+    align-content: center;
+  }
+  .ask-headline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(48px, 6vw, 92px);
+    line-height: 0.96;
+    letter-spacing: -0.034em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 14ch;
+  }
+  .ask-headline .accent { color: var(--accent); }
+  .ask-lede {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(13px, 1.1vw, 16px);
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 44ch;
+    margin: 18px 0 0;
+  }
+
+  .uof-list {
+    border-top: 1px solid var(--ink);
+    list-style: none; margin: 0; padding: 0;
+  }
+  .uof-row {
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .uof-row:last-of-type { border-bottom: 1px solid var(--border); }
+  .uof-row .pct {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(20px, 1.8vw, 26px);
+    letter-spacing: -0.024em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .uof-row .name {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .uof-row .desc {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--ink-2);
+    line-height: 1.35;
+    grid-column: 2 / 4;
+    margin-top: 3px;
+    letter-spacing: -0.003em;
+  }
+  .uof-row .gbp {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+  }
+
+  /* ───── closing slide ───── */
+  .closing-stage {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    gap: clamp(32px, 4vw, 56px);
+  }
+  .closing-mark {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(56px, 8vw, 132px);
+    line-height: 0.94;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 14ch;
+  }
+  .closing-mark .accent { color: var(--accent); }
+  .closing-line {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(28px, 3.4vw, 56px);
+    border-top: 1px solid var(--ink);
+    padding-top: 18px;
+  }
+  .closing-line .ck {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 6px;
+  }
+  .closing-line .cv {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(17px, 1.5vw, 22px);
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .closing-line .cv .accent { color: var(--accent); }
+
   /* responsive collapse for narrow screens */
   @media (max-width: 720px) {
     body { padding: 12px; }
@@ -1485,6 +1828,307 @@
         </div>
       </div>
       <div class="stamp">Source · UK fintech CAC benchmarks (FY24)</div>
+    </footer>
+  </section>
+
+  <!-- 10 — REGULATORY PATH -->
+  <section class="slide" id="regulatory">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">Regulatory Path</div>
+        <div>10 / 14</div>
+      </div>
+    </header>
+
+    <div class="reg-stage">
+      <div>
+        <div class="stage-eyebrow">Path to bank</div>
+        <h2 class="reg-headline">
+          Open Banking today.<br/>
+          <span class="accent">Direct EMI by month 18.</span>
+        </h2>
+      </div>
+
+      <div class="reg-track">
+        <div class="reg-step now">
+          <span class="when">Now · Q2 2026</span>
+          <h3>Open Banking</h3>
+          <p>AISP / PISP partner. We ship the AI banking and the wedge today, no licence needed.</p>
+        </div>
+        <div class="reg-step future">
+          <span class="when">Months 6 – 12</span>
+          <h3>BaaS rails</h3>
+          <p>QPayments-branded GBP accounts and cards via Griffin or Modulr.</p>
+        </div>
+        <div class="reg-step future">
+          <span class="when">Months 12 – 18</span>
+          <h3>Direct EMI</h3>
+          <p>FCA authorisation in our own name. CASS&nbsp;15 safeguarding from day one.</p>
+        </div>
+        <div class="reg-step future">
+          <span class="when">Year 3 – 4</span>
+          <h3>Bank licence</h3>
+          <p>Optional. Re-evaluated against scale and FSCS positioning needs.</p>
+        </div>
+      </div>
+
+      <p class="reg-coda">
+        The wedge — AI banking, dividends, Companies House sync, all filings — ships on Open Banking and is <span class="accent">not gated by FCA EMI authorisation</span>. We build customers and data on day one.
+      </p>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">Today</div>
+          <div class="v">FCA-authorised AISP/PISP partner</div>
+        </div>
+        <div class="meta">
+          <div class="k">Year 2</div>
+          <div class="v">Direct EMI in our own name</div>
+        </div>
+      </div>
+      <div class="stamp">FCA · CASS 15 · MLRs</div>
+    </footer>
+  </section>
+
+  <!-- 11 — PRODUCT ROADMAP -->
+  <section class="slide" id="roadmap">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">Roadmap</div>
+        <div>11 / 14</div>
+      </div>
+    </header>
+
+    <div class="rm-stage">
+      <div>
+        <div class="stage-eyebrow">Product roadmap</div>
+        <h2 class="rm-headline">
+          From wedge<br/>
+          <span class="accent">to platform.</span>
+        </h2>
+      </div>
+
+      <div class="rm-cols">
+        <div class="rm-col">
+          <span class="phase">Year 1 · MVP</span>
+          <h3>Prove the wedge</h3>
+          <ul>
+            <li>Open Banking + BaaS rails live</li>
+            <li>Formation · bank account · KYC</li>
+            <li>AI: payroll · dividends · books</li>
+            <li>VAT, CT, Self Assessment filing</li>
+            <li>500 – 2,000 Ltds via Q Accountants</li>
+          </ul>
+        </div>
+        <div class="rm-col">
+          <span class="phase">Year 2 · V2</span>
+          <h3>Close adjacent gaps</h3>
+          <ul>
+            <li>Direct FCA EMI authorisation</li>
+            <li>Native payroll · expense cards</li>
+            <li>CT600 draft · multicurrency</li>
+            <li>Resolution &amp; shareholder library</li>
+            <li>Partner accountant programme</li>
+          </ul>
+        </div>
+        <div class="rm-col">
+          <span class="phase">Year 3 · V3</span>
+          <h3>Platform thickening</h3>
+          <ul>
+            <li>Insurance &amp; lending marketplace</li>
+            <li>Public API · multi-company portal</li>
+            <li>Year-end accounts · auto CT filing</li>
+            <li>Cross-sell &amp; advisory</li>
+            <li>25 – 50 K Ltds on platform</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">Re-evaluation point</div>
+          <div class="v">Year 4 — full bank licence decision</div>
+        </div>
+      </div>
+      <div class="stamp">QPayments product roadmap · v0.1</div>
+    </footer>
+  </section>
+
+  <!-- 12 — TEAM -->
+  <section class="slide" id="team">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">Team</div>
+        <div>12 / 14</div>
+      </div>
+    </header>
+
+    <div class="team-stage">
+      <div>
+        <div class="stage-eyebrow">Founding team</div>
+        <h2 class="team-headline">
+          Operators who shipped<br/>
+          <span class="accent">UK regulated fintech before.</span>
+        </h2>
+      </div>
+
+      <div class="team-grid">
+        <div class="person">
+          <div class="avatar"></div>
+          <span class="role">Co-founder · CEO</span>
+          <h3>[ Name ]</h3>
+          <p>Background placeholder — prior company, role and why they own this problem.</p>
+        </div>
+        <div class="person">
+          <div class="avatar"></div>
+          <span class="role">Co-founder · CTO</span>
+          <h3>[ Name ]</h3>
+          <p>Background placeholder — payments engineering, AI agents, regulated systems.</p>
+        </div>
+        <div class="person">
+          <div class="avatar"></div>
+          <span class="role">Head of Product</span>
+          <h3>[ Name ]</h3>
+          <p>Background placeholder — UK SMB fintech product, accountant workflows.</p>
+        </div>
+        <div class="person">
+          <div class="avatar"></div>
+          <span class="role">Head of Compliance</span>
+          <h3>[ Name ]</h3>
+          <p>Background placeholder — EMI / SMCR / CASS 15 / MLRs.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">Founding partner</div>
+          <div class="v">Q Accountants — UK distribution</div>
+        </div>
+        <div class="meta">
+          <div class="k">Hiring next</div>
+          <div class="v">Senior payments engineer · BaaS lead · Account manager</div>
+        </div>
+      </div>
+      <div class="stamp">Bios &amp; photos to follow</div>
+    </footer>
+  </section>
+
+  <!-- 13 — USE OF FUNDS / ASK -->
+  <section class="slide" id="ask">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">The Ask</div>
+        <div>13 / 14</div>
+      </div>
+    </header>
+
+    <div class="ask-stage">
+      <div>
+        <div class="stage-eyebrow">The ask</div>
+        <h2 class="ask-headline">
+          £500K seed.<br/>
+          <span class="accent">12 months to live product.</span>
+        </h2>
+        <p class="ask-lede">
+          Capitalises engineering, regulatory work and the Q&nbsp;Accountants launch through MVP, BaaS go-live and the first 500 Ltds. Bridges to a Series&nbsp;A on revenue and direct EMI authorisation.
+        </p>
+      </div>
+
+      <div>
+        <div class="stage-eyebrow" style="margin-bottom: 14px;">Use of funds</div>
+        <ul class="uof-list">
+          <li class="uof-row">
+            <span class="pct">45 %</span>
+            <span class="name">Engineering</span>
+            <span class="gbp">£225 K</span>
+            <span class="desc">Core ledger, AI agents, mobile + web app, BaaS integration.</span>
+          </li>
+          <li class="uof-row">
+            <span class="pct">25 %</span>
+            <span class="name">Regulatory</span>
+            <span class="gbp">£125 K</span>
+            <span class="desc">EMI authorisation paperwork, CASS&nbsp;15 tooling, SMCR, audit.</span>
+          </li>
+          <li class="uof-row">
+            <span class="pct">20 %</span>
+            <span class="name">Distribution</span>
+            <span class="gbp">£100 K</span>
+            <span class="desc">Q Accountants programme, content, founder-community presence.</span>
+          </li>
+          <li class="uof-row">
+            <span class="pct">10 %</span>
+            <span class="name">Reserve</span>
+            <span class="gbp">£50 K</span>
+            <span class="desc">Buffer for regulatory timeline slippage and contingency.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">Round</div>
+          <div class="v">Seed · £500 K · 18 months runway</div>
+        </div>
+        <div class="meta">
+          <div class="k">Next round</div>
+          <div class="v">Series A · 2027 · post-revenue, post-EMI</div>
+        </div>
+      </div>
+      <div class="stamp">Confidential · QPayments Ltd</div>
+    </footer>
+  </section>
+
+  <!-- 14 — CLOSING -->
+  <section class="slide" id="closing">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">Closing</div>
+        <div>14 / 14</div>
+      </div>
+    </header>
+
+    <div class="closing-stage">
+      <div>
+        <div class="stage-eyebrow">In one sentence</div>
+        <h2 class="closing-mark">
+          AI runs the Ltd.<br/>
+          <span class="accent">Founders run the business.</span>
+        </h2>
+      </div>
+
+      <div class="closing-line">
+        <div>
+          <div class="ck">Next step</div>
+          <div class="cv">30-min call &amp; live demo of the AI banking flow on Open Banking rails.</div>
+        </div>
+        <div>
+          <div class="ck">Contact</div>
+          <div class="cv">maria@qpayments.uk &nbsp;<span class="accent">·</span>&nbsp; qpayments.uk</div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">QPayments Ltd</div>
+          <div class="v">London · United Kingdom</div>
+        </div>
+      </div>
+      <div class="stamp">Confidential · May 2026</div>
     </footer>
   </section>
 
