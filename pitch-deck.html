@@ -1,0 +1,1494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>QPayments — Investor Deck — Seed 2026</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@300,400,500,600,700,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* mirrored from qpay-app/lib/design_system/tokens.dart */
+    --canvas:       #F5EDE2;
+    --canvas-soft:  #FBF4EA;
+    --surface-2:    #EDE3D4;
+    --card:         #FFFCF5;
+    --ink:          #1A1410;
+    --ink-2:        #5C4F42;
+    --ink-3:        #6F5E4D;
+    --ink-4:        #B8A895;
+    --border:       #E2D6C4;
+    --border-2:     #C8B8A2;
+    --accent:       #B84A1F;
+
+    --display: 'Switzer', -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
+    --sans:    'Switzer', -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
+    --mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--surface-2);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-feature-settings: "ss01","ss02","cv01","cv02";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 24px;
+  }
+  ::selection { background: var(--ink); color: var(--canvas); }
+
+  .deck { width: 100%; max-width: 1280px; }
+
+  /* 16:9 slide canvas */
+  .slide {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--canvas);
+    border-radius: 4px;
+    box-shadow:
+      0 1px 0 rgba(26,20,16,0.05),
+      0 30px 60px -28px rgba(26,20,16,0.22);
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    /* editorial inner gutters */
+    padding: clamp(28px, 3.6vw, 48px) clamp(36px, 4.8vw, 64px);
+  }
+
+  /* subtle paper grain overlay */
+  .slide::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(rgba(26,20,16,0.018) 1px, transparent 1px),
+      radial-gradient(rgba(26,20,16,0.012) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1px 2px;
+    mix-blend-mode: multiply;
+    opacity: .9;
+  }
+  /* editorial corner index — large slide number as journal cover element */
+  .slide::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: var(--border);
+  }
+
+  /* ───── header band ───── */
+  .head {
+    position: relative; z-index: 2;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 24px;
+  }
+  .brand {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 21px;
+    letter-spacing: -0.022em;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+  }
+  .brand .dot {
+    display: inline-block;
+    width: 0.36em;
+    height: 0.36em;
+    background: var(--accent);
+    border-radius: 50%;
+    margin-left: 0.28em;
+    transform: translateY(0.04em);
+  }
+  .head .right {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    line-height: 1.5;
+  }
+  .head .right .label { color: var(--ink); }
+
+  /* ───── stage ───── */
+  .stage {
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 32px;
+    align-items: end;
+    padding: clamp(8px, 1.5vw, 24px) 0 clamp(12px, 2vw, 28px);
+  }
+
+  .headline-block { align-self: end; }
+
+  /* small editorial eyebrow */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: clamp(20px, 2vw, 28px);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 28px; height: 1px; background: var(--ink-3);
+  }
+
+  .headline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(52px, 6.6vw, 96px);
+    line-height: 0.98;
+    letter-spacing: -0.028em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 16ch;
+  }
+  .headline .accent {
+    color: var(--accent);
+  }
+
+  .lede {
+    margin-top: clamp(20px, 2vw, 28px);
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(15px, 1.18vw, 17px);
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--ink-2);
+    max-width: 46ch;
+  }
+
+  /* big folio number on right (cover element) */
+  .folio {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(64px, 7vw, 104px);
+    line-height: 0.84;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    text-align: right;
+    align-self: end;
+  }
+  .folio .of {
+    display: block;
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-top: 8px;
+    text-align: right;
+  }
+
+  /* ───── footer band ───── */
+  .foot {
+    position: relative; z-index: 2;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: clamp(28px, 4vw, 56px);
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+  }
+  .foot .meta-group {
+    display: flex; gap: clamp(28px, 4vw, 56px);
+  }
+  .meta .k {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 6px;
+  }
+  .meta .v {
+    font-family: var(--sans);
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+  }
+  .foot .stamp {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    text-align: right;
+    align-self: end;
+  }
+
+  /* slide-spacing between sections */
+  .slide + .slide { margin-top: 32px; }
+
+  /* ───── shared eyebrow / chrome ───── */
+  .stage-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: clamp(20px, 2.6vw, 32px);
+  }
+  .stage-eyebrow::before {
+    content: "";
+    width: 28px; height: 1px; background: var(--ink-3);
+  }
+
+  /* ───── problem slide composition ───── */
+  .problem-stage {
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: clamp(40px, 5vw, 72px);
+    align-items: center;
+    align-content: center;
+    padding: clamp(8px, 1.4vw, 20px) 0;
+  }
+
+  .problem-headline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(40px, 4.8vw, 68px);
+    line-height: 1.04;
+    letter-spacing: -0.026em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 18ch;
+  }
+  .problem-headline .accent { color: var(--accent); }
+
+  .problem-lede {
+    margin-top: clamp(20px, 2vw, 28px);
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(14px, 1.1vw, 16px);
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--ink-2);
+    max-width: 42ch;
+  }
+
+  /* admin-burden list — registry / document stack */
+  .registry {
+    border-top: 1px solid var(--ink);
+    align-self: center;
+  }
+  .registry .reg-eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding: 10px 0 12px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+    display: flex; justify-content: space-between;
+  }
+  .registry ul {
+    list-style: none; margin: 0; padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: clamp(20px, 2.4vw, 36px);
+  }
+  .registry li {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: clamp(12px, 0.95vw, 14px);
+    color: var(--ink);
+    letter-spacing: -0.003em;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 12px;
+    line-height: 1.2;
+  }
+  .registry li .freq {
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  /* ───── solution slide ───── */
+  .solution-stage {
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(40px, 5vw, 72px);
+    align-items: center;
+    align-content: center;
+  }
+  .solution-headline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(34px, 4.4vw, 64px);
+    line-height: 1.06;
+    letter-spacing: -0.026em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 18ch;
+  }
+  .solution-headline .accent { color: var(--accent); }
+  .solution-lede {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(14px, 1.1vw, 16px);
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--ink-2);
+    max-width: 38ch;
+    margin-bottom: 24px;
+  }
+  .phase-tags {
+    display: flex; flex-direction: column;
+    border-top: 1px solid var(--ink);
+  }
+  .phase-tag {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 16px;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .phase-tag .num {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .phase-tag .name {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(18px, 1.5vw, 22px);
+    letter-spacing: -0.018em;
+    color: var(--ink);
+  }
+  .phase-tag .desc {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--ink-2);
+    text-align: right;
+    letter-spacing: -0.003em;
+  }
+
+  /* ───── product slide ───── */
+  .product-stage {
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: clamp(20px, 2.4vw, 32px);
+  }
+  .product-head-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: end;
+  }
+  .product-headline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(32px, 3.6vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.026em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 22ch;
+  }
+  .product-headline .accent { color: var(--accent); }
+
+  .phones {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2vw, 28px);
+    align-items: end;
+  }
+  .phone-cell {
+    display: flex; flex-direction: column; gap: 14px;
+    min-width: 0;
+  }
+  .phone-frame {
+    aspect-ratio: 9 / 19.5;
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border-2);
+    border-radius: 28px;
+    box-shadow:
+      0 1px 0 rgba(26,20,16,0.04),
+      0 16px 32px -16px rgba(26,20,16,0.18);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .phone-frame img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+  }
+  /* placeholder when no image */
+  .phone-frame.placeholder::before {
+    content: attr(data-screen);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    text-align: center;
+    padding: 0 24px;
+  }
+  .phone-frame.placeholder::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, transparent 0 12px, rgba(184,168,149,0.18) 12px 13px);
+    pointer-events: none;
+  }
+  .phone-cap {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 0 4px;
+  }
+  .phone-cap .num {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .phone-cap .label {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(15px, 1.18vw, 18px);
+    letter-spacing: -0.014em;
+    color: var(--ink);
+  }
+  .phone-cap .desc {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 12.5px;
+    color: var(--ink-2);
+    line-height: 1.4;
+    letter-spacing: -0.003em;
+  }
+
+  /* ───── why-now slide ───── */
+  .why-stage {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    gap: clamp(28px, 3.4vw, 48px);
+  }
+  .why-headline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(44px, 5.4vw, 80px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 18ch;
+  }
+  .why-headline .accent { color: var(--accent); }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .tl-event {
+    padding: 16px clamp(18px, 2vw, 32px) 0 0;
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 10px;
+    min-width: 0;
+  }
+  .tl-event:nth-child(2) { padding-left: clamp(18px, 2vw, 32px); }
+  .tl-event:nth-child(3) { padding-left: clamp(18px, 2vw, 32px); border-right: 0; padding-right: 0; }
+
+  .tl-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .tl-title {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(17px, 1.5vw, 21px);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--ink);
+    margin: 0;
+    white-space: nowrap;
+  }
+  .tl-why {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: clamp(12px, 0.96vw, 13.5px);
+    line-height: 1.45;
+    letter-spacing: -0.003em;
+    color: var(--ink-2);
+    margin: 0;
+    max-width: 32ch;
+    position: relative;
+    padding-left: 18px;
+  }
+  .tl-why::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .why-coda {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: clamp(13px, 1.06vw, 15px);
+    line-height: 1.4;
+    color: var(--ink-2);
+    letter-spacing: -0.005em;
+    margin: 0;
+    max-width: 64ch;
+  }
+  .why-coda .accent { color: var(--accent); font-weight: 600; }
+
+  /* ───── market slide ───── */
+  .market-stage {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    gap: clamp(32px, 4vw, 56px);
+  }
+  .market-headline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(44px, 5.4vw, 80px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 18ch;
+  }
+  .market-headline .accent { color: var(--accent); }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .stat-cell {
+    padding: 18px clamp(20px, 2.4vw, 36px) 0 0;
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 8px;
+    min-width: 0;
+  }
+  .stat-cell:nth-child(2) { padding-left: clamp(20px, 2.4vw, 36px); }
+  .stat-cell:nth-child(3) { padding-left: clamp(20px, 2.4vw, 36px); border-right: 0; padding-right: 0; }
+
+  .stat-cell .stat-num {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(48px, 6.4vw, 96px);
+    line-height: 0.94;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+  .stat-cell .stat-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+  .stat-cell .stat-note {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ink-2);
+    margin-top: 6px;
+    max-width: 30ch;
+    letter-spacing: -0.003em;
+  }
+
+  /* ───── competition slide ───── */
+  .comp-stage {
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: clamp(40px, 5vw, 72px);
+    align-items: center;
+    align-content: center;
+  }
+  .comp-headline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: 1.02;
+    letter-spacing: -0.028em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 14ch;
+  }
+  .comp-headline .accent { color: var(--accent); }
+  .comp-bullets {
+    list-style: none; margin: 24px 0 0; padding: 0;
+    display: flex; flex-direction: column;
+    border-top: 1px solid var(--border);
+  }
+  .comp-bullets li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: clamp(13px, 1.04vw, 15px);
+    line-height: 1.4;
+    color: var(--ink);
+    letter-spacing: -0.003em;
+    display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline;
+  }
+  .comp-bullets li::before {
+    content: counter(comp-bullets, decimal-leading-zero);
+    counter-increment: comp-bullets;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .comp-bullets { counter-reset: comp-bullets; }
+
+  .quadrant {
+    aspect-ratio: 1.25 / 1;
+    border: 1px solid var(--ink);
+    background: var(--canvas-soft);
+    position: relative;
+    overflow: hidden;
+  }
+  .quadrant .axis-x, .quadrant .axis-y {
+    position: absolute; background: var(--border-2);
+  }
+  .quadrant .axis-x { left: 0; right: 0; top: 50%; height: 1px; }
+  .quadrant .axis-y { top: 0; bottom: 0; left: 50%; width: 1px; }
+  .qd-axis {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    line-height: 1;
+    white-space: nowrap;
+    background: var(--canvas-soft);
+    padding: 2px 6px;
+  }
+  .qd-axis.y {
+    top: 14px;
+    left: calc(50% + 10px);
+  }
+  .qd-axis.x {
+    bottom: 14px;
+    right: 14px;
+  }
+  .qd-dot {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    background: var(--canvas);
+    border: 1px solid var(--border-2);
+    padding: 4px 9px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .qd-dot.us {
+    background: var(--accent);
+    color: var(--canvas);
+    border-color: var(--accent);
+    font-weight: 600;
+    padding: 6px 12px;
+    box-shadow: 0 8px 16px -8px rgba(184,74,31,0.45);
+  }
+
+  /* ───── business model slide ───── */
+  .bm-stage {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    gap: clamp(24px, 3vw, 40px);
+  }
+  .bm-headline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(32px, 3.8vw, 52px);
+    line-height: 1.04;
+    letter-spacing: -0.026em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 26ch;
+  }
+  .bm-headline .accent { color: var(--accent); }
+
+  .tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .tier {
+    padding: 18px clamp(20px, 2.4vw, 32px) 18px clamp(20px, 2.4vw, 32px);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 14px;
+    min-width: 0;
+  }
+  .tier:first-child { padding-left: 0; }
+  .tier:last-child { border-right: 0; padding-right: 0; }
+  .tier.hero {
+    background: linear-gradient(180deg, rgba(184,74,31,0.07) 0%, transparent 100%);
+    margin-top: -1px;
+    border-top: 2px solid var(--accent);
+    padding-top: 16px;
+  }
+
+  .tier-name {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tier.hero .tier-name { color: var(--accent); }
+  .tier-name .badge {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    background: var(--accent);
+    color: var(--canvas);
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+
+  .tier-price {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(36px, 4.2vw, 60px);
+    line-height: 1;
+    letter-spacing: -0.038em;
+    color: var(--ink);
+    display: flex; align-items: baseline; gap: 6px;
+  }
+  .tier-price .per {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: -0.005em;
+    color: var(--ink-3);
+  }
+  .tier-tagline {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -0.005em;
+    max-width: 26ch;
+  }
+
+  .revenue-line {
+    display: flex; align-items: baseline; gap: clamp(20px, 2.4vw, 36px);
+    flex-wrap: wrap;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .revenue-line .label-key {
+    color: var(--ink-3);
+  }
+  .revenue-line .seg { display: inline-flex; align-items: baseline; gap: 6px; }
+  .revenue-line .seg .pct {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: -0.005em;
+    text-transform: none;
+    color: var(--ink);
+  }
+  .revenue-line .seg.hero .pct { color: var(--accent); }
+  .revenue-line .seg .name {
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  /* ───── gtm slide ───── */
+  .gtm-stage {
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: clamp(40px, 5vw, 80px);
+    align-items: center;
+    align-content: center;
+  }
+  .gtm-headline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(40px, 4.8vw, 68px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin: 0;
+    max-width: 14ch;
+  }
+  .gtm-headline .accent { color: var(--accent); }
+  .gtm-lede {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: clamp(13px, 1.06vw, 15px);
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 44ch;
+    margin: 18px 0 0;
+  }
+
+  /* CAC bar comparison */
+  .cac-block { display: flex; flex-direction: column; }
+  .cac-block .ce {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    border-top: 1px solid var(--ink);
+    padding: 10px 0 14px;
+    display: flex; justify-content: space-between;
+  }
+  .cac-row {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .cac-row:last-of-type { border-bottom: 0; }
+  .cac-row .row-head {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  }
+  .cac-row .num {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: clamp(28px, 3vw, 40px);
+    letter-spacing: -0.032em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .cac-row.us .num { color: var(--accent); }
+  .cac-row .who {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    text-align: right;
+  }
+  .cac-bar {
+    height: 10px;
+    border-radius: 2px;
+    background: var(--ink);
+    position: relative;
+  }
+  .cac-bar.us { background: var(--accent); width: 30%; }
+  .cac-bar.retail { background: var(--ink); width: 100%; }
+
+  .gtm-foot-stats {
+    display: flex; gap: clamp(20px, 2.4vw, 32px);
+    padding: 12px 0 0;
+    margin-top: 4px;
+  }
+  .gtm-foot-stats .ms {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .gtm-foot-stats .ms .v {
+    font-family: var(--display); font-weight: 600;
+    font-size: clamp(15px, 1.2vw, 18px); letter-spacing: -0.02em;
+    color: var(--ink); line-height: 1;
+  }
+  .gtm-foot-stats .ms .k {
+    font-family: var(--mono); font-size: 10px;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3);
+  }
+
+  /* responsive collapse for narrow screens */
+  @media (max-width: 720px) {
+    body { padding: 12px; }
+    .slide { padding: 24px; }
+    .stage { grid-template-columns: 1fr; gap: 16px; }
+    .folio { text-align: left; font-size: 80px; }
+    .folio .of { text-align: left; }
+    .foot { grid-template-columns: 1fr; gap: 12px; }
+    .foot .stamp { text-align: left; }
+    .number-pair { grid-template-columns: 1fr; gap: 24px; }
+    .number-pair .divider { width: auto; height: 1px; margin: 0 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- 01 — COVER -->
+  <section class="slide" id="cover">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">Investor Deck — Seed 2026</div>
+      </div>
+    </header>
+
+    <div class="stage">
+      <div class="headline-block">
+        <div class="eyebrow">AI-native banking · UK Ltd</div>
+        <h1 class="headline">
+          AI business banking<br/>
+          that runs <span class="accent">your Company</span>.
+        </h1>
+        <p class="lede">
+          QPayments pays dividends, files with HMRC and keeps Companies House aligned — so founders run their business, not their Ltd.
+        </p>
+      </div>
+      <div class="folio">
+        01<span class="of">of fourteen</span>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">Round</div>
+          <div class="v">Seed · £500K</div>
+        </div>
+        <div class="meta">
+          <div class="k">Stage</div>
+          <div class="v">Pre-launch · Open Banking</div>
+        </div>
+      </div>
+      <div class="stamp">London · May 2026</div>
+    </footer>
+  </section>
+
+  <!-- 02 — PROBLEM -->
+  <section class="slide" id="problem">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">The Problem</div>
+        <div>02 / 14</div>
+      </div>
+    </header>
+
+    <div class="problem-stage">
+      <div class="problem-text">
+        <div class="stage-eyebrow">The Problem</div>
+        <h2 class="problem-headline">
+          Founders don't<br/>
+          run businesses.<br/>
+          They run <span class="accent">paperwork</span>.
+        </h2>
+        <p class="problem-lede">
+          A UK&nbsp;Ltd is a filing machine. Every founder spends time on twenty&#8209;plus statutory and tax obligations a year — and no UK banking app does them end&#8209;to&#8209;end.
+        </p>
+      </div>
+
+      <div class="registry" aria-label="Annual obligations of a UK Ltd">
+        <div class="reg-eyebrow">
+          <span>Annual obligations</span>
+          <span>UK Ltd</span>
+        </div>
+        <ul>
+          <li>Company formation <span class="freq">Once</span></li>
+          <li>Business bank account <span class="freq">Once</span></li>
+          <li>Confirmation statement <span class="freq">Yearly</span></li>
+          <li>Statutory accounts <span class="freq">Yearly</span></li>
+          <li>Corporation Tax return <span class="freq">Yearly</span></li>
+          <li>VAT registration <span class="freq">Once</span></li>
+          <li>VAT returns <span class="freq">Quarterly</span></li>
+          <li>PAYE / RTI <span class="freq">Monthly</span></li>
+          <li>Director payroll <span class="freq">Monthly</span></li>
+          <li>Dividend vouchers <span class="freq">Per&nbsp;event</span></li>
+          <li>Cap table updates <span class="freq">Per&nbsp;event</span></li>
+          <li>Self Assessment <span class="freq">Yearly</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">Filings / yr</div>
+          <div class="v">20 +</div>
+        </div>
+        <div class="meta">
+          <div class="k">Tools used</div>
+          <div class="v">4 – 5 separate apps</div>
+        </div>
+        <div class="meta">
+          <div class="k">End-to-end product</div>
+          <div class="v">None</div>
+        </div>
+      </div>
+      <div class="stamp">Source · CH + HMRC obligations</div>
+    </footer>
+  </section>
+
+  <!-- 03 — SOLUTION -->
+  <section class="slide" id="solution">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">The Solution</div>
+        <div>03 / 14</div>
+      </div>
+    </header>
+
+    <div class="solution-stage">
+      <div>
+        <div class="stage-eyebrow">Solution</div>
+        <h2 class="solution-headline">
+          Twenty obligations.<br/>
+          AI&#8209;native banking.<br/>
+          <span class="accent">Zero paperwork.</span>
+        </h2>
+      </div>
+
+      <div>
+        <p class="solution-lede">
+          QPayments handles every UK&nbsp;Ltd obligation — from company formation through daily banking to year&#8209;end Self Assessment — in a single AI banking app.
+        </p>
+        <div class="phase-tags">
+          <div class="phase-tag">
+            <span class="num">01 — Open</span>
+            <span class="name">Set up the Ltd</span>
+            <span class="desc">Formation · Bank account · KYC</span>
+          </div>
+          <div class="phase-tag">
+            <span class="num">02 — Run</span>
+            <span class="name">Operate the Ltd</span>
+            <span class="desc">Payroll · Dividends · Books</span>
+          </div>
+          <div class="phase-tag">
+            <span class="num">03 — File</span>
+            <span class="name">Stay compliant</span>
+            <span class="desc">VAT · CT · Self&nbsp;Assessment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">App</div>
+          <div class="v">iOS · Android · Web</div>
+        </div>
+        <div class="meta">
+          <div class="k">Engine</div>
+          <div class="v">AI agent + Open Banking rails</div>
+        </div>
+      </div>
+      <div class="stamp">QPayments Ltd · UK</div>
+    </footer>
+  </section>
+
+  <!-- 04 — PRODUCT -->
+  <section class="slide" id="product">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">The Product</div>
+        <div>04 / 14</div>
+      </div>
+    </header>
+
+    <div class="product-stage">
+      <div class="product-head-row">
+        <div>
+          <div class="stage-eyebrow">Product</div>
+          <h2 class="product-headline">
+            One app. Three jobs.<br/>
+            <span class="accent">Built for UK&nbsp;Ltd directors.</span>
+          </h2>
+        </div>
+        <div class="meta">
+          <div class="k">Platforms</div>
+          <div class="v">iOS · Android · Web</div>
+        </div>
+      </div>
+
+      <div class="phones">
+        <div class="phone-cell">
+          <div class="phone-frame placeholder" data-screen="Screenshot · Open"></div>
+          <div class="phone-cap">
+            <span class="num">01 — Open</span>
+            <span class="label">Form a UK Ltd in minutes</span>
+            <span class="desc">Companies House submission, business bank account and director KYC handled in one flow.</span>
+          </div>
+        </div>
+        <div class="phone-cell">
+          <div class="phone-frame placeholder" data-screen="Screenshot · Run"></div>
+          <div class="phone-cap">
+            <span class="num">02 — Run</span>
+            <span class="label">AI runs the books</span>
+            <span class="desc">Categorisation, dividends, payroll, receipts and revenue forecasts — without an accountant.</span>
+          </div>
+        </div>
+        <div class="phone-cell">
+          <div class="phone-frame placeholder" data-screen="Screenshot · File"></div>
+          <div class="phone-cap">
+            <span class="num">03 — File</span>
+            <span class="label">Every filing, on time</span>
+            <span class="desc">VAT, Corporation Tax, Confirmation Statement and Self Assessment drafted and submitted from the app.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">Stack</div>
+          <div class="v">Flutter · TypeScript · Open Banking AISP/PISP</div>
+        </div>
+      </div>
+      <div class="stamp">Screens placeholder · drop PNGs into ./screens/</div>
+    </footer>
+  </section>
+
+  <!-- 05 — WHY NOW -->
+  <section class="slide" id="why-now">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">Why Now</div>
+        <div>05 / 14</div>
+      </div>
+    </header>
+
+    <div class="why-stage">
+      <div>
+        <div class="stage-eyebrow">Why now</div>
+        <h2 class="why-headline">
+          Three windows.<br/>
+          <span class="accent">One quarter.</span>
+        </h2>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-event">
+          <span class="tl-date">March 2026</span>
+          <h3 class="tl-title">Starling Toolkit closes</h3>
+          <p class="tl-why">A displaced cohort of UK Ltd directors starts shopping for an account-plus-bookkeeping bundle. The acquisition window lands inside our launch quarter.</p>
+        </div>
+        <div class="tl-event">
+          <span class="tl-date">April 2026</span>
+          <h3 class="tl-title">MTD-ITSA mandatory</h3>
+          <p class="tl-why">A new compliance pain that maps onto a director-native banking app. Directors with side income above £50K are pulled into HMRC digital filing — our exact wedge persona.</p>
+        </div>
+        <div class="tl-event">
+          <span class="tl-date">May 2026</span>
+          <h3 class="tl-title">CASS 15 safeguarding live</h3>
+          <p class="tl-why">Daily reconciliation at Tier&nbsp;1 banks becomes mandatory. New EMIs that build it from day one earn a trust premium incumbents have to retrofit.</p>
+        </div>
+      </div>
+
+      <p class="why-coda">
+        Plus: AI agents now <span class="accent">read, decide and file</span> across HMRC, Companies House and a customer's books — at the cost of a monthly subscription.
+      </p>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">Window</div>
+          <div class="v">Q2 2026 — Q4 2026</div>
+        </div>
+        <div class="meta">
+          <div class="k">First-mover advantage</div>
+          <div class="v">12–18 months</div>
+        </div>
+      </div>
+      <div class="stamp">Sources · FCA, HMRC, Starling Help</div>
+    </footer>
+  </section>
+
+  <!-- 06 — MARKET -->
+  <section class="slide" id="market">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">Market</div>
+        <div>06 / 14</div>
+      </div>
+    </header>
+
+    <div class="market-stage">
+      <div>
+        <div class="stage-eyebrow">Market</div>
+        <h2 class="market-headline">
+          Two million UK&nbsp;Ltds.<br/>
+          <span class="accent">Zero Ltd&#8209;native banks.</span>
+        </h2>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-cell">
+          <div class="stat-num">2 M</div>
+          <div class="stat-label">UK limited companies</div>
+          <div class="stat-note">Our hero segment. None of the leading UK banking apps treat a Ltd's structure as a first-class product.</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">£39<span style="font-size: 0.5em; color: var(--ink-3); margin-left: 6px;">/&thinsp;mo</span></div>
+          <div class="stat-label">Avg. willingness-to-pay</div>
+          <div class="stat-note">Anchored by Tide Pro (£24.99) and ANNA Business (£19.90); £39–£69 fits one-app-replaces-four positioning.</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">£190 M</div>
+          <div class="stat-label">Tide FY 2024 revenue</div>
+          <div class="stat-note">Proof the UK SMB banking market monetises — without a Ltd-native wedge or AI in the product.</div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">Year-3 target</div>
+          <div class="v">25–50 K Ltds on platform</div>
+        </div>
+        <div class="meta">
+          <div class="k">Channel</div>
+          <div class="v">Q Accountants — warm distribution</div>
+        </div>
+      </div>
+      <div class="stamp">Sources · ONS, Tide FY24, competitor pricing pages</div>
+    </footer>
+  </section>
+
+  <!-- 07 — COMPETITION -->
+  <section class="slide" id="competition">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">Competition</div>
+        <div>07 / 14</div>
+      </div>
+    </header>
+
+    <div class="comp-stage">
+      <div>
+        <div class="stage-eyebrow">Competition</div>
+        <h2 class="comp-headline">
+          The upper&#8209;right<br/>
+          is <span class="accent">empty.</span>
+        </h2>
+        <ol class="comp-bullets">
+          <li><span>Banking-first apps (Tide, Revolut, Monzo) are accounting-thin and Ltd-blind.</span></li>
+          <li><span>Accounting-first tools (Xero, FreeAgent) own the books but don't move money.</span></li>
+          <li><span>None are AI-native — and none builds for the UK Ltd structure as the hero.</span></li>
+        </ol>
+      </div>
+
+      <div class="quadrant" aria-label="Banking depth × accounting depth landscape">
+        <div class="axis-x"></div>
+        <div class="axis-y"></div>
+        <div class="qd-axis y">↑ Accounting depth</div>
+        <div class="qd-axis x">Banking depth →</div>
+
+        <div class="qd-dot" style="top: 22%; left: 20%;">FreeAgent</div>
+        <div class="qd-dot" style="top: 30%; left: 30%;">Xero</div>
+        <div class="qd-dot" style="top: 38%; left: 14%;">Crunch</div>
+        <div class="qd-dot" style="top: 60%; left: 26%;">ANNA</div>
+
+        <div class="qd-dot" style="top: 42%; left: 60%;">Mettle</div>
+        <div class="qd-dot" style="top: 56%; left: 44%;">Countingup</div>
+
+        <div class="qd-dot" style="top: 70%; left: 78%;">Tide</div>
+        <div class="qd-dot" style="top: 80%; left: 86%;">Revolut</div>
+        <div class="qd-dot" style="top: 82%; left: 60%;">Monzo</div>
+        <div class="qd-dot" style="top: 70%; left: 54%;">Starling</div>
+
+        <div class="qd-dot us" style="top: 22%; left: 80%;">QPayments</div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">Differentiator</div>
+          <div class="v">Banking-deep · Accounting-deep · Ltd-native · AI-first</div>
+        </div>
+      </div>
+      <div class="stamp">Source · QPayments competitive analysis, May 2026</div>
+    </footer>
+  </section>
+
+  <!-- 08 — BUSINESS MODEL -->
+  <section class="slide" id="business-model">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">Business Model</div>
+        <div>08 / 14</div>
+      </div>
+    </header>
+
+    <div class="bm-stage">
+      <div>
+        <div class="stage-eyebrow">Business model</div>
+        <h2 class="bm-headline">
+          £39 a month. <span class="accent">Times two million UK&nbsp;Ltds.</span>
+        </h2>
+      </div>
+
+      <div class="tiers">
+        <div class="tier">
+          <div class="tier-name">Starter</div>
+          <div class="tier-price">£0<span class="per">/ month</span></div>
+          <p class="tier-tagline">Open Banking aggregation. For solo founders just incorporating.</p>
+        </div>
+        <div class="tier hero">
+          <div class="tier-name">Pro <span class="badge">Hero</span></div>
+          <div class="tier-price">£39<span class="per">/ month</span></div>
+          <p class="tier-tagline">Full AI banking + governance. Replaces four tools.</p>
+        </div>
+        <div class="tier">
+          <div class="tier-name">Founder</div>
+          <div class="tier-price">£79<span class="per">/ month</span></div>
+          <p class="tier-tagline">Multi-director Ltd · expense cards · accountant portal.</p>
+        </div>
+      </div>
+
+      <div class="revenue-line">
+        <span class="label-key">Revenue mix —</span>
+        <span class="seg hero"><span class="pct">60 %</span> <span class="name">Subscription</span></span>
+        <span class="seg"><span class="pct">20 %</span> <span class="name">Interchange</span></span>
+        <span class="seg"><span class="pct">10 %</span> <span class="name">Filing add-ons</span></span>
+        <span class="seg"><span class="pct">5 %</span> <span class="name">FX</span></span>
+        <span class="seg"><span class="pct">5 %</span> <span class="name">Cross-sell</span></span>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">Year-3 ARR target</div>
+          <div class="v">£12 – 24 M</div>
+        </div>
+        <div class="meta">
+          <div class="k">LTV / CAC</div>
+          <div class="v">5 × +</div>
+        </div>
+      </div>
+      <div class="stamp">Pricing benchmarks · Tide, ANNA, Crunch</div>
+    </footer>
+  </section>
+
+  <!-- 09 — GO TO MARKET -->
+  <section class="slide" id="gtm">
+    <header class="head">
+      <span class="brand">QPayments<span class="dot"></span></span>
+      <div class="right">
+        <div class="label">Go-to-market</div>
+        <div>09 / 14</div>
+      </div>
+    </header>
+
+    <div class="gtm-stage">
+      <div>
+        <div class="stage-eyebrow">Go-to-market</div>
+        <h2 class="gtm-headline">
+          One accountant.<br/>
+          500 Ltds.<br/>
+          <span class="accent">Zero CAC.</span>
+        </h2>
+        <p class="gtm-lede">
+          Q&nbsp;Accountants — our founding partner — migrates their UK&nbsp;Ltd book onto QPayments at launch. Case studies, reference customers and revenue from day one, without paid acquisition.
+        </p>
+      </div>
+
+      <div class="cac-block">
+        <div class="ce"><span>Customer acquisition cost</span><span>£ per Ltd</span></div>
+        <div class="cac-row us">
+          <div class="row-head">
+            <span class="num">£20 – 60</span>
+            <span class="who">QPayments · accountant channel</span>
+          </div>
+          <div class="cac-bar us"></div>
+        </div>
+        <div class="cac-row">
+          <div class="row-head">
+            <span class="num">£100 – 300</span>
+            <span class="who">Tide / retail SMB benchmark</span>
+          </div>
+          <div class="cac-bar retail"></div>
+        </div>
+        <div class="gtm-foot-stats">
+          <div class="ms"><span class="v">½ ×</span><span class="k">Retail churn rate</span></div>
+          <div class="ms"><span class="v">25–50 K</span><span class="k">Year-3 Ltd target</span></div>
+          <div class="ms"><span class="v">~5 ×</span><span class="k">Faster payback</span></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <div class="meta-group">
+        <div class="meta">
+          <div class="k">Founding partner</div>
+          <div class="v">Q Accountants — UK</div>
+        </div>
+        <div class="meta">
+          <div class="k">Secondary channels</div>
+          <div class="v">Content · founder communities · partner firms</div>
+        </div>
+      </div>
+      <div class="stamp">Source · UK fintech CAC benchmarks (FY24)</div>
+    </footer>
+  </section>
+
+</div>
+
+</body>
+</html>
