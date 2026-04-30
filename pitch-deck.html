@@ -988,11 +988,11 @@
   .reg-step:nth-child(n+2) { padding-left: clamp(18px, 2vw, 28px); }
   .reg-step:last-child { border-right: 0; padding-right: 0; }
   .reg-step.now::before {
-    content: ""; position: absolute; top: -5px; left: 0;
+    content: ""; position: absolute;
+    top: -5px; left: 0;
     width: 10px; height: 10px;
     background: var(--accent);
     border-radius: 50%;
-    transform: translateY(-50%);
   }
   .reg-step .when {
     font-family: var(--mono);
@@ -1105,14 +1105,14 @@
     position: relative; z-index: 2;
     display: flex; flex-direction: column;
     justify-content: center;
-    gap: clamp(24px, 3vw, 40px);
+    gap: clamp(20px, 2.4vw, 32px);
   }
   .team-headline {
     font-family: var(--display);
     font-weight: 600;
-    font-size: clamp(36px, 4.4vw, 64px);
+    font-size: clamp(32px, 3.8vw, 52px);
     line-height: 1.02;
-    letter-spacing: -0.028em;
+    letter-spacing: -0.026em;
     color: var(--ink);
     margin: 0;
     max-width: 22ch;
@@ -1123,26 +1123,25 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0;
-    border-top: 1px solid var(--ink);
   }
   .person {
-    padding: 14px clamp(16px, 1.8vw, 24px) 0 0;
+    padding: 14px clamp(14px, 1.6vw, 22px);
     border-right: 1px solid var(--border);
-    display: flex; flex-direction: column; gap: 12px;
+    display: flex; flex-direction: column; gap: 10px;
     min-width: 0;
   }
-  .person:nth-child(n+2) { padding-left: clamp(16px, 1.8vw, 24px); }
-  .person:last-child { border-right: 0; padding-right: 0; }
+  .person:last-child { border-right: 0; }
   .avatar {
     aspect-ratio: 1 / 1;
     width: 100%;
+    max-width: 150px;
     background: linear-gradient(135deg, var(--surface-2) 0%, var(--border) 100%);
     border: 1px solid var(--border);
     border-radius: 4px;
     position: relative;
     overflow: hidden;
   }
-  .avatar::before {
+  .avatar.placeholder::before {
     content: "PHOTO";
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
@@ -1150,6 +1149,10 @@
     font-size: 9px;
     letter-spacing: 0.18em;
     color: var(--ink-3);
+  }
+  .avatar img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
   }
   .person .role {
     font-family: var(--mono);
@@ -1212,19 +1215,18 @@
     list-style: none; margin: 0; padding: 0;
   }
   .uof-row {
-    padding: 11px 0;
+    padding: 12px 0;
     border-bottom: 1px solid var(--border);
     display: grid;
-    grid-template-columns: 56px 1fr auto;
+    grid-template-columns: 56px 130px 1fr auto;
     gap: 16px;
     align-items: baseline;
   }
-  .uof-row:last-of-type { border-bottom: 1px solid var(--border); }
   .uof-row .pct {
     font-family: var(--display);
     font-weight: 600;
-    font-size: clamp(20px, 1.8vw, 26px);
-    letter-spacing: -0.024em;
+    font-size: clamp(18px, 1.6vw, 22px);
+    letter-spacing: -0.022em;
     color: var(--ink);
     line-height: 1;
   }
@@ -1234,6 +1236,7 @@
     font-size: 14px;
     letter-spacing: -0.01em;
     color: var(--ink);
+    line-height: 1.2;
   }
   .uof-row .desc {
     font-family: var(--sans);
@@ -1241,15 +1244,15 @@
     font-size: 12px;
     color: var(--ink-2);
     line-height: 1.35;
-    grid-column: 2 / 4;
-    margin-top: 3px;
     letter-spacing: -0.003em;
+    margin: 0;
   }
   .uof-row .gbp {
     font-family: var(--mono);
     font-size: 11px;
     letter-spacing: 0.06em;
     color: var(--ink-3);
+    white-space: nowrap;
   }
 
   /* ───── closing slide ───── */
@@ -1503,27 +1506,27 @@
 
       <div class="phones">
         <div class="phone-cell">
-          <div class="phone-frame placeholder" data-screen="Screenshot · Open"></div>
+          <div class="phone-frame"><img src="screens/open.png" alt="Form a Ltd in QPayments" /></div>
           <div class="phone-cap">
             <span class="num">01 — Open</span>
-            <span class="label">Form a UK Ltd in minutes</span>
-            <span class="desc">Companies House submission, business bank account and director KYC handled in one flow.</span>
+            <span class="label">Form a Ltd in 10 minutes</span>
+            <span class="desc">Companies House submission, certificate, Articles and bank account — handled in one flow.</span>
           </div>
         </div>
         <div class="phone-cell">
-          <div class="phone-frame placeholder" data-screen="Screenshot · Run"></div>
+          <div class="phone-frame"><img src="screens/run.png" alt="QPayments banking home" /></div>
           <div class="phone-cap">
             <span class="num">02 — Run</span>
-            <span class="label">AI runs the books</span>
-            <span class="desc">Categorisation, dividends, payroll, receipts and revenue forecasts — without an accountant.</span>
+            <span class="label">Bank your way</span>
+            <span class="desc">QPay business account or your existing bank via Open Banking. AI runs the books either way.</span>
           </div>
         </div>
         <div class="phone-cell">
-          <div class="phone-frame placeholder" data-screen="Screenshot · File"></div>
+          <div class="phone-frame"><img src="screens/file.png" alt="Articles of association filing" /></div>
           <div class="phone-cap">
             <span class="num">03 — File</span>
-            <span class="label">Every filing, on time</span>
-            <span class="desc">VAT, Corporation Tax, Confirmation Statement and Self Assessment drafted and submitted from the app.</span>
+            <span class="label">Every filing, drafted</span>
+            <span class="desc">Articles, Confirmation Statement, VAT, Corporation Tax — Companies Act compliant, always on time.</span>
           </div>
         </div>
       </div>
@@ -1974,35 +1977,35 @@
       <div>
         <div class="stage-eyebrow">Founding team</div>
         <h2 class="team-headline">
-          Operators who shipped<br/>
-          <span class="accent">UK regulated fintech before.</span>
+          Operators<br/>
+          <span class="accent">who shipped before.</span>
         </h2>
       </div>
 
       <div class="team-grid">
         <div class="person">
-          <div class="avatar"></div>
-          <span class="role">Co-founder · CEO</span>
-          <h3>[ Name ]</h3>
-          <p>Background placeholder — prior company, role and why they own this problem.</p>
+          <div class="avatar"><img src="team/farid.jpg" alt="Farid Gasanov" /></div>
+          <span class="role">CEO</span>
+          <h3>Farid Gasanov</h3>
+          <p>Co-founded Q Accountants (London, 2015) — 350+ UK SME clients across ten years. Also Head of Investment at Roe Park Developments.</p>
         </div>
         <div class="person">
-          <div class="avatar"></div>
-          <span class="role">Co-founder · CTO</span>
-          <h3>[ Name ]</h3>
-          <p>Background placeholder — payments engineering, AI agents, regulated systems.</p>
+          <div class="avatar"><img src="team/dmytro.jpg" alt="Dmytro Bakhtin" /></div>
+          <span class="role">CTO</span>
+          <h3>Dmytro Bakhtin</h3>
+          <p>Engineering leader at KPMG, Novuna and Ford. Founded Solutions Plus, a London IT consultancy. Angel investor in fintech and digital payments.</p>
         </div>
         <div class="person">
-          <div class="avatar"></div>
+          <div class="avatar"><img src="team/maria.jpg" alt="Maria Iontseva" /></div>
           <span class="role">Head of Product</span>
-          <h3>[ Name ]</h3>
-          <p>Background placeholder — UK SMB fintech product, accountant workflows.</p>
+          <h3>Maria Iontseva</h3>
+          <p>Senior product designer with 20 years across fintech and SaaS. Serial entrepreneur.</p>
         </div>
         <div class="person">
-          <div class="avatar"></div>
+          <div class="avatar"><img src="team/sean.jpg" alt="Sean Clare" /></div>
           <span class="role">Head of Compliance</span>
-          <h3>[ Name ]</h3>
-          <p>Background placeholder — EMI / SMCR / CASS 15 / MLRs.</p>
+          <h3>Sean Clare</h3>
+          <p>Director at SNPC Consulting — UK financial regulation specialist. CASS 6 / 7 / 15 safeguarding, Consumer Duty and regulatory reporting for mid-to-large CASS firms.</p>
         </div>
       </div>
     </div>
@@ -2013,12 +2016,8 @@
           <div class="k">Founding partner</div>
           <div class="v">Q Accountants — UK distribution</div>
         </div>
-        <div class="meta">
-          <div class="k">Hiring next</div>
-          <div class="v">Senior payments engineer · BaaS lead · Account manager</div>
-        </div>
       </div>
-      <div class="stamp">Bios &amp; photos to follow</div>
+      <div class="stamp">Bios to follow</div>
     </footer>
   </section>
 
@@ -2050,26 +2049,26 @@
           <li class="uof-row">
             <span class="pct">45 %</span>
             <span class="name">Engineering</span>
-            <span class="gbp">£225 K</span>
             <span class="desc">Core ledger, AI agents, mobile + web app, BaaS integration.</span>
+            <span class="gbp">£225 K</span>
           </li>
           <li class="uof-row">
             <span class="pct">25 %</span>
             <span class="name">Regulatory</span>
-            <span class="gbp">£125 K</span>
             <span class="desc">EMI authorisation paperwork, CASS&nbsp;15 tooling, SMCR, audit.</span>
+            <span class="gbp">£125 K</span>
           </li>
           <li class="uof-row">
             <span class="pct">20 %</span>
             <span class="name">Distribution</span>
-            <span class="gbp">£100 K</span>
             <span class="desc">Q Accountants programme, content, founder-community presence.</span>
+            <span class="gbp">£100 K</span>
           </li>
           <li class="uof-row">
             <span class="pct">10 %</span>
             <span class="name">Reserve</span>
-            <span class="gbp">£50 K</span>
             <span class="desc">Buffer for regulatory timeline slippage and contingency.</span>
+            <span class="gbp">£50 K</span>
           </li>
         </ul>
       </div>
@@ -2086,7 +2085,7 @@
           <div class="v">Series A · 2027 · post-revenue, post-EMI</div>
         </div>
       </div>
-      <div class="stamp">Confidential · QPayments Ltd</div>
+      <div class="stamp">QPayments Ltd</div>
     </footer>
   </section>
 
@@ -2116,7 +2115,7 @@
         </div>
         <div>
           <div class="ck">Contact</div>
-          <div class="cv">maria@qpayments.uk &nbsp;<span class="accent">·</span>&nbsp; qpayments.uk</div>
+          <div class="cv">farid@qpayments.co.uk &nbsp;<span class="accent">·</span>&nbsp; qpayments.co.uk</div>
         </div>
       </div>
     </div>
@@ -2128,7 +2127,7 @@
           <div class="v">London · United Kingdom</div>
         </div>
       </div>
-      <div class="stamp">Confidential · May 2026</div>
+      <div class="stamp">May 2026</div>
     </footer>
   </section>
 
