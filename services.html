@@ -178,23 +178,12 @@
 
     <div class="service">
       <div>
-        <div class="svc-name">Postcodes.io</div>
-        <div class="svc-provider">postcodes.io</div>
-      </div>
-      <div>
-        <div class="svc-what">Postcode validation and Companies House jurisdiction mapping (England &amp; Wales / Scotland / NI). Free, no API key, no rate limits. Used internally by the address service to resolve jurisdiction.</div>
-      </div>
-      <div class="badge working">Working · Free</div>
-    </div>
-
-    <div class="service">
-      <div>
         <div class="svc-name">Ideal Postcodes</div>
         <div class="svc-provider">ideal-postcodes.co.uk</div>
       </div>
       <div>
-        <div class="svc-what">Royal Mail PAF address autocomplete in the formation flow — the only address lookup service we actually use in production. Returns the full list of addresses for a postcode from licensed Royal Mail data.</div>
-        <div class="svc-note">Free tier is ~100 lookups/day — enough for dev/testing only, not for real users. Need a paid plan before launch. Without a production key the app falls back to a basic OpenStreetMap query (dev only, not shipped to users).</div>
+        <div class="svc-what">UK address autocomplete in the formation flow — Royal Mail PAF data. Returns the full list of addresses for a postcode, plus jurisdiction mapping (England &amp; Wales / Scotland / NI) for Companies House.</div>
+        <div class="svc-note">Free tier ~100 lookups/day — dev/testing only. Need a paid plan before any real users touch the app.</div>
         <div class="env-vars">
           <span class="env">IDEAL_POSTCODES_KEY</span>
         </div>
@@ -251,7 +240,7 @@
           <span class="env">VERIFY_BASE_URL</span>
         </div>
       </div>
-      <div class="badge demo">Demo mode</div>
+      <div class="badge demo">Not implemented yet</div>
     </div>
 
     <div class="service">
@@ -263,7 +252,7 @@
         <div class="svc-what">FCA-regulated Open Banking — read bank balances and transactions (AISP). "Connect your bank" screen is built. No OAuth flow or API calls wired yet.</div>
         <div class="svc-note">We referenced Open Banking in the CH presenter application and pitch. Needs to be properly integrated before launch.</div>
       </div>
-      <div class="badge demo">UI only</div>
+      <div class="badge demo">Not implemented yet</div>
     </div>
 
   </div>
@@ -284,7 +273,7 @@
         <div class="svc-what">Phone number verification at signup. Right now we use email OTP only (Supabase). SMS is standard expectation for a banking app.</div>
         <div class="svc-note">Twilio Verify is the simplest to integrate — one API call, handles delivery and expiry.</div>
       </div>
-      <div class="badge needed">Not started</div>
+      <div class="badge needed">Not implemented yet</div>
     </div>
 
     <div class="service">
@@ -296,7 +285,7 @@
         <div class="svc-what">Incorporation confirmations, account statements, filing deadline alerts. Supabase covers the basic OTP email but nothing else.</div>
         <div class="svc-note">Postmark is best for delivery reliability (used by Basecamp, GitHub). Resend is simpler API, cheaper to start.</div>
       </div>
-      <div class="badge needed">Not started</div>
+      <div class="badge needed">Not implemented yet</div>
     </div>
 
     <div class="service">
@@ -308,7 +297,7 @@
         <div class="svc-what">Actual GBP business accounts, Faster Payments, BACS, Direct Debits. The single biggest gap — without this there is no QPay bank account.</div>
         <div class="svc-note">Griffin is UK-native, API-first, FCA-authorised, gives sandbox access quickly. Modulr is the alternative — powers Revolut Business and Tide. Both require commercial conversation.</div>
       </div>
-      <div class="badge needed">Not started</div>
+      <div class="badge needed">Not implemented yet</div>
     </div>
 
     <div class="service">
@@ -319,7 +308,7 @@
       <div>
         <div class="svc-what">Virtual and physical debit cards for the QPay business account. Griffin has card issuing built in — if we go with them this may not need a separate provider.</div>
       </div>
-      <div class="badge needed">Not started</div>
+      <div class="badge needed">Not implemented yet</div>
     </div>
 
   </div>
