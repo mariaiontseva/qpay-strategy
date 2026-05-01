@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QPayments — AI business banking for UK Ltd directors</title>
+  <meta name="description" content="The first UK banking app built around the Ltd structure. Form a company, open a business account, and file with Companies House and HMRC — all in one AI-native app.">
+
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── tokens ──────────────────────────────────────── */
+    :root {
+      --canvas:  #F5EDE2;
+      --ink:     #1A1410;
+      --ink-2:   #4A3F37;
+      --ink-3:   #8C7B70;
+      --ink-4:   #BCA99A;
+      --accent:  #B84A1F;
+      --card:    #EDE4D8;
+      --border:  rgba(26,20,16,0.09);
+      --display: 'Switzer', sans-serif;
+      --mono:    'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--display);
+      overflow-x: hidden;
+    }
+
+    /* grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+
+    /* ── animations ──────────────────────────────────── */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* ── nav ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 56px;
+      transition: background 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+
+    nav.scrolled {
+      background: rgba(245,237,226,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom-color: var(--border);
+    }
+
+    .brand {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: -0.022em;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-left: 2px;
+      margin-bottom: 2px;
+      flex-shrink: 0;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nav-link {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: var(--ink); }
+
+    .nav-pill {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--canvas);
+      background: var(--ink);
+      text-decoration: none;
+      padding: 9px 18px;
+      transition: background 0.2s;
+    }
+
+    .nav-pill:hover { background: var(--accent); }
+
+    /* ── hero ────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 80px;
+      padding: 120px 56px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 32px;
+    }
+
+    .hero-headline {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(44px, 5.6vw, 80px);
+      line-height: 0.94;
+      letter-spacing: -0.034em;
+      color: var(--ink);
+    }
+
+    .hero-headline-2 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(44px, 5.6vw, 80px);
+      line-height: 0.94;
+      letter-spacing: -0.034em;
+      color: var(--accent);
+      margin-bottom: 36px;
+    }
+
+    .hero-desc {
+      font-size: clamp(15px, 1.2vw, 17px);
+      font-weight: 400;
+      color: var(--ink-2);
+      line-height: 1.58;
+      letter-spacing: -0.006em;
+      max-width: 42ch;
+      margin-bottom: 32px;
+    }
+
+    .hero-form-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .form-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+    }
+
+    .form-row { display: flex; }
+
+    .email-input {
+      flex: 1;
+      padding: 15px 20px;
+      background: transparent;
+      border: 1px solid var(--ink);
+      border-right: none;
+      font-family: var(--display);
+      font-size: 15px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.25s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    .email-input::placeholder { color: var(--ink-4); }
+    .email-input:focus { border-color: var(--accent); }
+
+    .email-btn {
+      padding: 15px 28px;
+      background: var(--ink);
+      color: var(--canvas);
+      border: 1px solid var(--ink);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      white-space: nowrap;
+      border-radius: 0;
+    }
+
+    .email-btn:hover { background: var(--accent); border-color: var(--accent); }
+
+    .form-success {
+      display: none;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 15px 0;
+    }
+
+    /* ── phone mockups ───────────────────────────────── */
+    .hero-right {
+      position: relative;
+      height: 600px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .phones-group {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .phone-mock {
+      position: absolute;
+      width: 200px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow:
+        0 2px 0 rgba(26,20,16,0.06),
+        0 32px 64px -20px rgba(26,20,16,0.30);
+    }
+
+    .phone-mock img {
+      width: 100%;
+      display: block;
+    }
+
+    .phone-mock.p1 {
+      left: 0;
+      bottom: 0;
+      transform: rotate(-4deg) translateY(20px);
+      z-index: 1;
+    }
+
+    .phone-mock.p2 {
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 32px;
+      z-index: 3;
+      width: 220px;
+      box-shadow:
+        0 2px 0 rgba(26,20,16,0.08),
+        0 48px 80px -20px rgba(26,20,16,0.38);
+    }
+
+    .phone-mock.p3 {
+      right: 0;
+      bottom: 0;
+      transform: rotate(4deg) translateY(20px);
+      z-index: 1;
+    }
+
+    /* ── features ────────────────────────────────────── */
+    .features-section {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+    }
+
+    .features-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 56px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .feature {
+      padding: 64px 56px 72px 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .feature:last-child { border-right: none; padding-right: 0; }
+    .feature + .feature { padding-left: 56px; }
+
+    .feat-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      margin-bottom: 28px;
+    }
+
+    .feat-num span { color: var(--accent); margin-right: 6px; }
+
+    .feat-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(22px, 1.9vw, 28px);
+      letter-spacing: -0.022em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .feat-desc {
+      font-size: 14.5px;
+      color: var(--ink-2);
+      line-height: 1.62;
+      letter-spacing: -0.004em;
+    }
+
+    /* ── stats ───────────────────────────────────────── */
+    .stats-section {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .stats-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 56px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stat {
+      padding: 52px 56px 52px 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat:last-child { border-right: none; padding-right: 0; }
+    .stat + .stat { padding-left: 56px; }
+
+    .stat-num {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(44px, 4.5vw, 64px);
+      letter-spacing: -0.038em;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 12px;
+    }
+
+    .stat-note {
+      font-size: 13.5px;
+      color: var(--ink-3);
+      line-height: 1.55;
+    }
+
+    /* ── dark CTA ────────────────────────────────────── */
+    .cta-section {
+      position: relative;
+      z-index: 1;
+      background: var(--ink);
+      overflow: hidden;
+    }
+
+    .cta-inner {
+      position: relative;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 100px 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .cta-headline {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(40px, 4.8vw, 68px);
+      letter-spacing: -0.034em;
+      line-height: 0.97;
+      color: var(--canvas);
+    }
+
+    .cta-headline .accent { color: var(--accent); }
+
+    .cta-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .cta-copy {
+      font-size: 16px;
+      color: rgba(245,237,226,0.5);
+      line-height: 1.56;
+      letter-spacing: -0.008em;
+      max-width: 40ch;
+    }
+
+    .cta-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,237,226,0.3);
+      margin-top: 8px;
+    }
+
+    .cta-form-row { display: flex; }
+
+    .cta-input {
+      flex: 1;
+      padding: 16px 20px;
+      background: rgba(245,237,226,0.06);
+      border: 1px solid rgba(245,237,226,0.16);
+      border-right: none;
+      font-family: var(--display);
+      font-size: 15px;
+      color: var(--canvas);
+      outline: none;
+      transition: border-color 0.25s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    .cta-input::placeholder { color: rgba(245,237,226,0.22); }
+    .cta-input:focus { border-color: var(--accent); }
+
+    .cta-btn {
+      padding: 16px 28px;
+      background: var(--accent);
+      color: var(--canvas);
+      border: 1px solid var(--accent);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+      border-radius: 0;
+    }
+
+    .cta-btn:hover { opacity: 0.82; }
+
+    .cta-success {
+      display: none;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 16px 0;
+    }
+
+    /* ── footer ──────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 28px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-left: 2px;
+      flex-shrink: 0;
+    }
+
+    .footer-meta {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+    }
+
+    /* ── responsive ──────────────────────────────────── */
+    /* ── problem & solution ──────────────────────────── */
+    .two-col-section {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+    }
+
+    .two-col-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 56px;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: start;
+      padding-top: 72px;
+      padding-bottom: 80px;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      padding-top: 6px;
+    }
+
+    .section-headline {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(32px, 3.2vw, 48px);
+      letter-spacing: -0.028em;
+      line-height: 1.03;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    .section-headline .accent { color: var(--accent); }
+
+    .section-body {
+      font-size: 16px;
+      color: var(--ink-2);
+      line-height: 1.65;
+      letter-spacing: -0.006em;
+      max-width: 56ch;
+      margin-bottom: 32px;
+    }
+
+    .problem-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .problem-list li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 16px;
+      align-items: start;
+      font-size: 15px;
+      color: var(--ink-2);
+      line-height: 1.5;
+    }
+
+    .problem-list li::before {
+      content: '';
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 9px;
+      flex-shrink: 0;
+    }
+
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 8px;
+    }
+
+    .sol-card {
+      background: var(--card);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sol-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .sol-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: -0.018em;
+      color: var(--ink);
+    }
+
+    .sol-desc {
+      font-size: 13.5px;
+      color: var(--ink-3);
+      line-height: 1.55;
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 22px 24px; }
+      .nav-link { display: none; }
+
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 48px; }
+      .hero-right { height: 400px; }
+      .phone-mock.p1 { width: 140px; }
+      .phone-mock.p2 { width: 160px; }
+      .phone-mock.p3 { width: 140px; }
+
+      .two-col-inner { grid-template-columns: 1fr; gap: 32px; padding: 48px 24px; }
+      .solution-grid { grid-template-columns: 1fr; }
+
+      .features-inner { grid-template-columns: 1fr; padding: 0 24px; }
+      .feature { border-right: none; border-bottom: 1px solid var(--border); padding: 48px 0; }
+      .feature:last-child { border-bottom: none; }
+      .feature + .feature { padding-left: 0; }
+
+      .stats-inner { grid-template-columns: 1fr; padding: 0 24px; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); padding: 44px 0; }
+      .stat:last-child { border-bottom: none; }
+      .stat + .stat { padding-left: 0; }
+
+      .cta-inner { grid-template-columns: 1fr; gap: 40px; padding: 72px 24px; }
+      .footer-inner { padding: 24px; flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/" class="brand">QPayments<span class="brand-dot"></span></a>
+  <div class="nav-right">
+    <a href="pitch-deck.html" class="nav-link" target="_blank">Investor deck</a>
+    <a href="#waitlist" class="nav-pill">Get early access</a>
+  </div>
+</nav>
+
+<section class="hero" id="waitlist">
+  <div class="hero-left">
+    <div class="hero-eyebrow reveal" style="animation-delay:0.05s">
+      Coming 2026
+    </div>
+    <div class="hero-headline reveal" style="animation-delay:0.14s">AI runs the&nbsp;Ltd.</div>
+    <div class="hero-headline-2 reveal" style="animation-delay:0.22s">Founders run<br>the business.</div>
+    <p class="hero-desc reveal" style="animation-delay:0.3s">
+      The first UK banking app built around the Ltd structure. Form your company, open a business account, file with Companies House and HMRC — all in one AI-native app.
+    </p>
+    <div class="hero-form-col reveal" style="animation-delay:0.38s">
+      <span class="form-label">Notify me at launch</span>
+      <div class="form-row" id="hero-form">
+        <input type="email" class="email-input" placeholder="your@email.co.uk" id="hero-email" autocomplete="email">
+        <button class="email-btn" onclick="submitForm('hero')">Notify me</button>
+      </div>
+      <div class="form-success" id="hero-success">You're on the list — we'll be in touch.</div>
+    </div>
+  </div>
+
+  <div class="hero-right reveal" style="animation-delay:0.2s">
+    <div class="phones-group">
+      <div class="phone-mock p1">
+        <img src="screens/open.png" alt="Form a Ltd">
+      </div>
+      <div class="phone-mock p2">
+        <img src="screens/run.png" alt="Banking home">
+      </div>
+      <div class="phone-mock p3">
+        <img src="screens/file.png" alt="Articles of association">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Problem -->
+<section class="two-col-section">
+  <div class="two-col-inner">
+    <div class="section-label">The problem</div>
+    <div>
+      <h2 class="section-headline">A UK&nbsp;Ltd is a <span class="accent">filing machine.</span></h2>
+      <p class="section-body">Every founder running a limited company juggles twenty-plus statutory and tax obligations a year — across four or more separate apps. No UK banking app does them end-to-end.</p>
+      <ul class="problem-list">
+        <li>Formation at Companies House — one app</li>
+        <li>Business banking — another app</li>
+        <li>VAT, Corporation Tax, Self Assessment — a third</li>
+        <li>Confirmation Statements, director changes — a fourth</li>
+        <li>Payroll, dividends, auto-enrolment — wherever you can find them</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Solution -->
+<section class="two-col-section">
+  <div class="two-col-inner">
+    <div class="section-label">The solution</div>
+    <div>
+      <h2 class="section-headline">One AI app that <span class="accent">runs the Ltd.</span></h2>
+      <p class="section-body">QPayments handles every UK&nbsp;Ltd obligation — from company formation through daily banking to year-end Self Assessment — in a single AI banking app.</p>
+      <div class="solution-grid">
+        <div class="sol-card">
+          <span class="sol-num">01 · Open</span>
+          <span class="sol-title">Form a Ltd in 10 minutes</span>
+          <span class="sol-desc">Companies House submission, certificate, Articles and a business account — one flow.</span>
+        </div>
+        <div class="sol-card">
+          <span class="sol-num">02 · Run</span>
+          <span class="sol-title">Banking that knows your structure</span>
+          <span class="sol-desc">QPay account or connect your existing bank. AI tracks dividends and keeps the books.</span>
+        </div>
+        <div class="sol-card">
+          <span class="sol-num">03 · File</span>
+          <span class="sol-title">Every filing, drafted</span>
+          <span class="sol-desc">VAT, Corporation Tax, Confirmation Statement — drafted by AI, filed on time.</span>
+        </div>
+        <div class="sol-card">
+          <span class="sol-num">04 · Comply</span>
+          <span class="sol-title">Always Companies Act compliant</span>
+          <span class="sol-desc">Director changes, PSC register, MTD-ITSA — the compliance calendar runs itself.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="features-inner">
+    <div class="feature">
+      <div class="feat-num"><span>01</span>Open</div>
+      <h3 class="feat-title">A Ltd in 10 minutes.</h3>
+      <p class="feat-desc">Companies House submission, certificate, Articles of Association and a business account — in a single flow from your phone. No solicitor, no waiting.</p>
+    </div>
+    <div class="feature">
+      <div class="feat-num"><span>02</span>Run</div>
+      <h3 class="feat-title">Banking that knows your structure.</h3>
+      <p class="feat-desc">QPay business account or connect your existing bank via Open Banking. AI categorises transactions, tracks dividends and keeps your books automatically.</p>
+    </div>
+    <div class="feature">
+      <div class="feat-num"><span>03</span>File</div>
+      <h3 class="feat-title">Every filing, drafted.</h3>
+      <p class="feat-desc">Confirmation Statement, VAT, Corporation Tax, Self Assessment — drafted by AI and filed on time. The compliance calendar runs itself.</p>
+    </div>
+  </div>
+</section>
+
+<section class="stats-section">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-num">2 M</div>
+      <div class="stat-label">UK limited companies</div>
+      <div class="stat-note">None of the leading UK banking apps treat a Ltd's legal structure as a first-class product.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">20+</div>
+      <div class="stat-label">Annual obligations</div>
+      <div class="stat-note">Every UK Ltd director juggles statutory and tax filings across four or more separate apps today.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">1</div>
+      <div class="stat-label">App to replace them all</div>
+      <div class="stat-note">Formation through year-end — QPayments is the first app built for the whole Ltd lifecycle.</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2 class="cta-headline">
+      Built for UK&nbsp;Ltd<br>directors.<br>
+      <span class="accent">Launching 2026.</span>
+    </h2>
+    <div class="cta-right">
+      <p class="cta-copy">
+        Be first to know when we launch. No spam — just one email when QPayments is live and ready for your company.
+      </p>
+      <span class="cta-label">Join the waitlist</span>
+      <div class="cta-form-row" id="cta-form">
+        <input type="email" class="cta-input" placeholder="your@email.co.uk" id="cta-email" autocomplete="email">
+        <button class="cta-btn" onclick="submitForm('cta')">Join waitlist</button>
+      </div>
+      <div class="cta-success" id="cta-success">You're on the list — we'll be in touch.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">QPayments<span class="footer-dot"></span></div>
+    <div class="footer-meta">© 2026 Q Payments Ltd &nbsp;·&nbsp; London, UK</div>
+  </div>
+</footer>
+
+<script>
+  // Nav blur on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 48);
+  }, { passive: true });
+
+  // Email form handler
+  // Connect to your real endpoint by uncommenting the fetch below
+  function submitForm(id) {
+    const input = document.getElementById(`${id}-email`);
+    const email = input.value.trim();
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      input.style.borderColor = 'var(--accent)';
+      input.focus();
+      setTimeout(() => (input.style.borderColor = ''), 1400);
+      return;
+    }
+
+    document.getElementById(`${id}-form`).style.display = 'none';
+    document.getElementById(`${id}-success`).style.display = 'block';
+
+    // Uncomment when ready:
+    // fetch('https://formspree.io/f/YOUR_FORM_ID', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    //   body: JSON.stringify({ email }),
+    // });
+  }
+
+  document.getElementById('hero-email').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitForm('hero');
+  });
+  document.getElementById('cta-email').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitForm('cta');
+  });
+</script>
+
+</body>
+</html>
