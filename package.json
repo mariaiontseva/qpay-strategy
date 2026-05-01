@@ -1,0 +1,26 @@
+{
+  "name": "qpay-strategy",
+  "version": "1.0.0",
+  "description": "Internal strategic documentation and design artefacts for QPay, a UK-focused business account and governance platform for limited companies.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariaiontseva/qpay-strategy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mariaiontseva/qpay-strategy/issues"
+  },
+  "homepage": "https://github.com/mariaiontseva/qpay-strategy#readme",
+  "devDependencies": {
+    "puppeteer": "^24.42.0"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
+  }
+}
