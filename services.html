@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QPayments — Backend Services & APIs</title>
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --canvas: #F5EDE2;
+      --ink:    #1A1410;
+      --ink-2:  #4A3F37;
+      --ink-3:  #8C7B70;
+      --ink-4:  #BCA99A;
+      --accent: #B84A1F;
+      --card:   #EDE4D8;
+      --green:  #2A6B3C;
+      --amber:  #8B5E00;
+      --border: rgba(26,20,16,0.09);
+      --display:'Switzer', sans-serif;
+      --mono:   'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; }
+
+    body {
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--display);
+    }
+
+    /* grain */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+
+    /* ── layout ── */
+    .page { max-width: 1100px; margin: 0 auto; padding: 0 48px 100px; }
+
+    /* ── header ── */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 0 48px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 56px;
+    }
+
+    .brand {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .brand-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-left: 2px; margin-bottom: 2px;
+    }
+
+    .top-meta {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(36px, 4vw, 56px);
+      letter-spacing: -0.032em;
+      line-height: 1.0;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    h1 span { color: var(--accent); }
+
+    .subtitle {
+      font-size: 17px;
+      color: var(--ink-3);
+      line-height: 1.55;
+      max-width: 60ch;
+      margin-bottom: 64px;
+    }
+
+    /* ── section ── */
+    .section { margin-bottom: 56px; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    .section-note {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+    }
+
+    /* ── service card ── */
+    .service {
+      display: grid;
+      grid-template-columns: 180px 1fr auto;
+      gap: 24px;
+      align-items: start;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .service:last-child { border-bottom: none; }
+
+    .svc-name {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: -0.014em;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+
+    .svc-provider {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      margin-top: 3px;
+    }
+
+    .svc-body { }
+
+    .svc-what {
+      font-size: 14.5px;
+      color: var(--ink-2);
+      line-height: 1.55;
+      margin-bottom: 6px;
+    }
+
+    .svc-detail {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--ink-4);
+      line-height: 1.6;
+    }
+
+    /* ── status badge ── */
+    .badge {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      white-space: nowrap;
+      align-self: start;
+    }
+
+    .badge.live     { background: rgba(42,107,60,0.12);  color: var(--green); }
+    .badge.partial  { background: rgba(139,94,0,0.12);   color: var(--amber); }
+    .badge.planned  { background: rgba(26,20,16,0.07);   color: var(--ink-3); }
+    .badge.core     { background: rgba(184,74,31,0.10);  color: var(--accent); }
+
+    /* ── legend ── */
+    .legend {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+    }
+
+    .legend-dot {
+      width: 8px; height: 8px; border-radius: 2px;
+    }
+
+    .legend-dot.live    { background: rgba(42,107,60,0.5); }
+    .legend-dot.partial { background: rgba(139,94,0,0.5); }
+    .legend-dot.core    { background: rgba(184,74,31,0.5); }
+    .legend-dot.planned { background: rgba(26,20,16,0.2); }
+
+    /* ── env var pills ── */
+    .env-vars {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .env {
+      font-family: var(--mono);
+      font-size: 10px;
+      background: var(--card);
+      color: var(--ink-3);
+      padding: 3px 8px;
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 720px) {
+      .page { padding: 0 20px 80px; }
+      .service { grid-template-columns: 1fr; gap: 8px; }
+      .badge { align-self: unset; width: fit-content; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="top-bar">
+    <a href="/" class="brand">QPayments<span class="brand-dot"></span></a>
+    <div class="top-meta">Internal · Services & APIs · May 2026</div>
+  </div>
+
+  <h1>Backend Services <span>&amp; APIs</span></h1>
+  <p class="subtitle">Every external service, API, and third-party integration in the QPayments stack — what's live, what's partially built, and what we still need.</p>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot live"></div> Live in code</div>
+    <div class="legend-item"><div class="legend-dot partial"></div> UI built, not wired</div>
+    <div class="legend-item"><div class="legend-dot core"></div> Needed before launch</div>
+    <div class="legend-item"><div class="legend-dot planned"></div> Planned (V2/V3)</div>
+  </div>
+
+  <!-- ── LIVE ─────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Live in code</div>
+      <div class="section-note">Active in qpay-backend + qpay-app</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">Supabase</div>
+        <div class="svc-provider">supabase.com</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">PostgreSQL database, email OTP authentication, and RPC function for atomic TransactionID counter. The core data layer for everything.</div>
+        <div class="env-vars">
+          <span class="env">SUPABASE_URL</span>
+          <span class="env">SUPABASE_ANON_KEY</span>
+          <span class="env">SUPABASE_SERVICE_ROLE_KEY</span>
+        </div>
+      </div>
+      <div class="badge live">Live</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">Companies House XML Gateway</div>
+        <div class="svc-provider">companieshouse.gov.uk</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">GovTalk SOAP/XML API for company incorporation (IN01 form). We are an authorised CH presenter. Currently on sandbox creds; production creds ready.</div>
+        <div class="svc-detail">Sandbox creds: Karolina @ CH Software Developer Support. Production: Presenter ID 00071937000, Credit Account £750.</div>
+        <div class="env-vars">
+          <span class="env">CH_PRESENTER_ID</span>
+          <span class="env">CH_AUTH_VALUE</span>
+          <span class="env">CH_GATEWAY_URL</span>
+          <span class="env">CH_TEST_FLAG</span>
+        </div>
+      </div>
+      <div class="badge live">Live</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">Companies House Public Data API</div>
+        <div class="svc-provider">find-and-update.company-information.service.gov.uk</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Read-only REST API for company name availability checks and company lookups by number. Used in both app and backend.</div>
+        <div class="env-vars">
+          <span class="env">CH_PUBLIC_API_KEY</span>
+        </div>
+      </div>
+      <div class="badge live">Live</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">Postcodes.io</div>
+        <div class="svc-provider">postcodes.io</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Free UK postcode validation and jurisdiction mapping. No API key needed. Used to determine England &amp; Wales vs Scotland vs NI for Companies House jurisdiction.</div>
+      </div>
+      <div class="badge live">Live · Free</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">Ideal Postcodes</div>
+        <div class="svc-provider">ideal-postcodes.co.uk</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Licensed Royal Mail PAF address lookup — primary address autocomplete in the formation flow. Falls back to Overpass/OSM if key missing.</div>
+        <div class="env-vars">
+          <span class="env">IDEAL_POSTCODES_KEY</span>
+        </div>
+      </div>
+      <div class="badge live">Live · Paid</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">Overpass / OpenStreetMap</div>
+        <div class="svc-provider">overpass-api.de</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Free address lookup fallback. Used when Ideal Postcodes returns empty or API key is missing. Partial UK coverage.</div>
+      </div>
+      <div class="badge live">Live · Free</div>
+    </div>
+
+  </div>
+
+  <!-- ── PARTIALLY BUILT ───────────────────────────────── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">UI built — not yet wired</div>
+      <div class="section-note">Screens exist in app; backend endpoints not implemented</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">Stripe Identity</div>
+        <div class="svc-provider">stripe.com/identity</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">KYC — passport scan + selfie match. ID scan and selfie screens are built in the app. In demo mode it auto-verifies. Needs backend endpoints <code>/verify/start</code> and <code>/verify/status</code>.</div>
+        <div class="env-vars">
+          <span class="env">VERIFY_BASE_URL</span>
+        </div>
+      </div>
+      <div class="badge partial">Partial</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">TrueLayer</div>
+        <div class="svc-provider">truelayer.com</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">FCA-regulated Open Banking — read bank balances and transactions (AISP). "Connect your bank" screen is built; OAuth flow not wired yet.</div>
+      </div>
+      <div class="badge partial">Partial</div>
+    </div>
+
+  </div>
+
+  <!-- ── NEEDED BEFORE LAUNCH ──────────────────────────── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">Needed before launch</div>
+      <div class="section-note">Core — can't ship without these</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">SMS OTP</div>
+        <div class="svc-provider">Twilio Verify or Vonage</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Phone number verification at signup. Currently using email OTP only (Supabase). SMS needed before launch. Twilio Verify is simplest to integrate.</div>
+      </div>
+      <div class="badge core">Needed</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">Transactional email</div>
+        <div class="svc-provider">Postmark or Resend</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Incorporation confirmations, account statements, filing alerts. Beyond the basic Supabase OTP. Postmark is best for delivery reliability; Resend is simpler API.</div>
+      </div>
+      <div class="badge core">Needed</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">BaaS / Payment rails</div>
+        <div class="svc-provider">Griffin (recommended) or Modulr</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Actual GBP business accounts, Faster Payments, BACS, Direct Debits. Griffin is UK-native, API-first, FCA-authorised — gives sandbox access quickly. This is the biggest missing piece.</div>
+      </div>
+      <div class="badge core">Needed</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">Card issuing</div>
+        <div class="svc-provider">Marqeta or Enfuce</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Virtual and physical debit cards for the QPay business account. Choice depends on the BaaS partner — Griffin has card issuing built in.</div>
+      </div>
+      <div class="badge core">Needed</div>
+    </div>
+
+  </div>
+
+  <!-- ── V2 ────────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">V2 — before Series A</div>
+      <div class="section-note">Months 6–18</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">HMRC MTD VAT API</div>
+        <div class="svc-provider">developer.service.hmrc.gov.uk</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">MTD-compliant VAT return submissions. Free government API, OAuth2. Mandatory for all VAT-registered businesses.</div>
+      </div>
+      <div class="badge planned">V2</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">HMRC MTD ITSA</div>
+        <div class="svc-provider">developer.service.hmrc.gov.uk</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Making Tax Digital for Income Tax Self Assessment. Mandatory from April 2026 for directors with income above £50K. Our exact wedge persona.</div>
+      </div>
+      <div class="badge planned">V2</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">Companies House Filing API V3</div>
+        <div class="svc-provider">developer.company-information.service.gov.uk</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">REST API for Confirmation Statements (CS01), director appointments (AP01), PSC updates. Free. Extends the XML Gateway which only covers incorporation.</div>
+      </div>
+      <div class="badge planned">V2</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">OCR / Receipt capture</div>
+        <div class="svc-provider">Veryfi or Klippa</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Expense categorisation from photos. Extracts merchant, amount, VAT from receipts automatically.</div>
+      </div>
+      <div class="badge planned">V2</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">iXBRL generation</div>
+        <div class="svc-provider">Hammock / internal</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Required for CT600 Corporation Tax returns and statutory accounts filed with Companies House. Tagged XHTML format mandated by HMRC.</div>
+      </div>
+      <div class="badge planned">V2</div>
+    </div>
+
+  </div>
+
+  <!-- ── V3 ────────────────────────────────────────────── -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-title">V3 — growth</div>
+      <div class="section-note">Year 2–3</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">FX rails</div>
+        <div class="svc-provider">Currencycloud / Visa</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Multicurrency accounts for Ltd directors trading internationally.</div>
+      </div>
+      <div class="badge planned">V3</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">E-signature</div>
+        <div class="svc-provider">Dropbox Sign</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">In-app signing of Articles of Association and shareholder agreements.</div>
+      </div>
+      <div class="badge planned">V3</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">Pension / auto-enrolment</div>
+        <div class="svc-provider">NEST, Smart Pension</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Payroll auto-enrolment for Ltd companies with employees.</div>
+      </div>
+      <div class="badge planned">V3</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">Embedded lending</div>
+        <div class="svc-provider">Iwoca, Funding Circle</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Business lending offers surfaced inside the app. Broker/introducer model — no balance sheet risk.</div>
+      </div>
+      <div class="badge planned">V3</div>
+    </div>
+
+    <div class="service">
+      <div>
+        <div class="svc-name">Insurance</div>
+        <div class="svc-provider">Aggregator (TBD)</div>
+      </div>
+      <div class="svc-body">
+        <div class="svc-what">Professional indemnity, public liability — surfaced at formation. Introducer model.</div>
+      </div>
+      <div class="badge planned">V3</div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>
