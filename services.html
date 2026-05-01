@@ -182,7 +182,7 @@
         <div class="svc-provider">postcodes.io</div>
       </div>
       <div>
-        <div class="svc-what">UK postcode validation and jurisdiction mapping (England &amp; Wales / Scotland / NI). No API key, no limits. Used to determine the correct Companies House jurisdiction at formation.</div>
+        <div class="svc-what">Postcode validation and Companies House jurisdiction mapping (England &amp; Wales / Scotland / NI). Free, no API key, no rate limits. Used internally by the address service to resolve jurisdiction.</div>
       </div>
       <div class="badge working">Working · Free</div>
     </div>
@@ -193,13 +193,13 @@
         <div class="svc-provider">ideal-postcodes.co.uk</div>
       </div>
       <div>
-        <div class="svc-what">Royal Mail PAF address lookup — the primary address autocomplete in the formation flow. Falls back to a basic OSM lookup if the key is missing (for local dev only — not production).</div>
-        <div class="svc-note">Paid. Need a production key before launch.</div>
+        <div class="svc-what">Royal Mail PAF address autocomplete in the formation flow — the only address lookup service we actually use in production. Returns the full list of addresses for a postcode from licensed Royal Mail data.</div>
+        <div class="svc-note">Free tier is ~100 lookups/day — enough for dev/testing only, not for real users. Need a paid plan before launch. Without a production key the app falls back to a basic OpenStreetMap query (dev only, not shipped to users).</div>
         <div class="env-vars">
           <span class="env">IDEAL_POSTCODES_KEY</span>
         </div>
       </div>
-      <div class="badge working">Working · Needs prod key</div>
+      <div class="badge working">Working · Needs paid plan</div>
     </div>
 
   </div>
