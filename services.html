@@ -128,7 +128,6 @@
   </div>
 
   <h1>Services <span>&amp; APIs</span></h1>
-  <p class="subtitle">Exact state of every external service in the stack as of today — what's actually working, what's blocked, what still needs to be built.</p>
 
   <div class="legend">
     <div class="legend-item"><div class="legend-dot working"></div>Working</div>
@@ -288,29 +287,6 @@
       <div class="badge needed">Not implemented yet</div>
     </div>
 
-    <div class="service">
-      <div>
-        <div class="svc-name">BaaS / Payment rails</div>
-        <div class="svc-provider">Griffin (recommended) or Modulr</div>
-      </div>
-      <div>
-        <div class="svc-what">Actual GBP business accounts, Faster Payments, BACS, Direct Debits. The single biggest gap — without this there is no QPay bank account.</div>
-        <div class="svc-note">Griffin is UK-native, API-first, FCA-authorised, gives sandbox access quickly. Modulr is the alternative — powers Revolut Business and Tide. Both require commercial conversation.</div>
-      </div>
-      <div class="badge needed">Not implemented yet</div>
-    </div>
-
-    <div class="service">
-      <div>
-        <div class="svc-name">Card issuing</div>
-        <div class="svc-provider">Marqeta or via Griffin</div>
-      </div>
-      <div>
-        <div class="svc-what">Virtual and physical debit cards for the QPay business account. Griffin has card issuing built in — if we go with them this may not need a separate provider.</div>
-      </div>
-      <div class="badge needed">Not implemented yet</div>
-    </div>
-
   </div>
 
   <!-- ── V2 ────────────────────────────────────────────── -->
@@ -348,6 +324,18 @@
       <div><div class="svc-name">iXBRL generation</div><div class="svc-provider">Hammock API or internal</div></div>
       <div><div class="svc-what">Required for CT600 Corporation Tax and statutory accounts filed with HMRC. Tagged XHTML format mandated by HMRC — can't file CT without it.</div></div>
       <div class="badge future">V2</div>
+    </div>
+
+    <div class="service">
+      <div><div class="svc-name">BaaS / Payment rails</div><div class="svc-provider">Griffin (recommended) or Modulr</div></div>
+      <div><div class="svc-what">GBP business accounts, Faster Payments, BACS, Direct Debits. Required once we get EMI authorisation and issue our own accounts. Griffin is UK-native, API-first, FCA-authorised. Modulr powers Revolut Business and Tide. Both need a commercial conversation.</div></div>
+      <div class="badge future">V2 · Post-EMI</div>
+    </div>
+
+    <div class="service">
+      <div><div class="svc-name">Card issuing</div><div class="svc-provider">Marqeta or via Griffin</div></div>
+      <div><div class="svc-what">Virtual and physical debit cards. Not needed for Open Banking launch — only required once we issue our own accounts. Griffin includes card issuing, so likely no separate provider needed.</div></div>
+      <div class="badge future">V2 · Post-EMI</div>
     </div>
 
   </div>
