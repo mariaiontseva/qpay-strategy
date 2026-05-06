@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QPayments — Card-free business payments for UK SMEs</title>
-  <meta name="description" content="A card-free payments platform purpose-built for UK SMEs. Faster Payments, scheduled payroll, batch supplier transfers, multi-user controls. Coming 2026, subject to FCA authorisation as an Electronic Money Institution.">
+  <meta name="description" content="A card-free payments platform purpose-built for UK SMEs. Faster Payments, scheduled payroll, batch supplier transfers, multi-user controls. Coming 2026.">
 
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
   <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -170,20 +170,22 @@
     .hero-headline {
       font-family: var(--display);
       font-weight: 800;
-      font-size: clamp(44px, 5.6vw, 80px);
-      line-height: 0.94;
-      letter-spacing: -0.034em;
-      color: var(--ink);
+      font-size: clamp(46px, 5.8vw, 84px);
+      letter-spacing: -0.036em;
+      margin-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.12em;
     }
 
-    .hero-headline-2 {
-      font-family: var(--display);
-      font-weight: 800;
-      font-size: clamp(44px, 5.6vw, 80px);
-      line-height: 0.94;
-      letter-spacing: -0.034em;
+    .hero-headline .line-1 {
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .hero-headline .line-2 {
       color: var(--accent);
-      margin-bottom: 36px;
+      line-height: 1;
     }
 
     .hero-desc {
@@ -663,10 +665,12 @@
 <section class="hero" id="waitlist">
   <div class="hero-left">
     <div class="hero-eyebrow reveal" style="animation-delay:0.05s">
-      Coming 2026 · Subject to FCA authorisation
+      Coming 2026
     </div>
-    <div class="hero-headline reveal" style="animation-delay:0.14s">Business payments.</div>
-    <div class="hero-headline-2 reveal" style="animation-delay:0.22s">Built for UK&nbsp;SMEs.</div>
+    <h1 class="hero-headline reveal" style="animation-delay:0.14s">
+      <span class="line-1">Business payments.</span>
+      <span class="line-2">Built for UK&nbsp;SMEs.</span>
+    </h1>
     <p class="hero-desc reveal" style="animation-delay:0.3s">
       A card-free payments platform purpose-built for UK limited companies. Faster Payments, scheduled payroll, batch supplier transfers and tax-ready exports — designed for SMEs with up to twenty employees and annual turnover up to £1&nbsp;million.
     </p>
@@ -781,7 +785,7 @@
     </h2>
     <div class="cta-right">
       <p class="cta-copy">
-        Be first to know when we launch. We'll send a single email when QPayments is live and accepting clients, subject to FCA authorisation.
+        Be first to know when we launch. We'll send a single email when QPayments is live and accepting clients.
       </p>
       <span class="cta-label">Join the waitlist</span>
       <div class="cta-form-row" id="cta-form">
