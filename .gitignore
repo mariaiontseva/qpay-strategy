@@ -3,3 +3,16 @@
 .vscode/
 .idea/
 node_modules/
+
+# Internal documents — must NOT be served from GitHub Pages
+pitch-deck.html
+landing.html
+architecture.html
+ch-access.html
+competitors.html
+features.html
+formation.html
+mockup.html
+services.html
+QPayments-Pitch-Deck.pdf
+tmp-*.pdf
