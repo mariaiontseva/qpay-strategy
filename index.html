@@ -560,40 +560,39 @@
       max-width: 92ch;
     }
 
-    /* ── problem & solution ──────────────────────────── */
-    .two-col-section {
+    /* ── content sections ────────────────────────────── */
+    .section {
       position: relative;
       z-index: 1;
       border-top: 1px solid var(--border);
+      padding: 112px 56px;
     }
 
-    .two-col-inner {
+    .section-inner {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 0 56px;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 80px;
-      align-items: start;
-      padding-top: 72px;
-      padding-bottom: 80px;
     }
 
-    .section-label {
+    .section-header {
+      max-width: 820px;
+      margin-bottom: 72px;
+    }
+
+    .section-eyebrow {
       font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.2em;
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--ink-4);
-      padding-top: 6px;
+      color: var(--accent);
+      margin-bottom: 20px;
     }
 
     .section-headline {
       font-family: var(--display);
       font-weight: 800;
-      font-size: clamp(32px, 3.2vw, 48px);
-      letter-spacing: -0.028em;
-      line-height: 1.03;
+      font-size: clamp(34px, 3.6vw, 56px);
+      letter-spacing: -0.03em;
+      line-height: 1.04;
       color: var(--ink);
       margin-bottom: 24px;
     }
@@ -601,75 +600,81 @@
     .section-headline .accent { color: var(--accent); }
 
     .section-body {
-      font-size: 16px;
+      font-size: 17px;
       color: var(--ink-2);
-      line-height: 1.65;
+      line-height: 1.62;
       letter-spacing: -0.006em;
-      max-width: 56ch;
-      margin-bottom: 32px;
+      max-width: 64ch;
     }
 
-    .problem-list {
-      list-style: none;
+    /* gap grid — 5 alternative solutions */
+    .alt-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+
+    .alt-card {
+      padding: 32px 26px;
+      background: var(--card);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      border-top: 2px solid var(--accent);
+    }
+
+    .alt-label {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: -0.016em;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .alt-desc {
+      font-size: 13.5px;
+      color: var(--ink-3);
+      line-height: 1.6;
+    }
+
+    /* platform grid — 4 product pillars */
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .platform-card {
+      padding: 36px 30px 40px;
+      background: var(--card);
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .problem-list li {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 16px;
-      align-items: start;
-      font-size: 15px;
-      color: var(--ink-2);
-      line-height: 1.5;
-    }
-
-    .problem-list li::before {
-      content: '';
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: var(--accent);
-      margin-top: 9px;
-      flex-shrink: 0;
-    }
-
-    .solution-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-      margin-top: 8px;
-    }
-
-    .sol-card {
-      background: var(--card);
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .sol-num {
+    .platform-num {
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 10.5px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--accent);
+      margin-bottom: 8px;
     }
 
-    .sol-title {
+    .platform-title {
       font-family: var(--display);
       font-weight: 700;
-      font-size: 17px;
+      font-size: 20px;
       letter-spacing: -0.018em;
       color: var(--ink);
+      line-height: 1.2;
     }
 
-    .sol-desc {
-      font-size: 13.5px;
-      color: var(--ink-3);
-      line-height: 1.55;
+    .platform-desc {
+      font-size: 14.5px;
+      color: var(--ink-2);
+      line-height: 1.6;
     }
 
     @media (max-width: 900px) {
@@ -682,8 +687,10 @@
       .phone-mock.p1 { left: 6%; }
       .phone-mock.p3 { right: 6%; }
 
-      .two-col-inner { grid-template-columns: 1fr; gap: 32px; padding: 48px 24px; }
-      .solution-grid { grid-template-columns: 1fr; }
+      .section { padding: 72px 24px; }
+      .section-header { margin-bottom: 48px; }
+      .alt-grid { grid-template-columns: 1fr; gap: 12px; }
+      .platform-grid { grid-template-columns: 1fr; gap: 12px; }
 
       .features-inner { grid-template-columns: 1fr; padding: 0 24px; }
       .feature { border-right: none; border-bottom: 1px solid var(--border); padding: 48px 0; }
@@ -698,6 +705,10 @@
       .cta-inner { grid-template-columns: 1fr; gap: 40px; padding: 72px 24px; }
       .footer-inner { padding: 24px; flex-direction: column; gap: 12px; align-items: flex-start; }
       .legal-note { padding: 0 24px 24px; }
+    }
+    @media (min-width: 901px) and (max-width: 1199px) {
+      .alt-grid { grid-template-columns: repeat(2, 1fr); }
+      .platform-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -744,52 +755,67 @@
   </div>
 </section>
 
-<!-- Problem -->
-<section class="two-col-section">
-  <div class="two-col-inner">
-    <div class="section-label">The gap</div>
-    <div>
+<!-- The gap -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">The gap</div>
       <h2 class="section-headline">SMEs are stuck in the <span class="accent">missing&nbsp;middle.</span></h2>
       <p class="section-body">Mainstream banks offer rigid, general-purpose accounts. Consumer fintechs prioritise card spend, budgeting, and sole traders. Neither is built for an incorporated SME running payroll, paying suppliers and approving payments across a small team.</p>
-      <ul class="problem-list">
-        <li>Mainstream banks — limited automation, slow workflows</li>
-        <li>Consumer fintechs — built for sole traders, not teams</li>
-        <li>Multi-currency platforms — FX-led, irrelevant for UK-domestic SMEs</li>
-        <li>Card-led tools — spend-tracking, not payment operations</li>
-        <li>Accounting software — handles books, not payments</li>
-      </ul>
+    </div>
+    <div class="alt-grid">
+      <div class="alt-card">
+        <div class="alt-label">Mainstream banks</div>
+        <div class="alt-desc">Limited automation, slow workflows, generic accounts not built for modern SME teams.</div>
+      </div>
+      <div class="alt-card">
+        <div class="alt-label">Consumer fintechs</div>
+        <div class="alt-desc">Built for sole traders and individuals — not for incorporated companies with internal teams.</div>
+      </div>
+      <div class="alt-card">
+        <div class="alt-label">Multi-currency platforms</div>
+        <div class="alt-desc">FX-led products, irrelevant for UK-domestic SMEs paying suppliers in GBP.</div>
+      </div>
+      <div class="alt-card">
+        <div class="alt-label">Card-led tools</div>
+        <div class="alt-desc">Spend-tracking and expense control — not payment operations or payroll.</div>
+      </div>
+      <div class="alt-card">
+        <div class="alt-label">Accounting software</div>
+        <div class="alt-desc">Handles books, VAT and reporting — but doesn't move money.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Solution -->
-<section class="two-col-section">
-  <div class="two-col-inner">
-    <div class="section-label">The platform</div>
-    <div>
+<!-- The platform -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">The platform</div>
       <h2 class="section-headline">A purpose-built <span class="accent">payments&nbsp;platform.</span></h2>
       <p class="section-body">QPayments handles the day-to-day financial operations of a UK Ltd — Faster Payments, scheduled payroll, supplier batches and multi-user controls — without cards, lending or FX overhead.</p>
-      <div class="solution-grid">
-        <div class="sol-card">
-          <span class="sol-num">01 · Pay</span>
-          <span class="sol-title">Real-time Faster Payments</span>
-          <span class="sol-desc">Send and receive in GBP via your UK sort code and account number. Domestic, instant, EMI-aligned.</span>
-        </div>
-        <div class="sol-card">
-          <span class="sol-num">02 · Schedule</span>
-          <span class="sol-title">Payroll &amp; supplier batches</span>
-          <span class="sol-desc">Schedule outgoing payments and upload batch files for payroll runs and recurring supplier settlements.</span>
-        </div>
-        <div class="sol-card">
-          <span class="sol-num">03 · Control</span>
-          <span class="sol-title">Multi-user roles</span>
-          <span class="sol-desc">Preparer, approver and viewer permissions for finance teams that need internal approval flows.</span>
-        </div>
-        <div class="sol-card">
-          <span class="sol-num">04 · Report</span>
-          <span class="sol-title">Tax-ready exports</span>
-          <span class="sol-desc">Categorised transaction data, exportable in formats your accountant or bookkeeping software can read.</span>
-        </div>
+    </div>
+    <div class="platform-grid">
+      <div class="platform-card">
+        <span class="platform-num">01 · Pay</span>
+        <h3 class="platform-title">Real-time Faster Payments</h3>
+        <p class="platform-desc">Send and receive in GBP via your UK sort code and account number. Domestic, instant, EMI-aligned.</p>
+      </div>
+      <div class="platform-card">
+        <span class="platform-num">02 · Schedule</span>
+        <h3 class="platform-title">Payroll &amp; supplier batches</h3>
+        <p class="platform-desc">Schedule outgoing payments and upload batch files for payroll runs and recurring supplier settlements.</p>
+      </div>
+      <div class="platform-card">
+        <span class="platform-num">03 · Control</span>
+        <h3 class="platform-title">Multi-user roles</h3>
+        <p class="platform-desc">Preparer, approver and viewer permissions for finance teams that need internal approval flows.</p>
+      </div>
+      <div class="platform-card">
+        <span class="platform-num">04 · Report</span>
+        <h3 class="platform-title">Tax-ready exports</h3>
+        <p class="platform-desc">Categorised transaction data, exportable in formats your accountant or bookkeeping software can read.</p>
       </div>
     </div>
   </div>
