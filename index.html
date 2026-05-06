@@ -337,6 +337,92 @@
 
     .cta-consent a:hover { color: var(--accent); }
 
+    /* ── privacy banner ──────────────────────────────── */
+    .privacy-banner {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      max-width: 460px;
+      background: var(--ink);
+      color: var(--canvas);
+      padding: 22px 24px;
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 500;
+      box-shadow: 0 32px 64px -16px rgba(26,20,16,0.5);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    }
+
+    .privacy-banner.show {
+      display: flex;
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .privacy-banner-label {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,237,226,0.5);
+    }
+
+    .privacy-banner-text {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: rgba(245,237,226,0.85);
+    }
+
+    .privacy-banner-text a {
+      color: var(--canvas);
+      text-decoration: underline;
+      text-decoration-color: rgba(245,237,226,0.4);
+      text-underline-offset: 2px;
+    }
+
+    .privacy-banner-text a:hover {
+      text-decoration-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .privacy-banner-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .privacy-banner-btn {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--canvas);
+      border: 1px solid var(--canvas);
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .privacy-banner-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--canvas);
+    }
+
+    @media (max-width: 720px) {
+      .privacy-banner {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        max-width: none;
+        padding: 20px;
+      }
+    }
+
     /* ── features ────────────────────────────────────── */
     .features-section {
       position: relative;
@@ -917,6 +1003,16 @@
   </div>
 </section>
 
+<div class="privacy-banner" id="privacy-banner" role="dialog" aria-label="Privacy notice">
+  <div class="privacy-banner-label">Privacy</div>
+  <div class="privacy-banner-text">
+    QPayments doesn't use tracking, advertising or analytics cookies. We only collect emails through the waitlist, with your consent. See our <a href="/privacy.html">privacy notice</a>.
+  </div>
+  <div class="privacy-banner-actions">
+    <button class="privacy-banner-btn" onclick="dismissPrivacyBanner()">Got it</button>
+  </div>
+</div>
+
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">QPayments<span class="footer-dot"></span></div>
@@ -937,7 +1033,7 @@
 
   // Waitlist endpoint — FormSubmit.co AJAX (no signup needed).
   // To switch destination email, change the address below and re-confirm via the activation link FormSubmit sends to that mailbox on the first submission.
-  const WAITLIST_ENDPOINT = 'https://formsubmit.co/ajax/maria@qpayments.co.uk';
+  const WAITLIST_ENDPOINT = 'https://formsubmit.co/ajax/farid@qpayments.co.uk';
 
   async function submitForm(id) {
     const input = document.getElementById(`${id}-email`);
@@ -979,6 +1075,20 @@
   document.getElementById('cta-email').addEventListener('keydown', e => {
     if (e.key === 'Enter') submitForm('cta');
   });
+
+  // Privacy banner — show on first visit, dismiss persists in localStorage.
+  // We don't actually set any tracking/advertising/analytics cookies; this
+  // banner is informational and acknowledges our data-collection posture.
+  const PRIVACY_KEY = 'qp-privacy-acknowledged-v1';
+  const privacyBanner = document.getElementById('privacy-banner');
+  if (privacyBanner && !localStorage.getItem(PRIVACY_KEY)) {
+    setTimeout(() => privacyBanner.classList.add('show'), 1200);
+  }
+  function dismissPrivacyBanner() {
+    try { localStorage.setItem(PRIVACY_KEY, '1'); } catch (e) {}
+    privacyBanner.classList.remove('show');
+    setTimeout(() => privacyBanner.style.display = 'none', 600);
+  }
 </script>
 
 </body>

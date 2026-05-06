@@ -201,6 +201,61 @@
       main { padding: 64px 24px 80px; }
       footer { padding: 24px; flex-direction: column; gap: 12px; }
     }
+
+    /* ── privacy banner ──────────────────────────────── */
+    .privacy-banner {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      max-width: 460px;
+      background: var(--ink);
+      color: var(--canvas);
+      padding: 22px 24px;
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 500;
+      box-shadow: 0 32px 64px -16px rgba(26,20,16,0.5);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    }
+    .privacy-banner.show { display: flex; transform: translateY(0); opacity: 1; }
+    .privacy-banner-label {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,237,226,0.5);
+    }
+    .privacy-banner-text {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: rgba(245,237,226,0.85);
+    }
+    .privacy-banner-text a {
+      color: var(--canvas);
+      text-decoration: underline;
+      text-decoration-color: rgba(245,237,226,0.4);
+      text-underline-offset: 2px;
+    }
+    .privacy-banner-actions { display: flex; justify-content: flex-end; gap: 10px; }
+    .privacy-banner-btn {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--canvas);
+      border: 1px solid var(--canvas);
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .privacy-banner-btn:hover { background: var(--accent); border-color: var(--accent); color: var(--canvas); }
+    @media (max-width: 720px) {
+      .privacy-banner { left: 16px; right: 16px; bottom: 16px; max-width: none; padding: 20px; }
+    }
   </style>
 </head>
 <body>
@@ -239,7 +294,7 @@
   <p>We retain your email address until you ask us to delete it, you unsubscribe, or for 24 months after collection if you have not engaged with our communications, whichever is sooner. After deletion we may retain a suppression record (a hashed version of your email) so that we do not contact you again in error.</p>
 
   <h2>6. Who else sees it</h2>
-  <p>Your waitlist submission is processed and delivered to us by FormSubmit (formsubmit.co), a third-party form-relay service. FormSubmit acts as a data processor and forwards each submission to our team mailbox at <a href="mailto:maria@qpayments.co.uk">maria@qpayments.co.uk</a>. Their privacy policy is available at <a href="https://formsubmit.co/privacy" target="_blank" rel="noopener">formsubmit.co/privacy</a>.</p>
+  <p>Your waitlist submission is processed and delivered to us by FormSubmit (formsubmit.co), a third-party form-relay service. FormSubmit acts as a data processor and forwards each submission to our team mailbox at <a href="mailto:farid@qpayments.co.uk">farid@qpayments.co.uk</a>. Their privacy policy is available at <a href="https://formsubmit.co/privacy" target="_blank" rel="noopener">formsubmit.co/privacy</a>.</p>
   <p>We do not sell your data. We do not share it with any other party for marketing purposes.</p>
 
   <h2>7. International transfers</h2>
@@ -256,7 +311,7 @@
     <li>withdraw consent at any time</li>
     <li>complain to the Information Commissioner's Office at <a href="https://ico.org.uk" target="_blank" rel="noopener">ico.org.uk</a></li>
   </ul>
-  <p>To exercise any of these rights, email us at <a href="mailto:maria@qpayments.co.uk">maria@qpayments.co.uk</a>. We will respond within one calendar month.</p>
+  <p>To exercise any of these rights, email us at <a href="mailto:farid@qpayments.co.uk">farid@qpayments.co.uk</a>. We will respond within one calendar month.</p>
 
   <h2>9. Security</h2>
   <p>We take reasonable technical and organisational measures to protect personal data against unauthorised access, loss or alteration. These include access controls on our team mailboxes, secure transport (HTTPS) for all submissions, and the use of vetted processors.</p>
@@ -270,7 +325,7 @@
     411 Oxford Street, Office 101<br>
     London, W1C 2PE<br>
     United Kingdom<br>
-    <a href="mailto:maria@qpayments.co.uk">maria@qpayments.co.uk</a>
+    <a href="mailto:farid@qpayments.co.uk">farid@qpayments.co.uk</a>
   </div>
 </main>
 
@@ -278,6 +333,29 @@
   <div>© 2026 Q Payments Ltd · London, UK</div>
   <a href="/">qpayments.co.uk</a>
 </footer>
+
+<div class="privacy-banner" id="privacy-banner" role="dialog" aria-label="Privacy notice">
+  <div class="privacy-banner-label">Privacy</div>
+  <div class="privacy-banner-text">
+    QPayments doesn't use tracking, advertising or analytics cookies. We only collect emails through the waitlist, with your consent. You're reading our full <a href="/privacy.html">privacy notice</a>.
+  </div>
+  <div class="privacy-banner-actions">
+    <button class="privacy-banner-btn" onclick="dismissPrivacyBanner()">Got it</button>
+  </div>
+</div>
+
+<script>
+  const PRIVACY_KEY = 'qp-privacy-acknowledged-v1';
+  const privacyBanner = document.getElementById('privacy-banner');
+  if (privacyBanner && !localStorage.getItem(PRIVACY_KEY)) {
+    setTimeout(() => privacyBanner.classList.add('show'), 1200);
+  }
+  function dismissPrivacyBanner() {
+    try { localStorage.setItem(PRIVACY_KEY, '1'); } catch (e) {}
+    privacyBanner.classList.remove('show');
+    setTimeout(() => privacyBanner.style.display = 'none', 600);
+  }
+</script>
 
 </body>
 </html>
