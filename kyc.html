@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KYC Vendor Comparison for a Bank</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --ink: #1a1a1a;
+    --muted: #666;
+    --line: #e3e1da;
+    --accent: #2b5fa3;
+    --good: #2f7a3a;
+    --warn: #b46a1a;
+    --bad: #a83232;
+    --card: #ffffff;
+    --code-bg: #f1efe8;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Charter", "Iowan Old Style", "Georgia", serif;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 56px 28px 96px;
+  }
+  header h1 {
+    font-size: 38px;
+    line-height: 1.15;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  header .sub {
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 36px;
+  }
+  h2 {
+    font-size: 26px;
+    margin: 56px 0 14px;
+    letter-spacing: -0.005em;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 6px;
+  }
+  h3 {
+    font-size: 19px;
+    margin: 28px 0 8px;
+  }
+  p { margin: 0 0 14px; }
+  a { color: var(--accent); }
+
+  /* Main table */
+  .table-scroll {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+    margin: 18px 0 8px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
+    font-size: 14.5px;
+  }
+  th, td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  th {
+    background: #f3f1ea;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #555;
+    position: sticky;
+    top: 0;
+  }
+  tr:last-child td { border-bottom: none; }
+  td.vendor {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .pill.yes { background: #e3f1e5; color: var(--good); }
+  .pill.no { background: #f6e1e1; color: var(--bad); }
+  .pill.partial { background: #faecd6; color: var(--warn); }
+  .pill.neutral { background: #ececec; color: #555; }
+  .note { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+  /* Verdicts */
+  .verdicts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .v {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .v .label {
+    font-family: -apple-system, system-ui, sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .v .pick { font-weight: 700; font-size: 17px; }
+
+  /* Ranking list */
+  ol.rank { padding-left: 22px; }
+  ol.rank li { margin-bottom: 10px; }
+  ol.rank li b { font-size: 17px; }
+
+  /* Pricing block */
+  .pricing-table th, .pricing-table td { font-variant-numeric: tabular-nums; }
+
+  /* Footer */
+  footer {
+    margin-top: 72px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 14px;
+  }
+  code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; font-size: 0.92em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>KYC vendors for a bank — comparison &amp; pricing</h1>
+  <div class="sub">Passport + face match + liveness. Researched May 2026 · 8 vendors</div>
+</header>
+
+<section>
+  <h2>Side-by-side comparison</h2>
+  <p>All eight vendors handle passport + selfie + liveness. The differences are in price transparency, AML inclusion, biometric certification level and which banks already trust them.</p>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Vendor</th>
+          <th>Price (doc + selfie)</th>
+          <th>AML / PEP</th>
+          <th>iBeta PAD level</th>
+          <th>eIDAS / ETSI</th>
+          <th>Tier-1 bank customers</th>
+          <th>Public pricing</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="vendor">Stripe Identity</td>
+          <td>£1.25 / ~$1.55</td>
+          <td><span class="pill no">No</span></td>
+          <td><span class="pill neutral">Not published</span></td>
+          <td><span class="pill no">No</span></td>
+          <td>Fintech / marketplaces, not regulated banks</td>
+          <td><span class="pill yes">Yes</span></td>
+        </tr>
+        <tr>
+          <td class="vendor">Sumsub</td>
+          <td>$1.35 base / $1.85 with AML</td>
+          <td><span class="pill yes">Built-in (Compliance plan)</span></td>
+          <td><span class="pill yes">Level 2</span></td>
+          <td><span class="pill yes">ETSI EN 319 411-1</span></td>
+          <td>Bitpanda, Bybit, Wirex, Mercuryo, Ferratum Bank</td>
+          <td><span class="pill yes">Yes</span></td>
+        </tr>
+        <tr>
+          <td class="vendor">Veriff</td>
+          <td>~$1.89 (Premium €209/mo)</td>
+          <td><span class="pill partial">Add-on (incl. on Premium)</span></td>
+          <td><span class="pill yes">Level 2 (Sep 2024)</span></td>
+          <td><span class="pill partial">Compatible</span></td>
+          <td>Wise, Bolt, Monese, N26 (historic), Trustly</td>
+          <td><span class="pill yes">Yes (self-serve)</span></td>
+        </tr>
+        <tr>
+          <td class="vendor">Onfido (Entrust)</td>
+          <td>~$1 – $2.50 (quote)</td>
+          <td><span class="pill partial">Add-on (Studio modules)</span></td>
+          <td><span class="pill partial">iBeta-tested (level not headline)</span></td>
+          <td><span class="pill yes">ETSI + QES</span></td>
+          <td><b>Revolut, Monzo, Bunq, Tide, ClearBank, OakNorth</b></td>
+          <td><span class="pill no">No</span></td>
+        </tr>
+        <tr>
+          <td class="vendor">Trulioo</td>
+          <td>~$1 – $4 (quote, $99/mo portal)</td>
+          <td><span class="pill yes">Built-in watchlist</span></td>
+          <td><span class="pill neutral">Less prominent</span></td>
+          <td><span class="pill partial">Compatible</span></td>
+          <td>Standard Chartered, BMO, BNP Paribas (data side)</td>
+          <td><span class="pill partial">Portal only</span></td>
+        </tr>
+        <tr>
+          <td class="vendor">iDenfy</td>
+          <td><b>$0.55 – $1.35</b></td>
+          <td><span class="pill partial">Add-on (+$0.50)</span></td>
+          <td><span class="pill yes">Level 2</span></td>
+          <td><span class="pill partial">Compatible</span></td>
+          <td>EU fintech / crypto / lending</td>
+          <td><span class="pill yes">Yes</span></td>
+        </tr>
+        <tr>
+          <td class="vendor">Jumio</td>
+          <td>$0.75 – $8 by volume</td>
+          <td><span class="pill partial">Add-on (Jumio Screening)</span></td>
+          <td><span class="pill yes">Level 1 + Level 2</span></td>
+          <td><span class="pill partial">NIST IAL2 / AAL2</span></td>
+          <td><b>HSBC, Standard Chartered, Lloyds, BBVA, ING</b></td>
+          <td><span class="pill no">No</span></td>
+        </tr>
+        <tr>
+          <td class="vendor">Persona</td>
+          <td>from $250/mo, ~$1.50 – $3</td>
+          <td><span class="pill partial">Add-on (Watchlist)</span></td>
+          <td><span class="pill partial">Tested</span></td>
+          <td><span class="pill partial">Compatible</span></td>
+          <td>Block (Square, Cash App), Robinhood, Brex</td>
+          <td><span class="pill partial">Partial</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Pricing is per <i>successful</i> verification on most plans. Vendors without public pricing typically discount 10–30 % at 50k+/year volumes after negotiation.</p>
+</section>
+
+<section>
+  <h2>Ranking for a bank</h2>
+  <ol class="rank">
+    <li><b>Onfido (Entrust)</b> — best for a UK/EU regulated bank. Tier-1 bank pedigree, eIDAS + QES, FCA-recognised. Worth the opaque pricing if you are pursuing a banking licence or facing regulator scrutiny.</li>
+    <li><b>Sumsub</b> — best price-performance with public pricing. ETSI eIDAS, AML built in, Level 2 PAD. Pick if you want to launch fast without a procurement cycle.</li>
+    <li><b>Jumio</b> — best for high-volume regulated banks (&gt; 100k/year). Strongest banking customer book. Costs only become competitive at scale.</li>
+    <li><b>Veriff</b> — best for fastest UX (~6 s decision). Pick if onboarding drop-off is your main problem.</li>
+    <li><b>iDenfy</b> — cheapest, pay-per-approval economics. Pick as a second-source vendor or for cost-sensitive customer segments.</li>
+    <li><b>Persona</b> — best workflow / orchestration flexibility. Strong US fintech fit, lighter EU bank presence.</li>
+    <li><b>Trulioo</b> — best for global breadth and data-based KYC (emerging-market customers without strong ID documents). Usually paired with a biometric specialist.</li>
+    <li><b>Stripe Identity</b> — best for fastest dev integration and transparent low-volume pricing. <b>Not standalone bank-grade</b> (no AML, no eIDAS, no published PAD level). Use as a complement, not the primary KYC.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Top 3 recommendations for a bank</h2>
+  <p>Stripe Identity, Persona and Trulioo are excluded — none are bank-grade as a sole KYC supplier (Stripe has no AML / no eIDAS / no published PAD level; Persona is US-fintech-shaped; Trulioo is a data layer, not a biometric specialist). The three below are real candidates.</p>
+  <div class="verdicts">
+    <div class="v">
+      <div class="label">#1 · Default safe choice</div>
+      <div class="pick">Onfido (Entrust)</div>
+      <p style="margin:8px 0 0;font-size:14.5px;font-family:-apple-system,system-ui,sans-serif;line-height:1.5;">The vendor that UK / EU neobanks already picked: Revolut, Monzo, Bunq, Tide, ClearBank. eIDAS-certified <b>with QES</b> — only one in this list. FCA-recognised. Best when the bank will face regulator scrutiny or pursue a banking licence. Trade-off: no published price, mid-speed (~30–60 s), enterprise-only contracting.</p>
+    </div>
+    <div class="v">
+      <div class="label">#2 · Best price-performance</div>
+      <div class="pick">Sumsub</div>
+      <p style="margin:8px 0 0;font-size:14.5px;font-family:-apple-system,system-ui,sans-serif;line-height:1.5;">Public price <b>$1.85</b> per verification with AML / PEP / adverse media built in — no separate sanctions vendor needed. ETSI EN 319 411-1 (eIDAS-compatible), iBeta Level 2 PAD. 14,500 documents, 220 countries. Best when speed-to-launch matters and you want to skip the procurement cycle. Trade-off: customer base is heavily crypto-bank, less prestige in classical EU retail banking.</p>
+    </div>
+    <div class="v">
+      <div class="label">#3 · Best at high volume</div>
+      <div class="pick">Jumio</div>
+      <p style="margin:8px 0 0;font-size:14.5px;font-family:-apple-system,system-ui,sans-serif;line-height:1.5;">The strongest tier-1 banking book in the market: HSBC, Standard Chartered, Lloyds, BBVA, ING, Wise. <b>Both Level 1 and Level 2 PAD</b> certified. NIST 800-63 IAL2/AAL2-aligned, FedRAMP-ready. Best at &gt; 100k verifications/year — price drops to $0.75–$2 at that scale. Trade-off: most expensive at low volumes ($3–$8), opaque pricing, heaviest enterprise contracting.</p>
+    </div>
+  </div>
+  <p class="note" style="margin-top:18px;"><b>How to choose between them:</b> regulator-first &amp; banking licence → <b>Onfido</b>. Speed-to-launch + transparent budget → <b>Sumsub</b>. High volume &amp; existing tier-1 bank infrastructure → <b>Jumio</b>.</p>
+</section>
+
+<section>
+  <h2>Annual cost — 50,000 verifications/year</h2>
+  <p>Sanity-check estimate for a bank doing 50k passport + face + liveness + sanctions checks per year.</p>
+  <div class="table-scroll">
+    <table class="pricing-table">
+      <thead>
+        <tr><th>Vendor</th><th>Per check (incl. AML where relevant)</th><th>Annual run-rate</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="vendor">iDenfy</td><td>$1.05 ($0.55 + $0.50 AML)</td><td>~$52k</td></tr>
+        <tr><td class="vendor">Stripe Identity</td><td>$1.55 (AML must be sourced separately)</td><td>$77k + AML</td></tr>
+        <tr><td class="vendor">Sumsub Compliance</td><td>$1.85</td><td>~$92k</td></tr>
+        <tr><td class="vendor">Veriff Premium</td><td>$1.89</td><td>~$97k</td></tr>
+        <tr><td class="vendor">Persona Essential</td><td>~$2.00</td><td>~$103k</td></tr>
+        <tr><td class="vendor">Onfido / Jumio / Trulioo</td><td>quote-based</td><td>$80k – $200k</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">List prices, before negotiation. Expect 10–30 % discount at this volume.</p>
+</section>
+
+<footer>
+  Sources: Stripe Identity pricing · Sumsub pricing &amp; ETSI announcement · Veriff plans &amp; iBeta Level 2 news · Entrust IDV / Onfido docs · Trulioo solutions · iDenfy pricing pages · HyperVerge &amp; Vendr Jumio analyses · Persona pricing · Trust Swiftly 2026 IDV comparison · G2 / Capterra third-party reviews.
+</footer>
+
+</div>
+</body>
+</html>
