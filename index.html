@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QPayments — AI compliance &amp; filings app for UK Ltd directors</title>
-  <meta name="description" content="The first UK AI app built around the Ltd structure. Form your company, automate your books, and file with Companies House and HMRC — all in one app.">
+  <title>QPayments — Card-free business payments for UK SMEs</title>
+  <meta name="description" content="A card-free payments platform purpose-built for UK SMEs. Faster Payments, scheduled payroll, batch supplier transfers, multi-user controls. Coming 2026, subject to FCA authorisation as an Electronic Money Institution.">
 
   <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
   <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -193,7 +193,7 @@
       color: var(--ink-2);
       line-height: 1.58;
       letter-spacing: -0.006em;
-      max-width: 42ch;
+      max-width: 44ch;
       margin-bottom: 32px;
     }
 
@@ -524,7 +524,7 @@
     .footer-inner {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 28px 56px;
+      padding: 28px 56px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -556,7 +556,20 @@
       color: var(--ink-4);
     }
 
-    /* ── responsive ──────────────────────────────────── */
+    .legal-note {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 8px 56px 28px;
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: var(--ink-3);
+      max-width: 1400px;
+    }
+
+    .legal-note p {
+      max-width: 92ch;
+    }
+
     /* ── problem & solution ──────────────────────────── */
     .two-col-section {
       position: relative;
@@ -693,7 +706,8 @@
       .stat + .stat { padding-left: 0; }
 
       .cta-inner { grid-template-columns: 1fr; gap: 40px; padding: 72px 24px; }
-      .footer-inner { padding: 24px; flex-direction: column; gap: 12px; }
+      .footer-inner { padding: 24px; flex-direction: column; gap: 12px; align-items: flex-start; }
+      .legal-note { padding: 0 24px 24px; }
     }
   </style>
 </head>
@@ -709,12 +723,12 @@
 <section class="hero" id="waitlist">
   <div class="hero-left">
     <div class="hero-eyebrow reveal" style="animation-delay:0.05s">
-      Coming 2026
+      Coming 2026 · Subject to FCA authorisation
     </div>
-    <div class="hero-headline reveal" style="animation-delay:0.14s">AI runs the&nbsp;Ltd.</div>
-    <div class="hero-headline-2 reveal" style="animation-delay:0.22s">Founders run<br>the business.</div>
+    <div class="hero-headline reveal" style="animation-delay:0.14s">Business payments.</div>
+    <div class="hero-headline-2 reveal" style="animation-delay:0.22s">Built for UK&nbsp;SMEs.</div>
     <p class="hero-desc reveal" style="animation-delay:0.3s">
-      The first UK AI app built around the Ltd structure. Form your company, automate your books, and file with Companies House and HMRC — end&nbsp;to&nbsp;end.
+      A card-free payments platform purpose-built for UK limited companies. Faster Payments, scheduled payroll, batch supplier transfers and tax-ready exports — designed for SMEs with up to twenty employees and annual turnover up to £1&nbsp;million.
     </p>
     <div class="hero-form-col reveal" style="animation-delay:0.38s">
       <span class="form-label">Notify me at launch</span>
@@ -729,13 +743,13 @@
   <div class="hero-right reveal" style="animation-delay:0.2s">
     <div class="phones-group">
       <div class="phone-mock p1">
-        <img src="screens/open.png" alt="Form a Ltd">
+        <img src="screens/open.png" alt="Faster Payments dashboard">
       </div>
       <div class="phone-mock p2">
-        <img src="screens/run.png" alt="Ltd dashboard">
+        <img src="screens/run.png" alt="Payment scheduling">
       </div>
       <div class="phone-mock p3">
-        <img src="screens/file.png" alt="Articles of association">
+        <img src="screens/file.png" alt="Tax-ready exports">
       </div>
     </div>
   </div>
@@ -744,16 +758,16 @@
 <!-- Problem -->
 <section class="two-col-section">
   <div class="two-col-inner">
-    <div class="section-label">The problem</div>
+    <div class="section-label">The gap</div>
     <div>
-      <h2 class="section-headline">A UK&nbsp;Ltd is a <span class="accent">filing machine.</span></h2>
-      <p class="section-body">Every founder running a limited company juggles twenty-plus statutory and tax obligations a year — across four or more separate apps. No one does them end-to-end.</p>
+      <h2 class="section-headline">SMEs are stuck in the <span class="accent">missing&nbsp;middle.</span></h2>
+      <p class="section-body">Mainstream banks offer rigid, general-purpose accounts. Consumer fintechs prioritise card spend, budgeting, and sole traders. Neither is built for an incorporated SME running payroll, paying suppliers and approving payments across a small team.</p>
       <ul class="problem-list">
-        <li>Formation at Companies House — one app</li>
-        <li>Bookkeeping &amp; receipts — another app</li>
-        <li>VAT, Corporation Tax, Self Assessment — a third</li>
-        <li>Confirmation Statements, director changes — a fourth</li>
-        <li>Payroll, dividends, auto-enrolment — wherever you can find them</li>
+        <li>Mainstream banks — limited automation, slow workflows</li>
+        <li>Consumer fintechs — built for sole traders, not teams</li>
+        <li>Multi-currency platforms — FX-led, irrelevant for UK-domestic SMEs</li>
+        <li>Card-led tools — spend-tracking, not payment operations</li>
+        <li>Accounting software — handles books, not payments</li>
       </ul>
     </div>
   </div>
@@ -762,30 +776,30 @@
 <!-- Solution -->
 <section class="two-col-section">
   <div class="two-col-inner">
-    <div class="section-label">The solution</div>
+    <div class="section-label">The platform</div>
     <div>
-      <h2 class="section-headline">One AI app that <span class="accent">runs the Ltd.</span></h2>
-      <p class="section-body">QPayments handles every UK&nbsp;Ltd obligation — from company formation through daily bookkeeping to year-end Self Assessment — in a single AI app.</p>
+      <h2 class="section-headline">A purpose-built <span class="accent">payments&nbsp;platform.</span></h2>
+      <p class="section-body">QPayments handles the day-to-day financial operations of a UK Ltd — Faster Payments, scheduled payroll, supplier batches and multi-user controls — without cards, lending or FX overhead.</p>
       <div class="solution-grid">
         <div class="sol-card">
-          <span class="sol-num">01 · Open</span>
-          <span class="sol-title">Form a Ltd in 10 minutes</span>
-          <span class="sol-desc">Companies House submission, certificate and Articles of Association — one flow.</span>
+          <span class="sol-num">01 · Pay</span>
+          <span class="sol-title">Real-time Faster Payments</span>
+          <span class="sol-desc">Send and receive in GBP via your UK sort code and account number. Domestic, instant, EMI-aligned.</span>
         </div>
         <div class="sol-card">
-          <span class="sol-num">02 · Run</span>
-          <span class="sol-title">Books that know your structure</span>
-          <span class="sol-desc">Securely sync transactions from your existing accounts. AI categorises them and tracks dividends.</span>
+          <span class="sol-num">02 · Schedule</span>
+          <span class="sol-title">Payroll &amp; supplier batches</span>
+          <span class="sol-desc">Schedule outgoing payments and upload batch files for payroll runs and recurring supplier settlements.</span>
         </div>
         <div class="sol-card">
-          <span class="sol-num">03 · File</span>
-          <span class="sol-title">Every filing, drafted</span>
-          <span class="sol-desc">VAT, Corporation Tax, Confirmation Statement — drafted by AI, filed on time.</span>
+          <span class="sol-num">03 · Control</span>
+          <span class="sol-title">Multi-user roles</span>
+          <span class="sol-desc">Preparer, approver and viewer permissions for finance teams that need internal approval flows.</span>
         </div>
         <div class="sol-card">
-          <span class="sol-num">04 · Comply</span>
-          <span class="sol-title">Always Companies Act compliant</span>
-          <span class="sol-desc">Director changes, PSC register, MTD-ITSA — the compliance calendar runs itself.</span>
+          <span class="sol-num">04 · Report</span>
+          <span class="sol-title">Tax-ready exports</span>
+          <span class="sol-desc">Categorised transaction data, exportable in formats your accountant or bookkeeping software can read.</span>
         </div>
       </div>
     </div>
@@ -795,19 +809,19 @@
 <section class="features-section">
   <div class="features-inner">
     <div class="feature">
-      <div class="feat-num"><span>01</span>Open</div>
-      <h3 class="feat-title">A Ltd in 10 minutes.</h3>
-      <p class="feat-desc">Companies House submission, certificate and Articles of Association — in a single flow from your phone. No solicitor, no waiting.</p>
+      <div class="feat-num"><span>01</span>Card-free</div>
+      <h3 class="feat-title">No cards, by design.</h3>
+      <p class="feat-desc">QPayments deliberately excludes physical and virtual debit cards. The result is lower fraud exposure, simpler operations, and a focused payments-first product for businesses that don't need card spend.</p>
     </div>
     <div class="feature">
-      <div class="feat-num"><span>02</span>Run</div>
-      <h3 class="feat-title">Books that know your structure.</h3>
-      <p class="feat-desc">Securely sync transactions from your existing UK business accounts. AI categorises them, tracks dividends and keeps your books automatically.</p>
+      <div class="feat-num"><span>02</span>UK domestic</div>
+      <h3 class="feat-title">Built for the UK Ltd.</h3>
+      <p class="feat-desc">Account-to-account payments in GBP via Faster Payments. No FX, no multi-currency complexity. Made for UK-domestic SMEs with structured payroll, supplier and recurring obligations.</p>
     </div>
     <div class="feature">
-      <div class="feat-num"><span>03</span>File</div>
-      <h3 class="feat-title">Every filing, drafted.</h3>
-      <p class="feat-desc">Confirmation Statement, VAT, Corporation Tax, Self Assessment — drafted by AI and filed on time. The compliance calendar runs itself.</p>
+      <div class="feat-num"><span>03</span>Compliance-led</div>
+      <h3 class="feat-title">Architected for EMI rules.</h3>
+      <p class="feat-desc">Strong customer authentication, role-based access, encrypted communications and daily reconciliations — built around the obligations of an Electronic Money Institution from day one.</p>
     </div>
   </div>
 </section>
@@ -815,19 +829,19 @@
 <section class="stats-section">
   <div class="stats-inner">
     <div class="stat">
-      <div class="stat-num">2 M</div>
-      <div class="stat-label">UK limited companies</div>
-      <div class="stat-note">None of the leading UK fintech apps treat a Ltd's legal structure as a first-class product.</div>
+      <div class="stat-num">1.5 M+</div>
+      <div class="stat-label">UK micro &amp; small businesses</div>
+      <div class="stat-note">Underserved by mainstream banks and consumer fintechs alike — caught between rigid legacy accounts and retail-style apps.</div>
     </div>
     <div class="stat">
-      <div class="stat-num">20+</div>
-      <div class="stat-label">Annual obligations</div>
-      <div class="stat-note">Every UK Ltd director juggles statutory and tax filings across four or more separate apps today.</div>
+      <div class="stat-num">£75</div>
+      <div class="stat-label">Flat monthly fee</div>
+      <div class="stat-note">Predictable subscription pricing. No surprise charges, no transaction-volume penalties, no hidden card fees.</div>
     </div>
     <div class="stat">
-      <div class="stat-num">1</div>
-      <div class="stat-label">App to replace them all</div>
-      <div class="stat-note">Formation through year-end — QPayments is the first app built for the whole Ltd lifecycle.</div>
+      <div class="stat-num">0</div>
+      <div class="stat-label">Cards issued</div>
+      <div class="stat-note">Card-free design reduces complexity, fraud exposure and operational risk — and lets us focus on payment workflows.</div>
     </div>
   </div>
 </section>
@@ -835,12 +849,12 @@
 <section class="cta-section">
   <div class="cta-inner">
     <h2 class="cta-headline">
-      Built for UK&nbsp;Ltd<br>directors.<br>
-      <span class="accent">Launching 2026.</span>
+      Built for the<br>missing&nbsp;middle.<br>
+      <span class="accent">Coming 2026.</span>
     </h2>
     <div class="cta-right">
       <p class="cta-copy">
-        Be first to know when we launch. No spam — just one email when QPayments is live and ready for your company.
+        Be first to know when we launch. We'll send a single email when QPayments is live and accepting clients, subject to FCA authorisation.
       </p>
       <span class="cta-label">Join the waitlist</span>
       <div class="cta-form-row" id="cta-form">
@@ -856,6 +870,9 @@
   <div class="footer-inner">
     <div class="footer-brand">QPayments<span class="footer-dot"></span></div>
     <div class="footer-meta">© 2026 Q Payments Ltd &nbsp;·&nbsp; London, UK</div>
+  </div>
+  <div class="legal-note">
+    <p>Q Payments Ltd is currently applying to the Financial Conduct Authority for authorisation as an Electronic Money Institution. The Firm is not yet authorised. The services described on this page will be made available subject to authorisation. Q Payments Ltd does not currently provide regulated services and is not a bank.</p>
   </div>
 </footer>
 
