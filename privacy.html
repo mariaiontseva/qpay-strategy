@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy notice — QPayments</title>
+  <meta name="description" content="How Q Payments Ltd collects, uses and protects personal data submitted via the QPayments waitlist.">
+  <meta name="robots" content="noindex">
+
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --canvas:  #F5EDE2;
+      --ink:     #1A1410;
+      --ink-2:   #4A3F37;
+      --ink-3:   #8C7B70;
+      --ink-4:   #BCA99A;
+      --accent:  #B84A1F;
+      --card:    #EDE4D8;
+      --border:  rgba(26,20,16,0.09);
+      --display: 'Switzer', sans-serif;
+      --mono:    'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--display);
+      line-height: 1.6;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 56px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: -0.022em;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-left: 2px;
+      margin-bottom: 2px;
+    }
+
+    .nav-back {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--ink); }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 88px 56px 96px;
+    }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(36px, 4vw, 56px);
+      letter-spacing: -0.03em;
+      line-height: 1.04;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    .updated {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      margin-bottom: 56px;
+    }
+
+    h2 {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.018em;
+      color: var(--ink);
+      margin-top: 48px;
+      margin-bottom: 16px;
+    }
+
+    p, li {
+      font-size: 15.5px;
+      color: var(--ink-2);
+      line-height: 1.65;
+      letter-spacing: -0.004em;
+    }
+
+    p + p { margin-top: 14px; }
+
+    ul {
+      margin: 14px 0;
+      padding-left: 24px;
+    }
+
+    li { margin-bottom: 6px; }
+
+    a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-color: rgba(184,74,31,0.4);
+      text-underline-offset: 3px;
+    }
+
+    a:hover { text-decoration-color: var(--accent); }
+
+    .contact-block {
+      margin-top: 16px;
+      padding: 24px 28px;
+      background: var(--card);
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink-2);
+    }
+
+    .contact-block strong {
+      display: block;
+      color: var(--ink);
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 56px;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+    }
+
+    footer a {
+      color: var(--ink-4);
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--ink-2); }
+
+    @media (max-width: 720px) {
+      nav { padding: 22px 24px; }
+      main { padding: 64px 24px 80px; }
+      footer { padding: 24px; flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="brand">QPayments<span class="brand-dot"></span></a>
+  <a href="/" class="nav-back">← Back</a>
+</nav>
+
+<main>
+  <div class="eyebrow">Legal</div>
+  <h1>Privacy notice</h1>
+  <div class="updated">Last updated · 6 May 2026</div>
+
+  <h2>1. Who we are</h2>
+  <p>Q Payments Ltd ("<strong>we</strong>", "<strong>us</strong>", "<strong>QPayments</strong>") is a private limited company registered in England and Wales. Our registered address is 411 Oxford Street, Office 101, London, W1C 2PE, United Kingdom.</p>
+  <p>For the personal data collected through this website, Q Payments Ltd is the data controller.</p>
+  <p>Q Payments Ltd is currently applying to the Financial Conduct Authority for authorisation as an Electronic Money Institution. The Firm is not yet authorised and does not currently provide regulated services.</p>
+
+  <h2>2. What we collect</h2>
+  <p>When you join our waitlist we collect:</p>
+  <ul>
+    <li>Your email address</li>
+    <li>The date and time of your submission</li>
+    <li>The page from which you submitted (URL)</li>
+  </ul>
+  <p>We do not collect any other personal data through this website. We do not use marketing or analytics cookies.</p>
+
+  <h2>3. Why we collect it</h2>
+  <p>We use your email solely to notify you when QPayments launches and is accepting clients, and to send a small number of related product updates between now and launch. We will not use it for any other purpose without your explicit consent.</p>
+
+  <h2>4. Lawful basis</h2>
+  <p>We rely on your consent under Article 6(1)(a) of the UK GDPR and Regulation 22 of the Privacy and Electronic Communications Regulations (PECR) for marketing communications. You give consent by submitting the waitlist form. You can withdraw your consent at any time — see Section 8.</p>
+
+  <h2>5. How long we keep it</h2>
+  <p>We retain your email address until you ask us to delete it, you unsubscribe, or for 24 months after collection if you have not engaged with our communications, whichever is sooner. After deletion we may retain a suppression record (a hashed version of your email) so that we do not contact you again in error.</p>
+
+  <h2>6. Who else sees it</h2>
+  <p>Your waitlist submission is processed and delivered to us by FormSubmit (formsubmit.co), a third-party form-relay service. FormSubmit acts as a data processor and forwards each submission to our team mailbox at <a href="mailto:maria@qpayments.co.uk">maria@qpayments.co.uk</a>. Their privacy policy is available at <a href="https://formsubmit.co/privacy" target="_blank" rel="noopener">formsubmit.co/privacy</a>.</p>
+  <p>We do not sell your data. We do not share it with any other party for marketing purposes.</p>
+
+  <h2>7. International transfers</h2>
+  <p>FormSubmit processes data in the United States. Where personal data is transferred outside the UK, we rely on the UK Government's adequacy decisions or, where these do not apply, on the International Data Transfer Agreement and appropriate supplementary safeguards.</p>
+
+  <h2>8. Your rights</h2>
+  <p>Under the UK GDPR you have the right to:</p>
+  <ul>
+    <li>access the personal data we hold about you</li>
+    <li>have inaccurate data corrected</li>
+    <li>have your data erased ("right to be forgotten")</li>
+    <li>restrict or object to processing</li>
+    <li>request your data in a portable format</li>
+    <li>withdraw consent at any time</li>
+    <li>complain to the Information Commissioner's Office at <a href="https://ico.org.uk" target="_blank" rel="noopener">ico.org.uk</a></li>
+  </ul>
+  <p>To exercise any of these rights, email us at <a href="mailto:maria@qpayments.co.uk">maria@qpayments.co.uk</a>. We will respond within one calendar month.</p>
+
+  <h2>9. Security</h2>
+  <p>We take reasonable technical and organisational measures to protect personal data against unauthorised access, loss or alteration. These include access controls on our team mailboxes, secure transport (HTTPS) for all submissions, and the use of vetted processors.</p>
+
+  <h2>10. Changes to this notice</h2>
+  <p>We may update this notice from time to time. The "Last updated" date at the top reflects the most recent revision. Material changes will be communicated via the email address you provided at signup.</p>
+
+  <h2>11. Contact</h2>
+  <div class="contact-block">
+    <strong>Q Payments Ltd</strong>
+    411 Oxford Street, Office 101<br>
+    London, W1C 2PE<br>
+    United Kingdom<br>
+    <a href="mailto:maria@qpayments.co.uk">maria@qpayments.co.uk</a>
+  </div>
+</main>
+
+<footer>
+  <div>© 2026 Q Payments Ltd · London, UK</div>
+  <a href="/">qpayments.co.uk</a>
+</footer>
+
+</body>
+</html>
