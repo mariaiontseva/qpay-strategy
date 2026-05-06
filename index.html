@@ -143,10 +143,12 @@
     .hero {
       position: relative;
       z-index: 1;
-      min-height: 88vh;
-      display: flex;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
       align-items: center;
-      padding: 140px 56px 96px;
+      gap: 64px;
+      padding: 120px 56px 80px;
       max-width: 1400px;
       margin: 0 auto;
     }
@@ -155,7 +157,50 @@
       display: flex;
       flex-direction: column;
       gap: 0;
-      max-width: 760px;
+    }
+
+    /* ── phone mockups ───────────────────────────────── */
+    .hero-right {
+      position: relative;
+      height: 600px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .phones-group {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .phone-mock {
+      position: absolute;
+      width: 240px;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow:
+        0 2px 0 rgba(26,20,16,0.06),
+        0 40px 72px -20px rgba(26,20,16,0.34);
+    }
+
+    .phone-mock img {
+      width: 100%;
+      display: block;
+    }
+
+    .phone-mock.p1 {
+      left: 4%;
+      bottom: 24px;
+      transform: rotate(-6deg);
+      z-index: 1;
+    }
+
+    .phone-mock.p3 {
+      right: 4%;
+      bottom: 0;
+      transform: rotate(6deg);
+      z-index: 2;
     }
 
     .hero-eyebrow {
@@ -189,13 +234,13 @@
     }
 
     .hero-desc {
-      font-size: clamp(16px, 1.3vw, 19px);
+      font-size: clamp(15px, 1.2vw, 17px);
       font-weight: 400;
       color: var(--ink-2);
-      line-height: 1.55;
+      line-height: 1.58;
       letter-spacing: -0.006em;
-      max-width: 60ch;
-      margin-bottom: 36px;
+      max-width: 44ch;
+      margin-bottom: 32px;
     }
 
     .hero-form-col {
@@ -632,7 +677,11 @@
       nav { padding: 22px 24px; }
       .nav-link { display: none; }
 
-      .hero { padding: 110px 24px 64px; min-height: auto; }
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 48px; min-height: auto; }
+      .hero-right { height: 380px; }
+      .phone-mock { width: 170px; }
+      .phone-mock.p1 { left: 6%; }
+      .phone-mock.p3 { right: 6%; }
 
       .two-col-inner { grid-template-columns: 1fr; gap: 32px; padding: 48px 24px; }
       .solution-grid { grid-template-columns: 1fr; }
@@ -672,7 +721,7 @@
       <span class="line-2">Built for UK&nbsp;SMEs.</span>
     </h1>
     <p class="hero-desc reveal" style="animation-delay:0.3s">
-      A card-free payments platform purpose-built for UK limited companies. Faster Payments, scheduled payroll, batch supplier transfers and tax-ready exports — designed for SMEs with up to twenty employees and annual turnover up to £1&nbsp;million.
+      A card-free payments platform purpose-built for UK limited companies. Faster Payments, scheduled payroll, batch supplier transfers and tax-ready exports.
     </p>
     <div class="hero-form-col reveal" style="animation-delay:0.38s">
       <span class="form-label">Notify me at launch</span>
@@ -684,6 +733,16 @@
     </div>
   </div>
 
+  <div class="hero-right reveal" style="animation-delay:0.2s">
+    <div class="phones-group">
+      <div class="phone-mock p1">
+        <img src="screens/open.png" alt="QPayments app screen">
+      </div>
+      <div class="phone-mock p3">
+        <img src="screens/file.png" alt="QPayments app screen">
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- Problem -->
