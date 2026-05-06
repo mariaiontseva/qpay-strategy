@@ -898,9 +898,11 @@
     nav.classList.toggle('scrolled', window.scrollY > 48);
   }, { passive: true });
 
-  // Email form handler
-  // Connect to your real endpoint by uncommenting the fetch below
-  function submitForm(id) {
+  // Waitlist endpoint — FormSubmit.co AJAX (no signup needed).
+  // To switch destination email, change the address below and re-confirm via the activation link FormSubmit sends to that mailbox on the first submission.
+  const WAITLIST_ENDPOINT = 'https://formsubmit.co/ajax/maria@mitocholine.com';
+
+  async function submitForm(id) {
     const input = document.getElementById(`${id}-email`);
     const email = input.value.trim();
 
@@ -911,15 +913,27 @@
       return;
     }
 
+    // Optimistic UI — show success immediately
     document.getElementById(`${id}-form`).style.display = 'none';
     document.getElementById(`${id}-success`).style.display = 'block';
 
-    // Uncomment when ready:
-    // fetch('https://formspree.io/f/YOUR_FORM_ID', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    //   body: JSON.stringify({ email }),
-    // });
+    try {
+      const res = await fetch(WAITLIST_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          source: id === 'hero' ? 'hero' : 'cta',
+          page: location.href,
+          _subject: 'New QPayments waitlist signup',
+          _captcha: 'false',
+          _template: 'table'
+        })
+      });
+      if (!res.ok) console.warn('Waitlist response not ok', res.status);
+    } catch (err) {
+      console.warn('Waitlist submission failed', err);
+    }
   }
 
   document.getElementById('hero-email').addEventListener('keydown', e => {
