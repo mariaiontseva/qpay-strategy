@@ -832,9 +832,103 @@
       .alt-grid { grid-template-columns: repeat(2, 1fr); }
       .platform-grid { grid-template-columns: repeat(2, 1fr); }
     }
+    /* ── Password gate (client-side, casual access only) ── */
+    .gate{
+      position:fixed;inset:0;z-index:10000;
+      background:var(--canvas);
+      display:flex;align-items:center;justify-content:center;
+      padding:24px;
+    }
+    .gate-card{
+      max-width:420px;width:100%;
+      background:#fff;border:1px solid var(--border);
+      padding:40px 36px;
+      box-shadow:0 24px 48px -16px rgba(26,20,16,0.18);
+    }
+    .gate-brand{
+      display:flex;align-items:center;gap:10px;margin-bottom:28px;
+    }
+    .gate-q{
+      width:36px;height:36px;background:var(--ink);color:var(--canvas);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:800;font-size:20px;letter-spacing:-0.05em;
+    }
+    .gate-name{font-weight:700;font-size:15px;letter-spacing:-0.02em}
+    .gate-sub{font-family:var(--mono);font-size:9.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-top:2px;font-weight:500}
+    .gate-h1{font-weight:800;font-size:24px;letter-spacing:-0.02em;margin-bottom:8px}
+    .gate-desc{color:var(--ink-3);font-size:13.5px;margin-bottom:24px;line-height:1.55}
+    .gate-input{
+      width:100%;padding:14px 16px;
+      border:1px solid var(--ink);background:transparent;
+      font-family:inherit;font-size:14px;color:var(--ink);outline:none;
+      border-radius:0;
+    }
+    .gate-input:focus{border-color:var(--accent)}
+    .gate-input.shake{animation:gate-shake 0.4s}
+    @keyframes gate-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+    .gate-btn{
+      width:100%;margin-top:14px;padding:14px;
+      background:var(--ink);color:var(--canvas);
+      border:1px solid var(--ink);
+      font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;
+      cursor:pointer;font-weight:500;
+    }
+    .gate-btn:hover{background:var(--accent);border-color:var(--accent)}
+    .gate-error{
+      margin-top:14px;color:var(--accent);
+      font-family:var(--mono);font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;
+      display:none;
+    }
+    .gate-error.show{display:block}
+    body.locked{overflow:hidden}
+    body.locked > :not(.gate){display:none!important}
   </style>
 </head>
-<body>
+<body class="locked"><div class="gate" id="gate">
+  <div class="gate-card">
+    <div class="gate-brand">
+      <div class="gate-q">Q</div>
+      <div>
+        <div class="gate-name">QPayments</div>
+        <div class="gate-sub">Restricted preview</div>
+      </div>
+    </div>
+    <h1 class="gate-h1">Enter password</h1>
+    <p class="gate-desc">This page is shared by invitation only.</p>
+    <input type="password" class="gate-input" id="gate-input" placeholder="Password" autofocus autocomplete="off">
+    <button class="gate-btn" id="gate-btn">Unlock →</button>
+    <div class="gate-error" id="gate-error">Wrong password</div>
+  </div>
+</div>
+<script>
+  (function(){
+    var KEY='qp-landing-unlocked-v1';
+    var PASS='password';
+    function unlock(){
+      try{sessionStorage.setItem(KEY,'1');}catch(e){}
+      var g=document.getElementById('gate');
+      if(g) g.parentNode.removeChild(g);
+      document.body.classList.remove('locked');
+    }
+    if(sessionStorage.getItem(KEY)==='1'){ unlock(); return; }
+    document.addEventListener('DOMContentLoaded', function(){
+      var input=document.getElementById('gate-input');
+      var btn=document.getElementById('gate-btn');
+      var err=document.getElementById('gate-error');
+      function attempt(){
+        if((input.value||'')===PASS){ unlock(); }
+        else{
+          input.classList.add('shake');
+          err.classList.add('show');
+          setTimeout(function(){ input.classList.remove('shake'); }, 500);
+          input.select();
+        }
+      }
+      btn.addEventListener('click', attempt);
+      input.addEventListener('keydown', function(e){ if(e.key==='Enter') attempt(); });
+    });
+  })();
+</script>
 
 <nav id="nav">
   <a href="/" class="brand">QPayments<span class="brand-dot"></span></a>
