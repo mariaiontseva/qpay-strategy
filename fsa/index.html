@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QPayments — Card-free business payments for UK SMEs</title>
+  <meta name="description" content="A card-free payments platform purpose-built for UK SMEs. Faster Payments, scheduled payroll, batch supplier transfers, multi-user controls. Coming 2026.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" href="/favicon.svg">
+
+  <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── tokens ──────────────────────────────────────── */
+    :root {
+      --canvas:  #F5EDE2;
+      --ink:     #1A1410;
+      --ink-2:   #4A3F37;
+      --ink-3:   #8C7B70;
+      --ink-4:   #BCA99A;
+      --accent:  #B84A1F;
+      --card:    #EDE4D8;
+      --border:  rgba(26,20,16,0.09);
+      --display: 'Switzer', sans-serif;
+      --mono:    'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: var(--display);
+      overflow-x: hidden;
+    }
+
+    /* grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+
+    /* ── animations ──────────────────────────────────── */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* ── nav ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 56px;
+      transition: background 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+
+    nav.scrolled {
+      background: rgba(245,237,226,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom-color: var(--border);
+    }
+
+    .brand {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: -0.022em;
+      color: var(--ink);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-left: 2px;
+      margin-bottom: 2px;
+      flex-shrink: 0;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .nav-link {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover { color: var(--ink); }
+
+    .nav-pill {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--canvas);
+      background: var(--ink);
+      text-decoration: none;
+      padding: 9px 18px;
+      transition: background 0.2s;
+    }
+
+    .nav-pill:hover { background: var(--accent); }
+
+    /* ── hero ────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      align-items: center;
+      gap: 64px;
+      padding: 120px 56px 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* ── phone mockups ───────────────────────────────── */
+    .hero-right {
+      position: relative;
+      height: 600px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .phones-group {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .phone-mock {
+      position: absolute;
+      width: 240px;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow:
+        0 2px 0 rgba(26,20,16,0.06),
+        0 40px 72px -20px rgba(26,20,16,0.34);
+    }
+
+    .phone-mock img {
+      width: 100%;
+      display: block;
+    }
+
+    .phone-mock.p1 {
+      left: 4%;
+      bottom: 24px;
+      transform: rotate(-6deg);
+      z-index: 1;
+    }
+
+    .phone-mock.p3 {
+      right: 4%;
+      bottom: 0;
+      transform: rotate(6deg);
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 32px;
+    }
+
+    .hero-headline {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(38px, 4.4vw, 64px);
+      letter-spacing: -0.036em;
+      margin-bottom: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.1em;
+    }
+
+    .hero-headline .line-1,
+    .hero-headline .line-2 {
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .hero-headline .line-1 { color: var(--ink); }
+    .hero-headline .line-2 { color: var(--accent); }
+
+    .hero-desc {
+      font-size: clamp(15px, 1.2vw, 17px);
+      font-weight: 400;
+      color: var(--ink-2);
+      line-height: 1.58;
+      letter-spacing: -0.006em;
+      max-width: 44ch;
+      margin-bottom: 32px;
+    }
+
+    .hero-form-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .form-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+    }
+
+    .form-row { display: flex; }
+
+    .email-input {
+      flex: 1;
+      padding: 15px 20px;
+      background: transparent;
+      border: 1px solid var(--ink);
+      border-right: none;
+      font-family: var(--display);
+      font-size: 15px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.25s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    .email-input::placeholder { color: var(--ink-4); }
+    .email-input:focus { border-color: var(--accent); }
+
+    .email-btn {
+      padding: 15px 28px;
+      background: var(--ink);
+      color: var(--canvas);
+      border: 1px solid var(--ink);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      white-space: nowrap;
+      border-radius: 0;
+    }
+
+    .email-btn:hover { background: var(--accent); border-color: var(--accent); }
+
+    .form-success {
+      display: none;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 15px 0;
+    }
+
+    .form-consent {
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--ink-3);
+      max-width: 44ch;
+      margin-top: 4px;
+    }
+
+    .form-consent a {
+      color: var(--ink-2);
+      text-decoration: underline;
+      text-decoration-color: rgba(26,20,16,0.25);
+      text-underline-offset: 2px;
+    }
+
+    .form-consent a:hover { color: var(--accent); }
+
+    .cta-consent {
+      font-size: 12px;
+      line-height: 1.5;
+      color: rgba(245,237,226,0.5);
+      max-width: 44ch;
+      margin-top: 4px;
+    }
+
+    .cta-consent a {
+      color: rgba(245,237,226,0.7);
+      text-decoration: underline;
+      text-decoration-color: rgba(245,237,226,0.25);
+      text-underline-offset: 2px;
+    }
+
+    .cta-consent a:hover { color: var(--accent); }
+
+    /* ── privacy banner ──────────────────────────────── */
+    .privacy-banner {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      max-width: 460px;
+      background: var(--ink);
+      color: var(--canvas);
+      padding: 22px 24px;
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 500;
+      box-shadow: 0 32px 64px -16px rgba(26,20,16,0.5);
+      transform: translateY(20px);
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    }
+
+    .privacy-banner.show {
+      display: flex;
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .privacy-banner-label {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,237,226,0.5);
+    }
+
+    .privacy-banner-text {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: rgba(245,237,226,0.85);
+    }
+
+    .privacy-banner-text a {
+      color: var(--canvas);
+      text-decoration: underline;
+      text-decoration-color: rgba(245,237,226,0.4);
+      text-underline-offset: 2px;
+    }
+
+    .privacy-banner-text a:hover {
+      text-decoration-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .privacy-banner-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .privacy-banner-btn {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--canvas);
+      border: 1px solid var(--canvas);
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+
+    .privacy-banner-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--canvas);
+    }
+
+    @media (max-width: 720px) {
+      .privacy-banner {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        max-width: none;
+        padding: 20px;
+      }
+    }
+
+    /* ── features ────────────────────────────────────── */
+    .features-section {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+    }
+
+    .features-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 56px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .feature {
+      padding: 64px 56px 72px 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .feature:last-child { border-right: none; padding-right: 0; }
+    .feature + .feature { padding-left: 56px; }
+
+    .feat-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+      margin-bottom: 28px;
+    }
+
+    .feat-num span { color: var(--accent); margin-right: 6px; }
+
+    .feat-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(22px, 1.9vw, 28px);
+      letter-spacing: -0.022em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .feat-desc {
+      font-size: 14.5px;
+      color: var(--ink-2);
+      line-height: 1.62;
+      letter-spacing: -0.004em;
+    }
+
+    /* ── stats ───────────────────────────────────────── */
+    .stats-section {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--card);
+    }
+
+    .stats-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 56px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stat {
+      padding: 52px 56px 52px 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat:last-child { border-right: none; padding-right: 0; }
+    .stat + .stat { padding-left: 56px; }
+
+    .stat-num {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(44px, 4.5vw, 64px);
+      letter-spacing: -0.038em;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 12px;
+    }
+
+    .stat-note {
+      font-size: 13.5px;
+      color: var(--ink-3);
+      line-height: 1.55;
+    }
+
+    /* ── dark CTA ────────────────────────────────────── */
+    .cta-section {
+      position: relative;
+      z-index: 1;
+      background: var(--ink);
+      overflow: hidden;
+    }
+
+    .cta-inner {
+      position: relative;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 100px 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .cta-headline {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(40px, 4.8vw, 68px);
+      letter-spacing: -0.034em;
+      line-height: 0.97;
+      color: var(--canvas);
+    }
+
+    .cta-headline .accent { color: var(--accent); }
+
+    .cta-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .cta-copy {
+      font-size: 16px;
+      color: rgba(245,237,226,0.5);
+      line-height: 1.56;
+      letter-spacing: -0.008em;
+      max-width: 40ch;
+    }
+
+    .cta-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,237,226,0.3);
+      margin-top: 8px;
+    }
+
+    .cta-form-row { display: flex; }
+
+    .cta-input {
+      flex: 1;
+      padding: 16px 20px;
+      background: rgba(245,237,226,0.06);
+      border: 1px solid rgba(245,237,226,0.16);
+      border-right: none;
+      font-family: var(--display);
+      font-size: 15px;
+      color: var(--canvas);
+      outline: none;
+      transition: border-color 0.25s;
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+
+    .cta-input::placeholder { color: rgba(245,237,226,0.22); }
+    .cta-input:focus { border-color: var(--accent); }
+
+    .cta-btn {
+      padding: 16px 28px;
+      background: var(--accent);
+      color: var(--canvas);
+      border: 1px solid var(--accent);
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+      border-radius: 0;
+    }
+
+    .cta-btn:hover { opacity: 0.82; }
+
+    .cta-success {
+      display: none;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 16px 0;
+    }
+
+    /* ── footer ──────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 28px 56px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+    }
+
+    .footer-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-left: 2px;
+      flex-shrink: 0;
+    }
+
+    .footer-meta {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-4);
+    }
+
+    .legal-note {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 8px 56px 28px;
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: var(--ink-3);
+      max-width: 1400px;
+    }
+
+    .legal-note p {
+      max-width: 92ch;
+    }
+
+    /* ── content sections ────────────────────────────── */
+    .section {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 112px 56px;
+    }
+
+    .section-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      max-width: 820px;
+      margin-bottom: 72px;
+    }
+
+    .section-eyebrow {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .section-headline {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(34px, 3.6vw, 56px);
+      letter-spacing: -0.03em;
+      line-height: 1.04;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    .section-headline .accent { color: var(--accent); }
+
+    .section-body {
+      font-size: 17px;
+      color: var(--ink-2);
+      line-height: 1.62;
+      letter-spacing: -0.006em;
+      max-width: 64ch;
+    }
+
+    /* gap grid — 5 alternative solutions */
+    .alt-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+
+    .alt-card {
+      padding: 32px 26px;
+      background: var(--card);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      border-top: 2px solid var(--accent);
+    }
+
+    .alt-label {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: -0.016em;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .alt-desc {
+      font-size: 13.5px;
+      color: var(--ink-3);
+      line-height: 1.6;
+    }
+
+    /* platform grid — 4 product pillars */
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .platform-card {
+      padding: 36px 30px 40px;
+      background: var(--card);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .platform-num {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .platform-title {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -0.018em;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    .platform-desc {
+      font-size: 14.5px;
+      color: var(--ink-2);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+      nav { padding: 22px 24px; }
+      .nav-link { display: none; }
+
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 48px; min-height: auto; }
+      .hero-right { height: 380px; }
+      .phone-mock { width: 170px; }
+      .phone-mock.p1 { left: 6%; }
+      .phone-mock.p3 { right: 6%; }
+
+      .section { padding: 72px 24px; }
+      .section-header { margin-bottom: 48px; }
+      .alt-grid { grid-template-columns: 1fr; gap: 12px; }
+      .platform-grid { grid-template-columns: 1fr; gap: 12px; }
+
+      .features-inner { grid-template-columns: 1fr; padding: 0 24px; }
+      .feature { border-right: none; border-bottom: 1px solid var(--border); padding: 48px 0; }
+      .feature:last-child { border-bottom: none; }
+      .feature + .feature { padding-left: 0; }
+
+      .stats-inner { grid-template-columns: 1fr; padding: 0 24px; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); padding: 44px 0; }
+      .stat:last-child { border-bottom: none; }
+      .stat + .stat { padding-left: 0; }
+
+      .cta-inner { grid-template-columns: 1fr; gap: 40px; padding: 72px 24px; }
+      .footer-inner { padding: 24px; flex-direction: column; gap: 12px; align-items: flex-start; }
+      .legal-note { padding: 0 24px 24px; }
+    }
+    @media (min-width: 901px) and (max-width: 1199px) {
+      .alt-grid { grid-template-columns: repeat(2, 1fr); }
+      .platform-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/" class="brand">QPayments<span class="brand-dot"></span></a>
+  <div class="nav-right">
+    <a href="#waitlist" class="nav-pill">Get early access</a>
+  </div>
+</nav>
+
+<section class="hero" id="waitlist">
+  <div class="hero-left">
+    <div class="hero-eyebrow reveal" style="animation-delay:0.05s">
+      Coming 2026
+    </div>
+    <h1 class="hero-headline reveal" style="animation-delay:0.14s">
+      <span class="line-1">Business payments.</span>
+      <span class="line-2">Built for UK&nbsp;SMEs.</span>
+    </h1>
+    <p class="hero-desc reveal" style="animation-delay:0.3s">
+      A card-free payments platform purpose-built for UK limited companies and LLPs. Faster Payments, scheduled payroll, batch supplier transfers and tax-ready exports.
+    </p>
+    <div class="hero-form-col reveal" style="animation-delay:0.38s">
+      <span class="form-label">Notify me at launch</span>
+      <div class="form-row" id="hero-form">
+        <input type="email" class="email-input" placeholder="your@email.co.uk" id="hero-email" autocomplete="email">
+        <button class="email-btn" onclick="submitForm('hero')">Notify me</button>
+      </div>
+      <div class="form-success" id="hero-success">You're on the list — we'll be in touch.</div>
+      <p class="form-consent">By submitting your email you agree to be contacted at launch. See our <a href="/privacy.html">privacy notice</a>.</p>
+    </div>
+  </div>
+
+  <div class="hero-right reveal" style="animation-delay:0.2s">
+    <div class="phones-group">
+      <div class="phone-mock p1">
+        <img src="screens/open.png" alt="QPayments app screen">
+      </div>
+      <div class="phone-mock p3">
+        <img src="screens/file.png" alt="QPayments app screen">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The gap -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">The gap</div>
+      <h2 class="section-headline">SMEs are stuck in the <span class="accent">missing&nbsp;middle.</span></h2>
+      <p class="section-body">Mainstream banks offer rigid, general-purpose accounts. Retail fintechs prioritise card spend and personal budgeting. Neither is built for a small limited company running payroll, paying suppliers and approving payments across a small team.</p>
+    </div>
+    <div class="alt-grid">
+      <div class="alt-card">
+        <div class="alt-label">Mainstream banks</div>
+        <div class="alt-desc">Limited automation, slow workflows, generic accounts not built for modern SME teams.</div>
+      </div>
+      <div class="alt-card">
+        <div class="alt-label">Retail fintechs</div>
+        <div class="alt-desc">Built for personal spend and budgeting — not for incorporated companies with internal teams.</div>
+      </div>
+      <div class="alt-card">
+        <div class="alt-label">Multi-currency platforms</div>
+        <div class="alt-desc">FX-led products, irrelevant for UK-domestic SMEs paying suppliers in GBP.</div>
+      </div>
+      <div class="alt-card">
+        <div class="alt-label">Card-led tools</div>
+        <div class="alt-desc">Spend-tracking and expense control — not payment operations or payroll.</div>
+      </div>
+      <div class="alt-card">
+        <div class="alt-label">Accounting software</div>
+        <div class="alt-desc">Handles books, VAT and reporting — but doesn't move money.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The platform -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">The platform</div>
+      <h2 class="section-headline">A purpose-built <span class="accent">payments&nbsp;platform.</span></h2>
+      <p class="section-body">QPayments handles the day-to-day financial operations of a UK Ltd — Faster Payments, scheduled payroll, supplier batches and multi-user controls — without cards, lending or FX overhead.</p>
+    </div>
+    <div class="platform-grid">
+      <div class="platform-card">
+        <span class="platform-num">01 · Pay</span>
+        <h3 class="platform-title">Real-time Faster Payments</h3>
+        <p class="platform-desc">Send and receive in GBP via your UK sort code and account number. Domestic, instant, EMI-aligned.</p>
+      </div>
+      <div class="platform-card">
+        <span class="platform-num">02 · Schedule</span>
+        <h3 class="platform-title">Payroll &amp; supplier batches</h3>
+        <p class="platform-desc">Schedule outgoing payments and upload batch files for payroll runs and recurring supplier settlements.</p>
+      </div>
+      <div class="platform-card">
+        <span class="platform-num">03 · Control</span>
+        <h3 class="platform-title">Multi-user roles</h3>
+        <p class="platform-desc">Preparer, approver and viewer permissions for finance teams that need internal approval flows.</p>
+      </div>
+      <div class="platform-card">
+        <span class="platform-num">04 · Report</span>
+        <h3 class="platform-title">Tax-ready exports</h3>
+        <p class="platform-desc">Categorised transaction data, exportable in formats your accountant or bookkeeping software can read.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="features-inner">
+    <div class="feature">
+      <div class="feat-num"><span>01</span>Card-free</div>
+      <h3 class="feat-title">No cards, by design.</h3>
+      <p class="feat-desc">QPayments deliberately excludes physical and virtual debit cards. The result is lower fraud exposure, simpler operations, and a focused payments-first product for businesses that don't need card spend.</p>
+    </div>
+    <div class="feature">
+      <div class="feat-num"><span>02</span>UK domestic</div>
+      <h3 class="feat-title">Built for the UK Ltd.</h3>
+      <p class="feat-desc">Account-to-account payments in GBP via Faster Payments. No FX, no multi-currency complexity. Made for UK-domestic SMEs with structured payroll, supplier and recurring obligations.</p>
+    </div>
+    <div class="feature">
+      <div class="feat-num"><span>03</span>Compliance-led</div>
+      <h3 class="feat-title">Architected for EMI rules.</h3>
+      <p class="feat-desc">Strong customer authentication, role-based access, encrypted communications and daily reconciliations — built around the obligations of an Electronic Money Institution from day one.</p>
+    </div>
+  </div>
+</section>
+
+<section class="stats-section">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-num">1.5 M+</div>
+      <div class="stat-label">UK small limited companies</div>
+      <div class="stat-note">Underserved by mainstream banks and retail fintechs alike — caught between rigid legacy accounts and retail-style apps.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">£75</div>
+      <div class="stat-label">Flat monthly fee</div>
+      <div class="stat-note">Predictable subscription pricing. Fair-use thresholds for high-volume payments; no hidden card fees.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Cards issued</div>
+      <div class="stat-note">Card-free design reduces complexity, fraud exposure and operational risk — and lets us focus on payment workflows.</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2 class="cta-headline">
+      Built for the<br>missing&nbsp;middle.<br>
+      <span class="accent">Coming 2026.</span>
+    </h2>
+    <div class="cta-right">
+      <p class="cta-copy">
+        Be first to know when we launch. We'll send a single email when QPayments is live and accepting clients.
+      </p>
+      <span class="cta-label">Join the waitlist</span>
+      <div class="cta-form-row" id="cta-form">
+        <input type="email" class="cta-input" placeholder="your@email.co.uk" id="cta-email" autocomplete="email">
+        <button class="cta-btn" onclick="submitForm('cta')">Join waitlist</button>
+      </div>
+      <div class="cta-success" id="cta-success">You're on the list — we'll be in touch.</div>
+      <p class="cta-consent">By submitting your email you agree to be contacted at launch. See our <a href="/privacy.html">privacy notice</a>.</p>
+    </div>
+  </div>
+</section>
+
+<div class="privacy-banner" id="privacy-banner" role="dialog" aria-label="Privacy notice">
+  <div class="privacy-banner-label">Privacy</div>
+  <div class="privacy-banner-text">
+    QPayments doesn't use tracking, advertising or analytics cookies. We only collect emails through the waitlist, with your consent. See our <a href="/privacy.html">privacy notice</a>.
+  </div>
+  <div class="privacy-banner-actions">
+    <button class="privacy-banner-btn" onclick="dismissPrivacyBanner()">Got it</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">QPayments<span class="footer-dot"></span></div>
+    <div class="footer-meta">© 2026 Q Payments Ltd &nbsp;·&nbsp; London, UK</div>
+  </div>
+  <div class="legal-note">
+    <p>Q Payments Ltd is currently applying to the Financial Conduct Authority for authorisation as an Electronic Money Institution. The Firm is not yet authorised. The services described on this page will be made available subject to authorisation. Q Payments Ltd does not currently provide regulated services and is not a bank. Once authorised, customer funds will be safeguarded in accordance with the Electronic Money Regulations 2011. E-money is not protected by the Financial Services Compensation Scheme (FSCS).</p>
+    <p style="margin-top:8px;"><a href="/privacy.html" style="color: inherit; text-decoration: underline; text-decoration-color: rgba(26,20,16,0.25); text-underline-offset: 3px;">Privacy notice</a></p>
+  </div>
+</footer>
+
+<script>
+  // Nav blur on scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 48);
+  }, { passive: true });
+
+  // Waitlist endpoint — FormSubmit.co AJAX (no signup needed).
+  // To switch destination email, change the address below and re-confirm via the activation link FormSubmit sends to that mailbox on the first submission.
+  const WAITLIST_ENDPOINT = 'https://formsubmit.co/ajax/maria@qpayments.co.uk';
+
+  async function submitForm(id) {
+    const input = document.getElementById(`${id}-email`);
+    const email = input.value.trim();
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      input.style.borderColor = 'var(--accent)';
+      input.focus();
+      setTimeout(() => (input.style.borderColor = ''), 1400);
+      return;
+    }
+
+    // Optimistic UI — show success immediately
+    document.getElementById(`${id}-form`).style.display = 'none';
+    document.getElementById(`${id}-success`).style.display = 'block';
+
+    try {
+      const res = await fetch(WAITLIST_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          email: email,
+          source: id === 'hero' ? 'hero' : 'cta',
+          page: location.href,
+          _subject: 'New QPayments waitlist signup',
+          _captcha: 'false',
+          _template: 'table'
+        })
+      });
+      if (!res.ok) console.warn('Waitlist response not ok', res.status);
+    } catch (err) {
+      console.warn('Waitlist submission failed', err);
+    }
+  }
+
+  document.getElementById('hero-email').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitForm('hero');
+  });
+  document.getElementById('cta-email').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitForm('cta');
+  });
+
+  // Privacy banner — show on first visit, dismiss persists in localStorage.
+  // We don't actually set any tracking/advertising/analytics cookies; this
+  // banner is informational and acknowledges our data-collection posture.
+  const PRIVACY_KEY = 'qp-privacy-acknowledged-v1';
+  const privacyBanner = document.getElementById('privacy-banner');
+  if (privacyBanner && !localStorage.getItem(PRIVACY_KEY)) {
+    setTimeout(() => privacyBanner.classList.add('show'), 1200);
+  }
+  function dismissPrivacyBanner() {
+    try { localStorage.setItem(PRIVACY_KEY, '1'); } catch (e) {}
+    privacyBanner.classList.remove('show');
+    setTimeout(() => privacyBanner.style.display = 'none', 600);
+  }
+</script>
+
+</body>
+</html>
